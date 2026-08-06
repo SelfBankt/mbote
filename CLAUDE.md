@@ -1,0 +1,96 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+**mbote** ("hello" in Lingala) is an eSIM price-comparison and sales site for the Democratic Republic of Congo, aimed at the Lingala-speaking population of Central Africa. Customers browse eSIM data plans, then pay with a Bitcoin Lightning wallet or, via a mobile-money-to-Lightning bridge, straight from their M-Pesa/mobile money balance — no bank card, no smartphone Lightning literacy required.
+
+Stack: Next.js 16 (App Router, TypeScript), Tailwind v4, `next-intl` for i18n (Lingala/French/English), SQLite (`better-sqlite3`) for local order storage. No ORM, no auth system — there's nothing here that needs user accounts yet.
+
+## Running it
+
+```
+npm install
+npm run dev
+```
+
+Opens at `http://localhost:3000`, redirects to `/ln` (the default locale) or whatever locale your browser's `Accept-Language` header prefers. No environment variables are required to run it — see "Mock mode" below.
+
+## Mock mode (no real API keys needed)
+
+`BLINK_API_KEY`/`BLINK_WALLET_ID` (Lightning invoices) and `MAYA_API_KEY` (eSIM fulfillment) are all unset by default. With them unset, `src/lib/blink.ts` and `src/lib/maya.ts` fall back to mock implementations: a fake-but-plausible-looking invoice is generated, the order is auto-marked "paid" ~6 seconds later (see the `setTimeout` in `POST /api/orders`), and a fake eSIM activation code is generated. This means the **entire flow — browse, compare, buy, pay, "receive" an eSIM — works end to end with zero external accounts**, which is what to use for building/demoing UI changes. Copy `.env.local.example` to `.env.local` and fill in real credentials once real accounts exist; nothing else needs to change, since both files check `isBlinkConfigured()`/`isMayaConfigured()` and switch behavior automatically.
+
+## Architecture
+
+### Next.js 16 — this is not the Next.js you know
+
+This project was scaffolded on Next.js 16.3.0, which has real breaking changes from earlier versions. Two that matter most for working in this repo:
+
+- **`middleware.ts` is deprecated and renamed to `proxy.ts`.** The file lives at `src/proxy.ts`, exports a `proxy` function (not `middleware`), and there's no other structural difference — `next-intl`'s `createMiddleware()` still works unchanged, it's just exported under the new name. Do not create a `middleware.ts` file; Next 16 won't run it.
+- **Route `params` are always a `Promise`**, in pages, layouts, and route handlers alike — `await params` (or `await ctx.params` in route handlers) everywhere. Use the globally-available typed helpers `PageProps<'/route'>`, `LayoutProps<'/route'>`, `RouteContext<'/route'>` instead of hand-writing param types — they're generated from the actual file structure by `next dev`/`next build`/`next typegen`, so after adding or renaming a route, run `npx next typegen` (or just start the dev server) before TypeScript will recognize the new route string.
+
+If something in `node_modules/next/dist/docs/` disagrees with training-data knowledge of "how Next.js works," trust the docs in that folder — that's the actual guidance this version's own `AGENTS.md` points at.
+
+### Internationalization (Lingala / French / English)
+
+`src/i18n/routing.ts` defines the three locales via `next-intl`'s `defineRouting`, with **Lingala as the default** (`localePrefix: "always"` — every URL is prefixed, e.g. `/ln`, `/fr`, `/en`, there's no unprefixed default). `src/proxy.ts` runs `next-intl`'s locale-negotiation on every non-API, non-asset request. Translated strings live in `src/messages/{ln,fr,en}.json`, one flat-ish nested JSON per locale, same key structure across all three.
+
+**The Lingala copy needs native-speaker review before this goes anywhere real.** It's a good-faith, vocabulary-conscious effort (and leans on French loanwords for technical terms like "réseau"/"données," which is realistic — code-switching with French for modern/technical vocabulary is genuinely how Lingala is spoken in DRC) but it was not written or checked by a native speaker. Treat it the same way the French/English copy would be treated if written by a fluent-but-not-native speaker: probably fine, worth a real review pass, don't assume it's flawless.
+
+Routing/links use `next-intl`'s typed navigation (`src/i18n/navigation.ts` — `Link`/`redirect`/`usePathname`/`useRouter`), which automatically prefixes hrefs with the current locale. **No `pathnames` config is set up** (i.e. no per-locale URL translation like `/plans` → `/forfaits` in French) — that's a deliberate scope cut, not an oversight; add a `pathnames` map to `routing.ts` if localized URLs become worth the complexity. Because of that, dynamic route hrefs are plain interpolated strings (`` `/plans/${plan.id}` ``), not the `{ pathname, params }` object shorthand — that shorthand only type-checks when a `pathnames` config exists.
+
+### eSIM plan data (placeholder, shaped for a real API swap)
+
+`src/lib/plans.ts` exports a hardcoded array of DRC eSIM plans and an async `getPlans()`/`getPlan(id)` — async on purpose, so swapping the body for a real `fetch()` call later doesn't change any caller. The shape (network, data amount, validity, USD price) mirrors what Maya Mobile's Connect+ API is documented to return.
+
+### Payment: Blink (Lightning) + Machankura (mobile money bridge)
+
+`src/lib/blink.ts` talks to [Blink](https://blink.sv)'s GraphQL API (`api.blink.sv/graphql`, `X-API-KEY` header) to create Lightning invoices via the `lnInvoiceCreate` mutation — confirmed against Blink's public developer docs, not guessed. Payment confirmation is meant to arrive via Blink webhooks (`receive.lightning` event, delivered through Svix) at `POST /api/webhooks/blink` — **that route does not yet verify the webhook signature** (`verifyWebhookSignature()` in `blink.ts` is a TODO stub); do not point a real `BLINK_API_KEY` at a publicly reachable deployment of this webhook route until that's implemented, or anyone who finds the URL can POST a fake "payment confirmed" event.
+
+`src/lib/machankura.ts` is the mobile-money bridge — a customer with no Bitcoin wallet, only a mobile money balance, pays the same Lightning invoice via USSD through [Machankura](https://machankura.com). **Important, confirmed gap: Machankura does not currently operate in DRC.** As of this build it covers Ghana, Kenya, Malawi, Nigeria, South Africa, Uganda, Côte d'Ivoire, Tanzania, and Zambia — DRC isn't among them, despite M-Pesa itself being confirmed live in DRC via Vodacom. Practically: a DRC customer with *any* Lightning wallet can already pay directly via the QR code; it's specifically customers with *only* a mobile-money balance and no Bitcoin wallet who aren't served via this path in DRC yet. The Machankura section is still built and shown, because (a) it's a no-code-change win the day Machankura adds DRC, and (b) it's already useful today for the wider Central/East African audience. Don't quietly drop this caveat if extending the Machankura integration — it's a real product gap, not a bug.
+
+There is no real USD→sats price feed (`usdToSats()` in `blink.ts` uses a hardcoded rate) — swap for a real BTC price API before real money is involved, or customers will be over/undercharged as the rate drifts.
+
+### eSIM fulfillment: Maya Mobile
+
+`src/lib/maya.ts` — once payment is confirmed, this is meant to call Maya Mobile's Connect+ API to actually provision the eSIM and get back an LPA activation code / QR. **Maya Mobile's full API reference is NDA'd to onboarded partners** — the request/response shapes here (`CreateEsimRequest { plan_id, region, country }`) come from what's publicly indexed, not a confirmed contract. Reconcile field names against the real partner docs the moment a Maya Mobile account exists.
+
+Why Maya Mobile specifically: researched against several eSIM wholesale/API platforms for DRC coverage specifically (not just "how many countries globally," which is a misleading metric — several big aggregators with ~100-country coverage don't include DRC at all). Confirmed: **Maya Mobile covers DRC via Vodacom + Orange LTE**, has a documented developer API and white-label reseller program. MobiMatter also confirmed DRC coverage (marketplace model, cheaper starting price) and is worth keeping as a second option. eSIM Access was ruled out — easy self-serve API signup, but DRC isn't in their ~100-country list.
+
+**Delivery to the customer isn't built** — `confirmAndFulfillOrder()` in `src/lib/orders.ts` has a `// TODO` marking exactly where to email/SMS the activation code once a transactional email/SMS provider is chosen. Right now a fulfilled order's activation code only exists in the SQLite row.
+
+### Order flow and storage
+
+`src/lib/db.ts` — SQLite via `better-sqlite3`, one `orders` table, deliberately zero-setup for local dev. **Swap for a hosted Postgres (e.g. Neon/Supabase) before deploying anywhere serverless** — the filesystem isn't persistent across invocations on platforms like Vercel, so SQLite writes would silently vanish between requests. The `data/` directory is gitignored.
+
+Order lifecycle: `pending` → `paid` → `fulfilled` (or `expired`/`failed`). `src/lib/orders.ts`'s `confirmAndFulfillOrder()` is the single funnel both the real webhook path and the mock-mode timeout call through, so fulfillment logic only exists in one place. `POST /api/orders` creates the order + invoice; `GET /api/orders/[id]/status` is polled by the checkout page client component every 2.5s (`src/app/[locale]/checkout/[orderId]/CheckoutClient.tsx`) rather than using a websocket/SSE — simplest thing that works at this scale, revisit if polling load ever matters.
+
+### Route structure
+
+```
+src/app/[locale]/              — every user-facing page, locale-prefixed
+  page.tsx                     — home
+  plans/page.tsx                — comparison listing
+  plans/[id]/page.tsx           — plan detail + BuyForm (client component, posts to /api/orders)
+  checkout/[orderId]/page.tsx   — server component: loads order, generates QR server-side
+  checkout/[orderId]/CheckoutClient.tsx — client component: polls status, renders QR/Machankura/success states
+src/app/api/                   — NOT locale-prefixed (excluded in proxy.ts's matcher)
+  orders/route.ts                — POST: create order + Blink invoice
+  orders/[id]/status/route.ts    — GET: poll order status
+  webhooks/blink/route.ts        — POST: Blink payment webhook (unverified — see above)
+```
+
+QR codes are generated **server-side** (`qrcode`'s `toDataURL`, in `checkout/[orderId]/page.tsx`) and passed to the client component as a data URL, rather than shipping the `qrcode` package to the browser — smaller client bundle, and the invoice string never needs a client-side round trip just to render itself.
+
+## Known limitations
+
+- Lingala copy needs native-speaker review (see i18n section above).
+- Machankura doesn't cover DRC yet (see Payment section above) — a real, confirmed gap, not an oversight.
+- No webhook signature verification on `/api/webhooks/blink` — don't point a real Blink account at a public deployment until this is built.
+- No real BTC/USD price feed — `usdToSats()` is a hardcoded rate.
+- No customer-facing delivery (email/SMS) of the eSIM activation code once fulfilled — it only lands in the database.
+- SQLite is local-dev-only — will lose data on any serverless deployment until swapped for a hosted DB.
+- No admin/ops view of orders — checking order status currently means querying the SQLite file directly.
+- No pagination, search, or filtering on the plans listing (fine at 8 hardcoded plans, won't be once real Maya Mobile data is wired in with potentially hundreds of plans/networks).
+- No tests.

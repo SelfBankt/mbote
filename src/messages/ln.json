@@ -1,0 +1,69 @@
+{
+  "site": {
+    "name": "Mbote",
+    "tagline": "Kokanisa mpe kosomba ba forfait ya eSIM na Kongo — futa na Bitcoin Lightning to na mobile money."
+  },
+  "nav": {
+    "home": "Ebandeli",
+    "plans": "Ba forfait",
+    "howItWorks": "Ndenge esalemaka"
+  },
+  "home": {
+    "heroTitle": "Mbote! Kangama na Kongo.",
+    "heroSubtitle": "Tala mpe kokanisa ba forfait ya eSIM ya ba réseaux ya solo, na nsima futa ndenge olingi — na portefeuille Lightning to na mbongo ya mobile money.",
+    "cta": "Kokanisa ba forfait",
+    "howItWorksTitle": "Ndenge esalemaka",
+    "step1Title": "Kokanisa",
+    "step1Body": "Tala ba forfait ya eSIM ya Kongo na ntalo, données, mpe ntango ekowumela.",
+    "step2Title": "Futa ndenge olingi",
+    "step2Body": "Futa na portefeuille Bitcoin Lightning, to na M-Pesa / mobile money na nzela ya Machankura — carte bancaire te.",
+    "step3Title": "Kangama",
+    "step3Body": "Code QR ya eSIM na yo ekoya na ba instructions nsima ya kondimama ya paiement."
+  },
+  "plans": {
+    "title": "Ba forfait ya eSIM ya Kongo",
+    "subtitle": "Ba forfait nyonso esalaka na réseau ya Vodacom, Orange, to Airtel na Kongo.",
+    "dataLabel": "Données",
+    "validityLabel": "Ekowumela",
+    "networkLabel": "Réseau",
+    "priceFrom": "Kobanda na",
+    "viewPlan": "Tala forfait",
+    "empty": "Forfait moko te ekokani na oyo oponi sik'oyo."
+  },
+  "planDetail": {
+    "buyButton": "Somba forfait oyo",
+    "networkNote": "Réseau",
+    "dataAmount": "Données",
+    "validity": "Ekowumela",
+    "backToPlans": "Zonga na ba forfait nyonso",
+    "days": "mikolo"
+  },
+  "checkout": {
+    "title": "Sukisa paiement na yo",
+    "payWithLightning": "Futa na Lightning",
+    "payWithMobileMoney": "Futa na mobile money",
+    "scanQr": "Tanga code QR oyo na portefeuille Lightning na yo",
+    "orPasteInvoice": "To kopi facture",
+    "machankuraTitle": "Futa na mbongo ya mobile money na yo",
+    "machankuraBody": "Portefeuille Bitcoin esengeli te — Machankura epesaka nzela ya kofuta facture Lightning oyo mbala moko na mbongo ya M-Pesa to mobile money na yo, na nzela ya USSD.",
+    "machankuraButton": "Futa na Machankura",
+    "waitingForPayment": "Kozela paiement…",
+    "paymentConfirmed": "Paiement endimami! eSIM na yo ezali koya.",
+    "paymentFailed": "Facture oyo esili to endimami te. Bandela lisusu.",
+    "deliveryNote": "Tokotindela yo code QR ya eSIM mpe ba instructions na contact oyo opesaki.",
+    "expiresIn": "Facture ekosila na",
+    "contactLabel": "Email to numéro ya téléphone mpo na kotinda",
+    "contactPlaceholder": "yo@ndakisa.com",
+    "startOrder": "Kokoba na paiement"
+  },
+  "common": {
+    "loading": "Kozela…",
+    "error": "Likambo moko ekweyi.",
+    "back": "Zonga",
+    "copy": "Kopi",
+    "copied": "Ekopiami!"
+  },
+  "footer": {
+    "disclaimer": "Version ya démonstration — ba données ya forfait ezali ndakisa, ntalo ya solo te. Tala CLAUDE.md."
+  }
+}

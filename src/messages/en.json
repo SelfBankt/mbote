@@ -1,0 +1,69 @@
+{
+  "site": {
+    "name": "Mbote",
+    "tagline": "Compare and buy eSIM data plans for DR Congo — pay with Bitcoin Lightning or mobile money."
+  },
+  "nav": {
+    "home": "Home",
+    "plans": "Plans",
+    "howItWorks": "How it works"
+  },
+  "home": {
+    "heroTitle": "Mbote! Get connected in DR Congo.",
+    "heroSubtitle": "Compare eSIM data plans from trusted networks, then pay however suits you — a Lightning wallet, or straight from your mobile money balance.",
+    "cta": "Compare plans",
+    "howItWorksTitle": "How it works",
+    "step1Title": "Compare",
+    "step1Body": "Browse eSIM data plans for DR Congo by price, data, and validity.",
+    "step2Title": "Pay your way",
+    "step2Body": "Pay with a Bitcoin Lightning wallet, or with M-Pesa / mobile money via Machankura — no bank card needed.",
+    "step3Title": "Get connected",
+    "step3Body": "Your eSIM QR code and setup instructions arrive as soon as payment is confirmed."
+  },
+  "plans": {
+    "title": "eSIM plans for DR Congo",
+    "subtitle": "All plans work on the Vodacom, Orange, or Airtel network in DRC.",
+    "dataLabel": "Data",
+    "validityLabel": "Valid for",
+    "networkLabel": "Network",
+    "priceFrom": "From",
+    "viewPlan": "View plan",
+    "empty": "No plans match your filters right now."
+  },
+  "planDetail": {
+    "buyButton": "Buy this plan",
+    "networkNote": "Network",
+    "dataAmount": "Data",
+    "validity": "Validity",
+    "backToPlans": "Back to all plans",
+    "days": "days"
+  },
+  "checkout": {
+    "title": "Complete your payment",
+    "payWithLightning": "Pay with Lightning",
+    "payWithMobileMoney": "Pay with mobile money",
+    "scanQr": "Scan this QR code with your Lightning wallet",
+    "orPasteInvoice": "Or copy the invoice",
+    "machankuraTitle": "Pay from your mobile money balance",
+    "machankuraBody": "No Bitcoin wallet needed — Machankura lets you pay this Lightning invoice straight from your M-Pesa or mobile money balance over USSD.",
+    "machankuraButton": "Pay via Machankura",
+    "waitingForPayment": "Waiting for payment…",
+    "paymentConfirmed": "Payment confirmed! Your eSIM is on its way.",
+    "paymentFailed": "This invoice expired or couldn't be confirmed. Please start again.",
+    "deliveryNote": "We'll send your eSIM QR code and setup instructions to the contact you provided.",
+    "expiresIn": "Invoice expires in",
+    "contactLabel": "Email or phone for delivery",
+    "contactPlaceholder": "you@example.com",
+    "startOrder": "Continue to payment"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "back": "Back",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "footer": {
+    "disclaimer": "Demo build — plan data is illustrative, not live pricing. See CLAUDE.md."
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "site": {
+    "name": "Mbote",
+    "tagline": "Comparez et achetez des forfaits eSIM pour la RDC — payez en Bitcoin Lightning ou via mobile money."
+  },
+  "nav": {
+    "home": "Accueil",
+    "plans": "Forfaits",
+    "howItWorks": "Comment ça marche"
+  },
+  "home": {
+    "heroTitle": "Mbote ! Restez connecté en RDC.",
+    "heroSubtitle": "Comparez les forfaits eSIM des réseaux de confiance, puis payez comme vous voulez — portefeuille Lightning, ou directement depuis votre solde mobile money.",
+    "cta": "Comparer les forfaits",
+    "howItWorksTitle": "Comment ça marche",
+    "step1Title": "Comparez",
+    "step1Body": "Parcourez les forfaits eSIM pour la RDC par prix, volume de données et validité.",
+    "step2Title": "Payez à votre façon",
+    "step2Body": "Payez avec un portefeuille Bitcoin Lightning, ou avec M-Pesa / mobile money via Machankura — sans carte bancaire.",
+    "step3Title": "Restez connecté",
+    "step3Body": "Votre code QR eSIM et les instructions d'installation arrivent dès que le paiement est confirmé."
+  },
+  "plans": {
+    "title": "Forfaits eSIM pour la RDC",
+    "subtitle": "Tous les forfaits fonctionnent sur le réseau Vodacom, Orange ou Airtel en RDC.",
+    "dataLabel": "Données",
+    "validityLabel": "Validité",
+    "networkLabel": "Réseau",
+    "priceFrom": "À partir de",
+    "viewPlan": "Voir le forfait",
+    "empty": "Aucun forfait ne correspond à vos filtres pour le moment."
+  },
+  "planDetail": {
+    "buyButton": "Acheter ce forfait",
+    "networkNote": "Réseau",
+    "dataAmount": "Données",
+    "validity": "Validité",
+    "backToPlans": "Retour à tous les forfaits",
+    "days": "jours"
+  },
+  "checkout": {
+    "title": "Finalisez votre paiement",
+    "payWithLightning": "Payer avec Lightning",
+    "payWithMobileMoney": "Payer avec mobile money",
+    "scanQr": "Scannez ce code QR avec votre portefeuille Lightning",
+    "orPasteInvoice": "Ou copiez la facture",
+    "machankuraTitle": "Payez depuis votre solde mobile money",
+    "machankuraBody": "Pas besoin de portefeuille Bitcoin — Machankura vous permet de payer cette facture Lightning directement depuis votre solde M-Pesa ou mobile money, via USSD.",
+    "machankuraButton": "Payer via Machankura",
+    "waitingForPayment": "En attente du paiement…",
+    "paymentConfirmed": "Paiement confirmé ! Votre eSIM arrive.",
+    "paymentFailed": "Cette facture a expiré ou n'a pas pu être confirmée. Veuillez recommencer.",
+    "deliveryNote": "Nous enverrons votre code QR eSIM et les instructions d'installation au contact que vous avez fourni.",
+    "expiresIn": "La facture expire dans",
+    "contactLabel": "E-mail ou téléphone pour la livraison",
+    "contactPlaceholder": "vous@exemple.com",
+    "startOrder": "Continuer vers le paiement"
+  },
+  "common": {
+    "loading": "Chargement…",
+    "error": "Une erreur s'est produite.",
+    "back": "Retour",
+    "copy": "Copier",
+    "copied": "Copié !"
+  },
+  "footer": {
+    "disclaimer": "Version de démonstration — les données des forfaits sont illustratives, pas des prix réels. Voir CLAUDE.md."
+  }
+}
