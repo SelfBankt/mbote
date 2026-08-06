@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     memo: `mbote: ${plan.network} ${plan.dataAmountMb}MB / ${plan.validityDays}d (order ${orderId})`,
   });
 
-  createOrder({
+  await createOrder({
     id: orderId,
     plan_id: plan.id,
     contact,

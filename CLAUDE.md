@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **mbote** ("hello" in Lingala) is an eSIM price-comparison and sales site for the Democratic Republic of Congo, aimed at the Lingala-speaking population of Central Africa. Customers browse eSIM data plans, then pay with a Bitcoin Lightning wallet or, via a mobile-money-to-Lightning bridge, straight from their M-Pesa/mobile money balance — no bank card, no smartphone Lightning literacy required.
 
-Stack: Next.js 16 (App Router, TypeScript), Tailwind v4, `next-intl` for i18n (Lingala/French/English), SQLite (`better-sqlite3`) for local order storage. No ORM, no auth system — there's nothing here that needs user accounts yet.
+Stack: Next.js 16 (App Router, TypeScript), Tailwind v4, `next-intl` for i18n (Lingala/French/English), SQLite (local dev) / Postgres (production, via Vercel's Neon integration) for order storage — see "Order flow and storage" below for how the two are picked. No ORM, no auth system — there's nothing here that needs user accounts yet.
 
 ## Running it
 
@@ -62,11 +62,16 @@ There is no real USD→sats price feed (`usdToSats()` in `blink.ts` uses a hardc
 
 Why Maya Mobile specifically: researched against several eSIM wholesale/API platforms for DRC coverage specifically (not just "how many countries globally," which is a misleading metric — several big aggregators with ~100-country coverage don't include DRC at all). Confirmed: **Maya Mobile covers DRC via Vodacom + Orange LTE**, has a documented developer API and white-label reseller program. MobiMatter also confirmed DRC coverage (marketplace model, cheaper starting price) and is worth keeping as a second option. eSIM Access was ruled out — easy self-serve API signup, but DRC isn't in their ~100-country list.
 
-**Delivery to the customer isn't built** — `confirmAndFulfillOrder()` in `src/lib/orders.ts` has a `// TODO` marking exactly where to email/SMS the activation code once a transactional email/SMS provider is chosen. Right now a fulfilled order's activation code only exists in the SQLite row.
+**Delivery to the customer isn't built** — `confirmAndFulfillOrder()` in `src/lib/orders.ts` has a `// TODO` marking exactly where to email/SMS the activation code once a transactional email/SMS provider is chosen. Right now a fulfilled order's activation code only exists in the orders table.
 
 ### Order flow and storage
 
-`src/lib/db.ts` — SQLite via `better-sqlite3`, one `orders` table, deliberately zero-setup for local dev. **Swap for a hosted Postgres (e.g. Neon/Supabase) before deploying anywhere serverless** — the filesystem isn't persistent across invocations on platforms like Vercel, so SQLite writes would silently vanish between requests. The `data/` directory is gitignored.
+`src/lib/db/` — dual-backend order store, picked automatically by whether `DATABASE_URL` is set (`src/lib/db/index.ts`):
+
+- **Local dev (`DATABASE_URL` unset):** SQLite via `better-sqlite3` (`src/lib/db/sqlite.ts`), one `orders` table, zero-setup. The `data/` directory is gitignored.
+- **Production (`DATABASE_URL` set):** Postgres via the `postgres` npm package (`src/lib/db/postgres.ts`), targeting Vercel's Neon integration — add Postgres storage from the Vercel project's Settings > Storage tab and `DATABASE_URL` is injected automatically, no separate Neon account needed. This was necessary before any serverless deployment: a serverless platform's filesystem isn't persistent across invocations, so SQLite writes would silently vanish between requests.
+
+Both backends implement the same `OrderStore` interface (`src/lib/db/types.ts`) with identical async method signatures, so every caller (`src/lib/orders.ts`, the API routes, the checkout page) is written against one consistent API and doesn't know or care which backend is actually active. `db/index.ts` picks between them with a conditional `require()`, not a static `import` — both backends run side-effecting setup at module load (SQLite opens/creates a file, Postgres opens a connection), and a static import would run *both* regardless of which is selected, which would crash immediately on Vercel's read-only filesystem even in a Postgres-only deployment.
 
 Order lifecycle: `pending` → `paid` → `fulfilled` (or `expired`/`failed`). `src/lib/orders.ts`'s `confirmAndFulfillOrder()` is the single funnel both the real webhook path and the mock-mode timeout call through, so fulfillment logic only exists in one place. `POST /api/orders` creates the order + invoice; `GET /api/orders/[id]/status` is polled by the checkout page client component every 2.5s (`src/app/[locale]/checkout/[orderId]/CheckoutClient.tsx`) rather than using a websocket/SSE — simplest thing that works at this scale, revisit if polling load ever matters.
 
@@ -94,7 +99,7 @@ QR codes are generated **server-side** (`qrcode`'s `toDataURL`, in `checkout/[or
 - Webhook signature verification is built, but `BLINK_WEBHOOK_SECRET` can't be obtained until this is deployed somewhere with a public URL to register in the Blink Dashboard — payment confirmation won't function until that's done post-deployment.
 - No real BTC/USD price feed — `usdToSats()` is a hardcoded rate.
 - No customer-facing delivery (email/SMS) of the eSIM activation code once fulfilled — it only lands in the database.
-- SQLite is local-dev-only — will lose data on any serverless deployment until swapped for a hosted DB.
+- The Postgres backend (`src/lib/db/postgres.ts`) hasn't been tested against a live database yet as of this writing — it type-checks and builds cleanly, but validate it against a real `DATABASE_URL` (e.g. via `vercel env pull` once Postgres storage is provisioned) before trusting it with real orders.
 - No admin/ops view of orders — checking order status currently means querying the SQLite file directly.
 - No pagination, search, or filtering on the plans listing (fine at 8 hardcoded plans, won't be once real Maya Mobile data is wired in with potentially hundreds of plans/networks).
 - No tests.

@@ -11,7 +11,7 @@ export default async function CheckoutPage({
   const { locale, orderId } = await params;
   setRequestLocale(locale);
 
-  const order = getOrder(orderId);
+  const order = await getOrder(orderId);
   if (!order) notFound();
   const plan = await getPlan(order.plan_id);
   if (!plan) notFound();

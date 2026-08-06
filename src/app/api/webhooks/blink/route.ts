@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "missing transaction id" }, { status: 400 });
   }
 
-  const order = getOrderByPaymentHash(paymentHash);
+  const order = await getOrderByPaymentHash(paymentHash);
   if (!order) {
     // not necessarily an error — could be a payment to this Blink account unrelated to mbote
     return NextResponse.json({ ok: true });

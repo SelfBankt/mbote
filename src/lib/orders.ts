@@ -5,14 +5,14 @@ import { fulfillOrder } from "@/lib/maya";
 // from the mock-mode timeout in POST /api/orders (no Blink credentials yet). Keeping both paths
 // funnel through here means fulfillment logic only exists once.
 export async function confirmAndFulfillOrder(orderId: string): Promise<void> {
-  const order = getOrder(orderId);
+  const order = await getOrder(orderId);
   if (!order || order.status !== "pending") return; // already handled, or unknown order
 
-  markOrderPaid(orderId);
+  await markOrderPaid(orderId);
 
   try {
     const esim = await fulfillOrder({ planId: order.plan_id, orderId: order.id });
-    markOrderFulfilled(orderId, esim.esimReference);
+    await markOrderFulfilled(orderId, esim.esimReference);
     // TODO once real delivery is needed: email/SMS `esim.lpaActivationCode` to `order.contact`.
     // Not built yet since it needs a transactional email/SMS provider decision — out of scope for
     // this scaffold, but this is the exact point to hook it in.
