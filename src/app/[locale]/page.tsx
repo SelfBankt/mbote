@@ -104,6 +104,18 @@ function Home() {
             </div>
           ))}
         </div>
+
+        <div className="mt-14 text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold text-balance">
+            {t("home.finalCtaTitle")}
+          </h2>
+          <Link
+            href="/plans"
+            className="inline-block mt-6 bg-accent text-brand font-semibold rounded-full px-8 py-3.5 hover:brightness-105 hover:-translate-y-0.5 transition-all"
+          >
+            {t("home.cta")}
+          </Link>
+        </div>
       </section>
     </div>
   );
