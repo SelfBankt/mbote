@@ -30,3 +30,31 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Hero decoration (src/app/[locale]/page.tsx). Only `transform` and `opacity` are animated —
+   both are compositor-only, so this stays cheap even on low-end devices, unlike animating
+   `background-position` on a large gradient (which forces repaints every frame). */
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(28px, -18px) scale(1.08); }
+}
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-22px, 22px) scale(1.05); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-blob-1 { animation: blob-drift-1 22s ease-in-out infinite; }
+.animate-blob-2 { animation: blob-drift-2 26s ease-in-out infinite; }
+.animate-fade-in-up { animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob-1,
+  .animate-blob-2,
+  .animate-fade-in-up {
+    animation: none;
+  }
+}

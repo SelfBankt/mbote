@@ -15,38 +15,118 @@ function Home() {
     { title: t("home.step2Title"), body: t("home.step2Body"), icon: "⚡" },
     { title: t("home.step3Title"), body: t("home.step3Body"), icon: "📶" },
   ];
+  const badges = [
+    { icon: "🌍", label: t("home.badgeNetwork") },
+    { icon: "⚡", label: t("home.badgePayment") },
+    { icon: "📧", label: t("home.badgeDelivery") },
+  ];
 
   return (
     <div>
-      <section className="bg-brand text-white">
-        <div className="max-w-5xl mx-auto px-5 py-20 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-balance">
+      {/* Decorative blobs only animate `transform`/`opacity` (compositor-only, cheap even on
+          low-end devices) — see globals.css. Nothing here is an image, so this section adds zero
+          network weight. */}
+      <section className="relative overflow-hidden bg-brand text-white">
+        <div
+          aria-hidden
+          className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-accent/30 blur-3xl animate-blob-1"
+        />
+        <div
+          aria-hidden
+          className="absolute -bottom-32 -right-16 h-96 w-96 rounded-full bg-brand-light blur-3xl animate-blob-2"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(white_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black_45%,transparent_80%)]"
+        />
+
+        <div className="relative max-w-5xl mx-auto px-5 py-24 md:py-28 text-center">
+          <span
+            className="animate-fade-in-up inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-white/90 ring-1 ring-white/20"
+            style={{ animationDelay: "0ms" }}
+          >
+            🇨🇩 RDC · Vodacom &amp; Orange
+          </span>
+
+          <h1
+            className="animate-fade-in-up mt-6 text-4xl md:text-6xl font-bold tracking-tight text-balance"
+            style={{ animationDelay: "80ms" }}
+          >
             {t("home.heroTitle")}
           </h1>
-          <p className="mt-4 text-lg text-white/80 max-w-xl mx-auto text-balance">
+
+          <p
+            className="animate-fade-in-up mt-5 text-lg text-white/80 max-w-xl mx-auto text-balance"
+            style={{ animationDelay: "160ms" }}
+          >
             {t("home.heroSubtitle")}
           </p>
-          <Link
-            href="/plans"
-            className="inline-block mt-8 bg-accent text-brand font-semibold rounded-full px-8 py-3 hover:brightness-105 transition"
+
+          <div
+            className="animate-fade-in-up mt-9"
+            style={{ animationDelay: "240ms" }}
           >
-            {t("home.cta")}
-          </Link>
+            <Link
+              href="/plans"
+              className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 shadow-[0_8px_30px_-8px_rgba(247,181,0,0.6)] hover:brightness-105 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-8px_rgba(247,181,0,0.7)] transition-all"
+            >
+              {t("home.cta")}
+            </Link>
+          </div>
+
+          <div
+            className="animate-fade-in-up mt-12 flex flex-wrap items-center justify-center gap-3"
+            style={{ animationDelay: "320ms" }}
+          >
+            {badges.map((badge) => (
+              <span
+                key={badge.label}
+                className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white/90 ring-1 ring-white/15"
+              >
+                <span aria-hidden>{badge.icon}</span>
+                {badge.label}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="max-w-5xl mx-auto px-5 py-16">
-        <h2 className="text-2xl font-semibold text-center mb-10">{t("home.howItWorksTitle")}</h2>
-        <div className="grid sm:grid-cols-3 gap-8">
+      <section className="max-w-5xl mx-auto px-5 py-20">
+        <h2 className="text-2xl md:text-3xl font-semibold text-center">
+          {t("home.howItWorksTitle")}
+        </h2>
+        <div className="mt-12 grid sm:grid-cols-3 gap-6">
           {steps.map((step, i) => (
-            <div key={i} className="text-center">
-              <div className="text-4xl mb-3" aria-hidden>
-                {step.icon}
+            <div
+              key={i}
+              className="relative border border-line rounded-2xl p-6 bg-white/60 hover:border-brand hover:shadow-md hover:-translate-y-1 transition-all"
+            >
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-bold text-brand">
+                  {i + 1}
+                </span>
+                <div className="text-2xl" aria-hidden>
+                  {step.icon}
+                </div>
               </div>
-              <h3 className="font-semibold mb-2">{step.title}</h3>
-              <p className="text-sm text-foreground/70">{step.body}</p>
+              <h3 className="font-semibold mt-4">{step.title}</h3>
+              <p className="mt-2 text-sm text-foreground/70">{step.body}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="max-w-5xl mx-auto px-5 pb-20">
+        <div className="rounded-3xl bg-brand text-white text-center px-6 py-14 md:py-16">
+          <h2 className="text-2xl md:text-3xl font-semibold text-balance">
+            {t("home.finalCtaTitle")}
+          </h2>
+          <Link
+            href="/plans"
+            className="inline-block mt-7 bg-accent text-brand font-semibold rounded-full px-8 py-3.5 hover:brightness-105 hover:-translate-y-0.5 transition-all"
+          >
+            {t("home.cta")}
+          </Link>
         </div>
       </section>
     </div>
