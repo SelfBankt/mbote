@@ -62,7 +62,13 @@ There is no real USD→sats price feed (`usdToSats()` in `blink.ts` uses a hardc
 
 Why Maya Mobile specifically: researched against several eSIM wholesale/API platforms for DRC coverage specifically (not just "how many countries globally," which is a misleading metric — several big aggregators with ~100-country coverage don't include DRC at all). Confirmed: **Maya Mobile covers DRC via Vodacom + Orange LTE**, has a documented developer API and white-label reseller program. MobiMatter also confirmed DRC coverage (marketplace model, cheaper starting price) and is worth keeping as a second option. eSIM Access was ruled out — easy self-serve API signup, but DRC isn't in their ~100-country list.
 
-**Delivery to the customer isn't built** — `confirmAndFulfillOrder()` in `src/lib/orders.ts` has a `// TODO` marking exactly where to email/SMS the activation code once a transactional email/SMS provider is chosen. Right now a fulfilled order's activation code only exists in the orders table.
+### Delivery: email (Resend)
+
+`src/lib/email.ts` — once an order is fulfilled, `confirmAndFulfillOrder()` (`src/lib/orders.ts`) emails the customer the eSIM QR code (as a PNG attachment, generated server-side with the same `qrcode` package used for the checkout Lightning QR) plus the manual LPA activation code, localized to `order.locale` via `next-intl`'s `createTranslator` (not a request-scoped `useTranslations`, since this runs outside any page render — messages are loaded directly by dynamic `import()`, same pattern as `src/i18n/request.ts`).
+
+Uses Resend's HTTP API directly via `fetch`, not the `resend` npm package — a single POST call didn't justify a dependency. `RESEND_API_KEY` unset runs in mock mode (logs what would have been sent, same pattern as Blink/Maya); `EMAIL_FROM` must be on a domain verified in the Resend dashboard once real sending is needed.
+
+`order.contact` can be an email *or* a phone number (see `checkout.contactLabel`) — delivery only fires when it contains `@`; phone-number contacts are silently skipped rather than erroring, since SMS/WhatsApp delivery into DRC isn't built (most mainstream SMS APIs have weak/expensive DRC coverage — worth checking real usage patterns before picking one). Verified end-to-end in mock mode (2026-08-06): all three locales produced correctly-subjected/translated log output, and a phone-number contact correctly produced no email.
 
 ### Order flow and storage
 

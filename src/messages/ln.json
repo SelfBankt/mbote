@@ -65,5 +65,16 @@
   },
   "footer": {
     "disclaimer": "Version ya démonstration — ba données ya forfait ezali ndakisa, ntalo ya solo te. Tala CLAUDE.md."
+  },
+  "email": {
+    "subject": "eSIM na yo mpo na Kongo esili kobongisama — MboteData",
+    "greeting": "Mbote,",
+    "intro": "Paiement na yo endimami mpe eSIM na yo esili kobongisama mpo na kotia yango.",
+    "planLabel": "Forfait",
+    "instructionsTitle": "Ndenge ya kotia eSIM na yo",
+    "instructionsBody": "Tanga code QR oyo ezali na kati na email na kamera ya téléphone na yo to na application ya kotia eSIM, to kotisa code d'activation oyo na maboko:",
+    "manualCodeLabel": "Code d'activation na maboko",
+    "supportNote": "Osengeli na lisungi? Zongisa kaka email oyo.",
+    "footer": "Melesi mpo oponi MboteData."
   }
 }

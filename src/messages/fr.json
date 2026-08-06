@@ -65,5 +65,16 @@
   },
   "footer": {
     "disclaimer": "Version de démonstration — les données des forfaits sont illustratives, pas des prix réels. Voir CLAUDE.md."
+  },
+  "email": {
+    "subject": "Votre eSIM pour la RDC est prête — MboteData",
+    "greeting": "Bonjour,",
+    "intro": "Votre paiement est confirmé et votre eSIM est prête à être installée.",
+    "planLabel": "Forfait",
+    "instructionsTitle": "Comment installer votre eSIM",
+    "instructionsBody": "Scannez le code QR ci-joint avec l'appareil photo de votre téléphone ou votre application d'installation eSIM, ou saisissez ce code d'activation manuellement :",
+    "manualCodeLabel": "Code d'activation manuel",
+    "supportNote": "Besoin d'aide ? Répondez simplement à cet e-mail.",
+    "footer": "Merci d'avoir choisi MboteData."
   }
 }

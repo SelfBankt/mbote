@@ -65,5 +65,16 @@
   },
   "footer": {
     "disclaimer": "Demo build — plan data is illustrative, not live pricing. See CLAUDE.md."
+  },
+  "email": {
+    "subject": "Your eSIM for RDC is ready — MboteData",
+    "greeting": "Hello,",
+    "intro": "Your payment is confirmed and your eSIM is ready to install.",
+    "planLabel": "Plan",
+    "instructionsTitle": "How to install your eSIM",
+    "instructionsBody": "Scan the attached QR code with your phone's camera or your eSIM installer app, or enter this activation code manually:",
+    "manualCodeLabel": "Manual activation code",
+    "supportNote": "Need help? Just reply to this email.",
+    "footer": "Thank you for choosing MboteData."
   }
 }
