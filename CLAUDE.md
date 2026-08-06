@@ -50,7 +50,7 @@ Routing/links use `next-intl`'s typed navigation (`src/i18n/navigation.ts` — `
 
 **Webhook signature verification is implemented** (`verifyWebhookSignature()` in `blink.ts`, using the official `svix` npm package rather than hand-rolled HMAC comparison) and covered by the route handler in `src/app/api/webhooks/blink/route.ts`, which reads the raw request body (not a parsed/re-serialized one — signature verification is over exact bytes) and checks the `svix-id`/`svix-timestamp`/`svix-signature` headers before trusting anything in the payload. Confirmed working end-to-end with a locally-generated test secret: a validly-signed payload is accepted (200), a tampered signature is rejected (401), and missing headers are rejected (400).
 
-**What's still needed before this is production-safe:** `BLINK_WEBHOOK_SECRET` can only be obtained by registering this endpoint's *public* URL in the Blink Dashboard's Callback Endpoints page — that can't happen from local dev, only after a real deployment exists. Until `BLINK_WEBHOOK_SECRET` is set, `verifyWebhookSignature()` throws rather than silently accepting unverified payloads (see the explicit check at the top of the function) — so the endpoint fails closed, not open, but it also means payment confirmation won't work at all until that secret is in place post-deployment.
+`BLINK_WEBHOOK_SECRET` can only be obtained by registering this endpoint's *public* URL in the Blink Dashboard's Callback Endpoints page, so it can't be set up from local dev — only after a real deployment exists. **Confirmed working end-to-end on the real production deployment** (mbotedata.com): registered the endpoint via the `callbackEndpointAdd` mutation, obtained the real signing secret from the Dashboard, set it on Vercel, and verified both accept (valid signature → 200) and reject (tampered signature → 401) paths against the live URL. Until `BLINK_WEBHOOK_SECRET` is set, `verifyWebhookSignature()` throws rather than silently accepting unverified payloads — the endpoint fails closed, not open.
 
 `src/lib/machankura.ts` is the mobile-money bridge — a customer with no Bitcoin wallet, only a mobile money balance, pays the same Lightning invoice via USSD through [Machankura](https://machankura.com). **Important, confirmed gap: Machankura does not currently operate in DRC.** As of this build it covers Ghana, Kenya, Malawi, Nigeria, South Africa, Uganda, Côte d'Ivoire, Tanzania, and Zambia — DRC isn't among them, despite M-Pesa itself being confirmed live in DRC via Vodacom. Practically: a DRC customer with *any* Lightning wallet can already pay directly via the QR code; it's specifically customers with *only* a mobile-money balance and no Bitcoin wallet who aren't served via this path in DRC yet. The Machankura section is still built and shown, because (a) it's a no-code-change win the day Machankura adds DRC, and (b) it's already useful today for the wider Central/East African audience. Don't quietly drop this caveat if extending the Machankura integration — it's a real product gap, not a bug.
 
@@ -87,19 +87,34 @@ src/app/[locale]/              — every user-facing page, locale-prefixed
 src/app/api/                   — NOT locale-prefixed (excluded in proxy.ts's matcher)
   orders/route.ts                — POST: create order + Blink invoice
   orders/[id]/status/route.ts    — GET: poll order status
-  webhooks/blink/route.ts        — POST: Blink payment webhook (unverified — see above)
+  webhooks/blink/route.ts        — POST: Blink payment webhook (signature-verified — see above)
 ```
 
 QR codes are generated **server-side** (`qrcode`'s `toDataURL`, in `checkout/[orderId]/page.tsx`) and passed to the client component as a data URL, rather than shipping the `qrcode` package to the browser — smaller client bundle, and the invoice string never needs a client-side round trip just to render itself.
+
+## Deployment
+
+Live at **mbotedata.com**, deployed on Vercel (team `mbote1`, project `mbote`), Postgres via the Neon marketplace integration (Project Settings > Storage). Deploying:
+
+```
+vercel deploy --prod --token=<a Vercel access token, from vercel.com/account/tokens>
+```
+
+The GitHub repo is connected too, so pushes to `main` also trigger a deployment automatically — the CLI deploy above is only needed for things like an env var change that isn't tied to a code push.
+
+**Env vars** are managed via `vercel env add <NAME> production --value="..." [--sensitive]` — **always pass `--value` explicitly rather than letting the CLI read from a `.env.local` line via shell substitution**: `.env.local` values here are double-quoted (`KEY="value"`), and naively extracting them (e.g. `` $(grep ...) ``) captures the literal quote characters into the stored secret, silently breaking auth. Confirmed this exact failure mode once already (`BLINK_API_KEY`/`BLINK_WALLET_ID` had to be removed and re-added after the quotes made it into the stored value) — worth remembering before scripting env var updates again.
+
+**After any env var change, redeploy** (`vercel deploy --prod`) — Vercel serverless functions don't pick up dashboard/CLI env var changes on existing deployments, only on the next build.
+
+`vercel integration add neon` requires accepting Neon's marketplace terms in a browser first (`vercel.com/<team>/~/integrations/accept-terms/neon`) — this is a one-time, human-only step; the CLI returns `action_required` / `integration_terms_acceptance_required` until it's done, then the same `integration add` command completes the install.
 
 ## Known limitations
 
 - Lingala copy needs native-speaker review (see i18n section above).
 - Machankura doesn't cover DRC yet (see Payment section above) — a real, confirmed gap, not an oversight.
-- Webhook signature verification is built, but `BLINK_WEBHOOK_SECRET` can't be obtained until this is deployed somewhere with a public URL to register in the Blink Dashboard — payment confirmation won't function until that's done post-deployment.
 - No real BTC/USD price feed — `usdToSats()` is a hardcoded rate.
 - No customer-facing delivery (email/SMS) of the eSIM activation code once fulfilled — it only lands in the database.
-- The Postgres backend (`src/lib/db/postgres.ts`) hasn't been tested against a live database yet as of this writing — it type-checks and builds cleanly, but validate it against a real `DATABASE_URL` (e.g. via `vercel env pull` once Postgres storage is provisioned) before trusting it with real orders.
-- No admin/ops view of orders — checking order status currently means querying the SQLite file directly.
+- No admin/ops view of orders — checking order status currently means querying Postgres (or the SQLite file in local dev) directly.
 - No pagination, search, or filtering on the plans listing (fine at 8 hardcoded plans, won't be once real Maya Mobile data is wired in with potentially hundreds of plans/networks).
 - No tests.
+- Maya Mobile eSIM fulfillment is still mocked — no real partner account yet (see "eSIM fulfillment" above), so real orders confirm payment correctly but don't provision a real eSIM.

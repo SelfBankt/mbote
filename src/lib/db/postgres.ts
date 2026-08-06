@@ -7,7 +7,26 @@ import type { Order, NewOrder, OrderStore } from "./types";
 // provisioning it there. Uses the *pooled* connection string Vercel/Neon provide — serverless
 // functions open/close connections far more often than a long-running server would, and the
 // pooler is what keeps that from exhausting Postgres's connection limit.
-const sql = postgres(process.env.DATABASE_URL as string, { ssl: "require" });
+//
+// `types.bigint` override: confirmed by testing against a real database that postgres.js returns
+// BIGINT columns (amount_sats, created_at, paid_at, fulfilled_at) as JS strings by default, to
+// avoid silent precision loss for values outside Number.MAX_SAFE_INTEGER. Every value actually
+// stored here (millisecond epoch timestamps, satoshi amounts for eSIM-sized purchases) is safely
+// within that range, and Order/NewOrder (types.ts) type these fields as `number` — without this
+// override the runtime type wouldn't match the declared type, silently, only on the Postgres
+// backend (the SQLite backend returns real numbers), which would be exactly the kind of bug that
+// only shows up in production.
+const sql = postgres(process.env.DATABASE_URL as string, {
+  ssl: "require",
+  types: {
+    bigint: {
+      to: 20,
+      from: [20],
+      serialize: (x: number) => String(x),
+      parse: (x: string) => Number(x),
+    },
+  },
+});
 
 // Same schema as the SQLite backend (see sqlite.ts), translated to Postgres types. Running this
 // idempotently on cold start rather than a separate migration step — fine at this app's current
