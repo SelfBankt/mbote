@@ -29,7 +29,7 @@ function Home() {
       <section className="relative overflow-hidden bg-brand text-white">
         <div
           aria-hidden
-          className="absolute -top-32 -left-32 h-[34rem] w-[34rem] rounded-full bg-accent/20 blur-[110px] animate-blob-1"
+          className="absolute -top-32 -left-32 h-[34rem] w-[34rem] rounded-full bg-brand-light/60 blur-[110px] animate-blob-1"
         />
         <div
           aria-hidden
@@ -50,7 +50,7 @@ function Home() {
             <img
               src="/brand/logo-white.png"
               alt={t("site.name")}
-              className="h-11 md:h-16 w-auto mx-auto"
+              className="h-[51px] md:h-[74px] w-auto mx-auto"
             />
             <span className="block mt-3 text-4xl md:text-6xl font-bold tracking-tight">
               {t("home.heroTitleLine2")}
