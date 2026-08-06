@@ -41,16 +41,9 @@ function Home() {
         />
 
         <div className="relative max-w-5xl mx-auto px-5 py-24 md:py-28 text-center">
-          <span
-            className="animate-fade-in-up inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-white/90 ring-1 ring-white/20"
-            style={{ animationDelay: "0ms" }}
-          >
-            🇨🇩 RDC · Vodacom &amp; Orange
-          </span>
-
           <h1
-            className="animate-fade-in-up mt-6 text-4xl md:text-6xl font-bold tracking-tight text-balance"
-            style={{ animationDelay: "80ms" }}
+            className="animate-fade-in-up text-4xl md:text-6xl font-bold tracking-tight text-balance"
+            style={{ animationDelay: "0ms" }}
           >
             {t("home.heroTitle")}
           </h1>
@@ -92,10 +85,7 @@ function Home() {
       </section>
 
       <section className="max-w-5xl mx-auto px-5 py-20">
-        <h2 className="text-2xl md:text-3xl font-semibold text-center">
-          {t("home.howItWorksTitle")}
-        </h2>
-        <div className="mt-12 grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-3 gap-6">
           {steps.map((step, i) => (
             <div
               key={i}
