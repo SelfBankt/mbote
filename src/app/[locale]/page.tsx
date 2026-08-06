@@ -105,20 +105,6 @@ function Home() {
           ))}
         </div>
       </section>
-
-      <section className="max-w-5xl mx-auto px-5 pb-20">
-        <div className="rounded-3xl bg-brand text-white text-center px-6 py-14 md:py-16">
-          <h2 className="text-2xl md:text-3xl font-semibold text-balance">
-            {t("home.finalCtaTitle")}
-          </h2>
-          <Link
-            href="/plans"
-            className="inline-block mt-7 bg-accent text-brand font-semibold rounded-full px-8 py-3.5 hover:brightness-105 hover:-translate-y-0.5 transition-all"
-          >
-            {t("home.cta")}
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }
