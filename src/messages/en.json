@@ -42,7 +42,19 @@
     "backToPlans": "Back to all plans",
     "days": "days",
     "metaTitle": "{data} eSIM — {network} ({days} days)",
-    "metaDescription": "Buy a {data} eSIM for DR Congo on the {network} network, valid {days} days. Pay with Bitcoin Lightning or mobile money — instant delivery."
+    "metaDescription": "Buy a {data} eSIM for DR Congo on the {network} network, valid {days} days. Pay with Bitcoin Lightning or mobile money — instant delivery.",
+    "whatsIncludedTitle": "What you're buying",
+    "dataOnlyNote": "Data only — no voice calls or SMS included.",
+    "coverageNote": "Runs on the {network} LTE network across DR Congo.",
+    "compatibilityNote": "Works on any eSIM-compatible phone (most iPhone XS+ and Android models from 2019 onward).",
+    "guideLinkText": "See the full install guide",
+    "afterPurchaseTitle": "After you purchase",
+    "afterPurchaseStep1": "Payment is confirmed automatically as soon as it's received.",
+    "afterPurchaseStep2": "Your eSIM QR code and activation code arrive by email within seconds.",
+    "afterPurchaseStep3": "Scan the QR code in your phone's cellular settings to install it.",
+    "termsTitle": "MboteData terms of sale",
+    "termsValidity": "Valid for {days} days starting from activation, not from purchase.",
+    "termsNonRefundable": "Non-refundable once the eSIM code has been delivered by email."
   },
   "checkout": {
     "title": "Complete your payment",

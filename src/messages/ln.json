@@ -42,7 +42,19 @@
     "backToPlans": "Zonga na ba forfait nyonso",
     "days": "mikolo",
     "metaTitle": "eSIM {data} — {network} (mikolo {days})",
-    "metaDescription": "Somba eSIM {data} mpo na Kongo na réseau {network}, ekowumela mikolo {days}. Futa na Bitcoin Lightning to mobile money — ekoya mbala moko."
+    "metaDescription": "Somba eSIM {data} mpo na Kongo na réseau {network}, ekowumela mikolo {days}. Futa na Bitcoin Lightning to mobile money — ekoya mbala moko.",
+    "whatsIncludedTitle": "Oyo ozali kosomba",
+    "dataOnlyNote": "Données kaka — ba appel na SMS ezali te.",
+    "coverageNote": "Esalaka na réseau LTE ya {network} na Kongo mobimba.",
+    "compatibilityNote": "Esalaka na téléphone nyonso oyo ekoki na eSIM (mingi ya iPhone XS mpe oyo ya sika koleka, na ba modèle Android oyo ebimaki banda 2019).",
+    "guideLinkText": "Tala guide mobimba ya kotia",
+    "afterPurchaseTitle": "Nsima ya kosomba",
+    "afterPurchaseStep1": "Paiement endimami automatiquement tango kaka ezui.",
+    "afterPurchaseStep2": "Code QR ya eSIM na yo mpe code ya activation ekoya na email na ba seconde.",
+    "afterPurchaseStep3": "Tanga code QR na paramètres ya cellulaire ya téléphone na yo mpo na kotia yango.",
+    "termsTitle": "Mibeko ya kotekisa ya MboteData",
+    "termsValidity": "Ekowumela mikolo {days} kobanda na activation, kobanda na kosomba te.",
+    "termsNonRefundable": "Bazongisaka mbongo te soki code ya eSIM esili kotindama na email."
   },
   "checkout": {
     "title": "Sukisa paiement na yo",

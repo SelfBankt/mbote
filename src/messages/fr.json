@@ -42,7 +42,19 @@
     "backToPlans": "Retour à tous les forfaits",
     "days": "jours",
     "metaTitle": "eSIM {data} — {network} ({days} jours)",
-    "metaDescription": "Achetez une eSIM {data} pour la RDC sur le réseau {network}, valable {days} jours. Payez en Bitcoin Lightning ou mobile money — livraison instantanée."
+    "metaDescription": "Achetez une eSIM {data} pour la RDC sur le réseau {network}, valable {days} jours. Payez en Bitcoin Lightning ou mobile money — livraison instantanée.",
+    "whatsIncludedTitle": "Ce que vous achetez",
+    "dataOnlyNote": "Données uniquement — appels et SMS non inclus.",
+    "coverageNote": "Fonctionne sur le réseau LTE {network} dans toute la RDC.",
+    "compatibilityNote": "Fonctionne sur tout téléphone compatible eSIM (la plupart des iPhone XS et plus récents, et des modèles Android sortis depuis 2019).",
+    "guideLinkText": "Voir le guide d'installation complet",
+    "afterPurchaseTitle": "Après votre achat",
+    "afterPurchaseStep1": "Le paiement est confirmé automatiquement dès sa réception.",
+    "afterPurchaseStep2": "Votre code QR eSIM et votre code d'activation arrivent par e-mail en quelques secondes.",
+    "afterPurchaseStep3": "Scannez le code QR dans les réglages cellulaires de votre téléphone pour l'installer.",
+    "termsTitle": "Conditions de vente MboteData",
+    "termsValidity": "Valable {days} jours à partir de l'activation, pas de l'achat.",
+    "termsNonRefundable": "Non remboursable dès que le code eSIM a été envoyé par e-mail."
   },
   "checkout": {
     "title": "Finalisez votre paiement",

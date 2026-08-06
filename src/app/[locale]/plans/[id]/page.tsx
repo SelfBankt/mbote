@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPlan, formatData } from "@/lib/plans";
+import { getPlan, formatData, NETWORK_COLORS } from "@/lib/plans";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
@@ -54,6 +54,18 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
     },
   };
 
+  const afterPurchaseSteps = [
+    t("planDetail.afterPurchaseStep1"),
+    t("planDetail.afterPurchaseStep2"),
+    t("planDetail.afterPurchaseStep3"),
+  ];
+
+  const terms = [
+    t("planDetail.dataOnlyNote"),
+    t("planDetail.termsValidity", { days: plan.validityDays }),
+    t("planDetail.termsNonRefundable"),
+  ];
+
   return (
     <div className="max-w-2xl mx-auto px-5 py-12">
       <JsonLd data={productJsonLd} />
@@ -62,10 +74,13 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
       </Link>
 
       <div className="mt-6 border border-line rounded-2xl p-6 bg-white/60">
-        <span className="text-xs font-mono uppercase tracking-wide text-foreground/60">
-          {t("planDetail.networkNote")}: {plan.network}
+        <span
+          className="inline-block rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white"
+          style={{ backgroundColor: NETWORK_COLORS[plan.network] }}
+        >
+          {plan.network}
         </span>
-        <h1 className="text-3xl font-bold mt-2">{formatData(plan.dataAmountMb)}</h1>
+        <h1 className="text-3xl font-bold mt-3">{formatData(plan.dataAmountMb)}</h1>
         <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div>
             <dt className="text-foreground/60">{t("planDetail.dataAmount")}</dt>
@@ -83,6 +98,55 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
         <div className="mt-6">
           <BuyForm planId={plan.id} locale={locale} />
         </div>
+      </div>
+
+      <div className="mt-6 border border-line rounded-2xl p-6 bg-white/60">
+        <h2 className="font-semibold">{t("planDetail.whatsIncludedTitle")}</h2>
+        <ul className="mt-3 space-y-2 text-sm text-foreground/80">
+          <li className="flex gap-2">
+            <span aria-hidden>📶</span>
+            {t("planDetail.dataOnlyNote")}
+          </li>
+          <li className="flex gap-2">
+            <span aria-hidden>🌍</span>
+            {t("planDetail.coverageNote", { network: plan.network })}
+          </li>
+          <li className="flex gap-2">
+            <span aria-hidden>📱</span>
+            {t("planDetail.compatibilityNote")}
+          </li>
+        </ul>
+        <Link
+          href="/guides/comment-installer-esim-rdc"
+          className="inline-block mt-4 text-sm font-medium text-brand hover:text-accent transition-colors"
+        >
+          {t("planDetail.guideLinkText")} →
+        </Link>
+      </div>
+
+      <div className="mt-6 border border-line rounded-2xl p-6 bg-white/60">
+        <h2 className="font-semibold">{t("planDetail.afterPurchaseTitle")}</h2>
+        <ol className="mt-3 space-y-3">
+          {afterPurchaseSteps.map((step, i) => (
+            <li key={i} className="flex gap-3 text-sm text-foreground/80">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-bold text-brand">
+                {i + 1}
+              </span>
+              <span className="pt-0.5">{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-line p-5">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground/60">
+          {t("planDetail.termsTitle")}
+        </h2>
+        <ul className="mt-2 space-y-1.5 text-xs text-foreground/60">
+          {terms.map((term, i) => (
+            <li key={i}>· {term}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
