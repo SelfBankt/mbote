@@ -8,9 +8,9 @@ export default function Header() {
   return (
     <header className="border-b border-line">
       <div className="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold text-lg text-brand">
-          <span aria-hidden>📶</span>
-          {t("site.name")}
+        <Link href="/" className="flex items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element -- small static local PNG, no benefit from next/image here */}
+          <img src="/brand/logo.png" alt={t("site.name")} className="h-8 w-auto" />
         </Link>
         <nav className="flex items-center gap-5 text-sm">
           <Link href="/plans" className="hover:text-accent transition-colors">

@@ -44,6 +44,10 @@ Routing/links use `next-intl`'s typed navigation (`src/i18n/navigation.ts` — `
 
 `src/lib/plans.ts` exports a hardcoded array of DRC eSIM plans and an async `getPlans()`/`getPlan(id)` — async on purpose, so swapping the body for a real `fetch()` call later doesn't change any caller. The shape (network, data amount, validity, USD price) mirrors what Maya Mobile's Connect+ API is documented to return.
 
+### Branding (MboteData logo)
+
+`public/brand/logo.png` — the site wordmark (orange signal-bars icon + "MboteData" text), used in `Header.tsx` in place of the earlier 📶-emoji-plus-text placeholder. User-supplied (2026-08-06), not generated or sourced by an agent. `src/app/icon.png`, `apple-icon.png`, and `favicon.ico` are all cropped/derived from the same source file (the icon mark cropped out and rendered at multiple sizes) — Next's file-based metadata convention picks these up automatically, no manual `<link>` tags needed. If the logo is ever updated, regenerate all four files from the new source rather than editing just `logo.png`, or the browser tab icon and the header will drift out of sync.
+
 ### Network logos
 
 `public/logos/{vodacom,orange,airtel}.svg` — real carrier logos, rendered via `src/components/NetworkLogo.tsx` on `/plans` and `/plans/[id]` (`NETWORK_LOGOS` map in `plans.ts`). Sourced from Wikimedia Commons (2026-08-06), each individually verified by rendering before use, not assumed correct from filename alone:
