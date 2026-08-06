@@ -1,6 +1,23 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getPlans, formatData } from "@/lib/plans";
+import { SITE_URL, localeAlternates } from "@/lib/site";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/plans">): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "plans" });
+  return {
+    title: t("title"),
+    description: t("subtitle"),
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/plans`,
+      languages: localeAlternates("/plans"),
+    },
+  };
+}
 
 export default async function PlansPage({ params }: PageProps<"/[locale]/plans">) {
   const { locale } = await params;

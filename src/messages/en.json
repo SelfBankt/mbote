@@ -36,7 +36,9 @@
     "dataAmount": "Data",
     "validity": "Validity",
     "backToPlans": "Back to all plans",
-    "days": "days"
+    "days": "days",
+    "metaTitle": "{data} eSIM — {network} ({days} days)",
+    "metaDescription": "Buy a {data} eSIM for DR Congo on the {network} network, valid {days} days. Pay with Bitcoin Lightning or mobile money — instant delivery."
   },
   "checkout": {
     "title": "Complete your payment",

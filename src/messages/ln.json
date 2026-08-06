@@ -36,7 +36,9 @@
     "dataAmount": "Données",
     "validity": "Ekowumela",
     "backToPlans": "Zonga na ba forfait nyonso",
-    "days": "mikolo"
+    "days": "mikolo",
+    "metaTitle": "eSIM {data} — {network} (mikolo {days})",
+    "metaDescription": "Somba eSIM {data} mpo na Kongo na réseau {network}, ekowumela mikolo {days}. Futa na Bitcoin Lightning to mobile money — ekoya mbala moko."
   },
   "checkout": {
     "title": "Sukisa paiement na yo",

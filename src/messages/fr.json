@@ -36,7 +36,9 @@
     "dataAmount": "Données",
     "validity": "Validité",
     "backToPlans": "Retour à tous les forfaits",
-    "days": "jours"
+    "days": "jours",
+    "metaTitle": "eSIM {data} — {network} ({days} jours)",
+    "metaDescription": "Achetez une eSIM {data} pour la RDC sur le réseau {network}, valable {days} jours. Payez en Bitcoin Lightning ou mobile money — livraison instantanée."
   },
   "checkout": {
     "title": "Finalisez votre paiement",
