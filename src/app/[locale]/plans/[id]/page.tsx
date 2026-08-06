@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPlan, formatData, NETWORK_COLORS } from "@/lib/plans";
+import { getPlan, formatData } from "@/lib/plans";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
+import { NetworkLogo } from "@/components/NetworkLogo";
 import BuyForm from "./BuyForm";
 
 export async function generateMetadata({
@@ -64,6 +65,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
     t("planDetail.dataOnlyNote"),
     t("planDetail.termsValidity", { days: plan.validityDays }),
     t("planDetail.termsNonRefundable"),
+    t("planDetail.termsLogoDisclaimer"),
   ];
 
   return (
@@ -74,12 +76,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
       </Link>
 
       <div className="mt-6 border border-line rounded-2xl p-6 bg-white/60">
-        <span
-          className="inline-block rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white"
-          style={{ backgroundColor: NETWORK_COLORS[plan.network] }}
-        >
-          {plan.network}
-        </span>
+        <NetworkLogo network={plan.network} className="h-8 w-auto" />
         <h1 className="text-3xl font-bold mt-3">{formatData(plan.dataAmountMb)}</h1>
         <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div>

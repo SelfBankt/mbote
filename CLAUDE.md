@@ -44,6 +44,16 @@ Routing/links use `next-intl`'s typed navigation (`src/i18n/navigation.ts` — `
 
 `src/lib/plans.ts` exports a hardcoded array of DRC eSIM plans and an async `getPlans()`/`getPlan(id)` — async on purpose, so swapping the body for a real `fetch()` call later doesn't change any caller. The shape (network, data amount, validity, USD price) mirrors what Maya Mobile's Connect+ API is documented to return.
 
+### Network logos
+
+`public/logos/{vodacom,orange,airtel}.svg` — real carrier logos, rendered via `src/components/NetworkLogo.tsx` on `/plans` and `/plans/[id]` (`NETWORK_LOGOS` map in `plans.ts`). Sourced from Wikimedia Commons (2026-08-06), each individually verified by rendering before use, not assumed correct from filename alone:
+
+- Vodacom: `Logo_of_Vodacom_Group_Limited_(old).svg` (despite the "(old)" filename, this is the correct current wordmark on inspection)
+- Orange: `Orange_logo.svg`
+- Airtel: `Airtel_logo.svg` (the generic red wordmark used in-market, not the `Airtel_Africa_logo.svg` corporate-holding variant)
+
+All three are Commons-hosted as public-domain file uploads but remain live trademarks of their respective owners — displayed small and neutrally (informational "which network does this run on" use, not styled as an endorsement), with an explicit "Network logos are trademarks of their respective owners" line in the plan page's terms section. **There is no confirmed reseller/partnership agreement with any of these carriers** — that depends on Maya Mobile onboarding (still pending, see "eSIM fulfillment" below), which would normally also clarify official brand-asset usage rights. Revisit this section once that's confirmed: Maya Mobile may provide licensed logo assets and usage guidelines that supersede this Commons-sourced approach.
+
 ### Payment: Blink (Lightning) + Machankura (mobile money bridge)
 
 `src/lib/blink.ts` talks to [Blink](https://blink.sv)'s GraphQL API (`api.blink.sv/graphql`, `X-API-KEY` header) to create Lightning invoices via the `lnInvoiceCreate` mutation — confirmed working against the real API, not just documented (created a genuine invoice through the app's own code path during development). Payment confirmation arrives via Blink webhooks (`receive.lightning` event, delivered through Svix) at `POST /api/webhooks/blink`.

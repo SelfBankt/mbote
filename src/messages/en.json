@@ -54,7 +54,8 @@
     "afterPurchaseStep3": "Scan the QR code in your phone's cellular settings to install it.",
     "termsTitle": "MboteData terms of sale",
     "termsValidity": "Valid for {days} days starting from activation, not from purchase.",
-    "termsNonRefundable": "Non-refundable once the eSIM code has been delivered by email."
+    "termsNonRefundable": "Non-refundable once the eSIM code has been delivered by email.",
+    "termsLogoDisclaimer": "Network logos are trademarks of their respective owners."
   },
   "checkout": {
     "title": "Complete your payment",

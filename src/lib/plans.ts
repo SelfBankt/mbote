@@ -6,15 +6,16 @@
 // plans from $4.99 — the two cheapest plans below match that starting price deliberately.
 export type Network = "Vodacom" | "Orange" | "Airtel";
 
-// Each network's real brand color, used for a text-based badge on the plan detail page (see
-// plans/[id]/page.tsx) — NOT an official logo. We don't have licensed logo artwork from any of
-// these carriers (no confirmed reseller agreement yet — see CLAUDE.md "eSIM fulfillment"), so a
-// styled color badge with the plain network name is the honest way to visually distinguish
-// networks without implying an official partnership or reproducing trademarked logo images.
-export const NETWORK_COLORS: Record<Network, string> = {
-  Vodacom: "#E60000",
-  Orange: "#FF7900",
-  Airtel: "#ED1C24",
+// Official network logos, sourced from Wikimedia Commons (public-domain-licensed uploads,
+// individually confirmed as the correct current logo before use — see CLAUDE.md "Network logos"
+// for the exact source files and the reasoning behind using them at all). Displayed small and
+// neutrally, purely to identify which network a plan runs on — not styled as an endorsement, and
+// not implying any confirmed partnership with these carriers (Maya Mobile onboarding, which would
+// normally clarify official brand-asset usage rights, is still pending).
+export const NETWORK_LOGOS: Record<Network, string> = {
+  Vodacom: "/logos/vodacom.svg",
+  Orange: "/logos/orange.svg",
+  Airtel: "/logos/airtel.svg",
 };
 
 export type EsimPlan = {

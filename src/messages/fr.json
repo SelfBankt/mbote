@@ -54,7 +54,8 @@
     "afterPurchaseStep3": "Scannez le code QR dans les réglages cellulaires de votre téléphone pour l'installer.",
     "termsTitle": "Conditions de vente MboteData",
     "termsValidity": "Valable {days} jours à partir de l'activation, pas de l'achat.",
-    "termsNonRefundable": "Non remboursable dès que le code eSIM a été envoyé par e-mail."
+    "termsNonRefundable": "Non remboursable dès que le code eSIM a été envoyé par e-mail.",
+    "termsLogoDisclaimer": "Les logos des réseaux sont des marques déposées de leurs propriétaires respectifs."
   },
   "checkout": {
     "title": "Finalisez votre paiement",

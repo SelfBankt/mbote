@@ -54,7 +54,8 @@
     "afterPurchaseStep3": "Tanga code QR na paramètres ya cellulaire ya téléphone na yo mpo na kotia yango.",
     "termsTitle": "Mibeko ya kotekisa ya MboteData",
     "termsValidity": "Ekowumela mikolo {days} kobanda na activation, kobanda na kosomba te.",
-    "termsNonRefundable": "Bazongisaka mbongo te soki code ya eSIM esili kotindama na email."
+    "termsNonRefundable": "Bazongisaka mbongo te soki code ya eSIM esili kotindama na email.",
+    "termsLogoDisclaimer": "Ba logo ya réseaux ezali ba marque ya ba propriétaire na bango moko."
   },
   "checkout": {
     "title": "Sukisa paiement na yo",

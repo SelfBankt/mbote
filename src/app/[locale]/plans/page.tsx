@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getPlans, formatData } from "@/lib/plans";
 import { SITE_URL, localeAlternates } from "@/lib/site";
+import { NetworkLogo } from "@/components/NetworkLogo";
 
 export async function generateMetadata({
   params,
@@ -41,9 +42,7 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
               className="block border border-line rounded-2xl p-5 bg-white/60 hover:border-brand hover:shadow-sm transition"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-wide text-foreground/60">
-                  {plan.network}
-                </span>
+                <NetworkLogo network={plan.network} className="h-5 w-auto" />
                 <span className="text-xs bg-accent-soft text-brand rounded-full px-2 py-0.5 font-medium">
                   {t("plans.networkLabel")}
                 </span>
