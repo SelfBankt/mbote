@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "Mbote",
+    "name": "MboteData",
     "tagline": "Compare and buy eSIM data plans for DR Congo — pay with Bitcoin Lightning or mobile money."
   },
   "nav": {
@@ -9,7 +9,7 @@
     "howItWorks": "How it works"
   },
   "home": {
-    "heroTitle": "Mbote! Get connected in DR Congo.",
+    "heroTitle": "MboteData! Stay connected in RDC.",
     "heroSubtitle": "Compare eSIM data plans from trusted networks, then pay however suits you — a Lightning wallet, or straight from your mobile money balance.",
     "cta": "Compare plans",
     "howItWorksTitle": "How it works",

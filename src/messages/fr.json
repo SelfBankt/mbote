@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "Mbote",
+    "name": "MboteData",
     "tagline": "Comparez et achetez des forfaits eSIM pour la RDC — payez en Bitcoin Lightning ou via mobile money."
   },
   "nav": {
@@ -9,7 +9,7 @@
     "howItWorks": "Comment ça marche"
   },
   "home": {
-    "heroTitle": "Mbote ! Restez connecté en RDC.",
+    "heroTitle": "MboteData ! Restez connecté en RDC.",
     "heroSubtitle": "Comparez les forfaits eSIM des réseaux de confiance, puis payez comme vous voulez — portefeuille Lightning, ou directement depuis votre solde mobile money.",
     "cta": "Comparer les forfaits",
     "howItWorksTitle": "Comment ça marche",

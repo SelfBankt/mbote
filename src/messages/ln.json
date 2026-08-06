@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "Mbote",
+    "name": "MboteData",
     "tagline": "Kokanisa mpe kosomba ba forfait ya eSIM na Kongo — futa na Bitcoin Lightning to na mobile money."
   },
   "nav": {
@@ -9,7 +9,7 @@
     "howItWorks": "Ndenge esalemaka"
   },
   "home": {
-    "heroTitle": "Mbote! Kangama na Kongo.",
+    "heroTitle": "MboteData! Kangama na RDC.",
     "heroSubtitle": "Tala mpe kokanisa ba forfait ya eSIM ya ba réseaux ya solo, na nsima futa ndenge olingi — na portefeuille Lightning to na mbongo ya mobile money.",
     "cta": "Kokanisa ba forfait",
     "howItWorksTitle": "Ndenge esalemaka",
