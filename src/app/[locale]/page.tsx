@@ -11,9 +11,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 function Home() {
   const t = useTranslations();
   const steps = [
-    { title: t("home.step1Title"), body: t("home.step1Body"), icon: "🔍" },
-    { title: t("home.step2Title"), body: t("home.step2Body"), icon: "⚡" },
-    { title: t("home.step3Title"), body: t("home.step3Body"), icon: "📶" },
+    { title: t("home.step1Title"), body: t("home.step1Body") },
+    { title: t("home.step2Title"), body: t("home.step2Body") },
+    { title: t("home.step3Title"), body: t("home.step3Body") },
   ];
   const badges = [
     { icon: "🌍", label: t("home.badgeNetwork") },
@@ -100,15 +100,9 @@ function Home() {
               key={i}
               className="relative border border-line rounded-2xl p-6 bg-white/60 hover:border-brand hover:shadow-md hover:-translate-y-1 transition-all"
             >
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm font-bold text-brand">
-                  {i + 1}
-                </span>
-                <div className="text-2xl" aria-hidden>
-                  {step.icon}
-                </div>
-              </div>
-              <h3 className="font-semibold mt-4">{step.title}</h3>
+              <h3 className="text-xl md:text-2xl font-bold">
+                {i + 1}. {step.title}
+              </h3>
               <p className="mt-2 text-sm text-foreground/70">{step.body}</p>
             </div>
           ))}

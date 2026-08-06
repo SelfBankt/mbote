@@ -75,9 +75,9 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
         ← {t("planDetail.backToPlans")}
       </Link>
 
-      <div className="mt-6 border border-line rounded-2xl p-6 bg-white/60">
-        <NetworkLogo network={plan.network} className="h-24 w-auto" />
-        <h1 className="text-3xl font-bold mt-3">{formatData(plan.dataAmountMb)}</h1>
+      <div className="relative mt-6 border border-line rounded-2xl p-6 bg-white/60">
+        <NetworkLogo network={plan.network} className="absolute top-6 right-6 h-16 md:h-20 w-auto" />
+        <h1 className="text-3xl font-bold pr-32 md:pr-40">{formatData(plan.dataAmountMb)}</h1>
         <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div>
             <dt className="text-foreground/60">{t("planDetail.dataAmount")}</dt>

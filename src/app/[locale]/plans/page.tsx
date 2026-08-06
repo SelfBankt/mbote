@@ -39,15 +39,10 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
             <Link
               key={plan.id}
               href={`/plans/${plan.id}`}
-              className="block border border-line rounded-2xl p-5 bg-white/60 hover:border-brand hover:shadow-sm transition"
+              className="relative block border border-line rounded-2xl p-5 bg-white/60 hover:border-brand hover:shadow-sm transition"
             >
-              <div className="flex items-center justify-between">
-                <NetworkLogo network={plan.network} className="h-10 w-auto" />
-                <span className="text-xs bg-accent-soft text-brand rounded-full px-2 py-0.5 font-medium">
-                  {t("plans.networkLabel")}
-                </span>
-              </div>
-              <div className="mt-4 text-2xl font-bold">{formatData(plan.dataAmountMb)}</div>
+              <NetworkLogo network={plan.network} className="absolute top-5 right-5 h-10 w-auto" />
+              <div className="mt-4 text-2xl font-bold pr-16">{formatData(plan.dataAmountMb)}</div>
               <div className="text-sm text-foreground/70">
                 {t("plans.validityLabel")} {plan.validityDays} {t("planDetail.days")}
               </div>

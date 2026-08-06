@@ -29,7 +29,6 @@
     "subtitle": "All plans work on the Vodacom, Orange, or Airtel network in DRC.",
     "dataLabel": "Data",
     "validityLabel": "Valid for",
-    "networkLabel": "Network",
     "priceFrom": "From",
     "viewPlan": "View plan",
     "empty": "No plans match your filters right now."
