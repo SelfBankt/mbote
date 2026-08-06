@@ -42,7 +42,7 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
               className="block border border-line rounded-2xl p-5 bg-white/60 hover:border-brand hover:shadow-sm transition"
             >
               <div className="flex items-center justify-between">
-                <NetworkLogo network={plan.network} className="h-5 w-auto" />
+                <NetworkLogo network={plan.network} className="h-10 w-auto" />
                 <span className="text-xs bg-accent-soft text-brand rounded-full px-2 py-0.5 font-medium">
                   {t("plans.networkLabel")}
                 </span>

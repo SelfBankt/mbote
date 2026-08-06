@@ -76,7 +76,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
       </Link>
 
       <div className="mt-6 border border-line rounded-2xl p-6 bg-white/60">
-        <NetworkLogo network={plan.network} className="h-8 w-auto" />
+        <NetworkLogo network={plan.network} className="h-24 w-auto" />
         <h1 className="text-3xl font-bold mt-3">{formatData(plan.dataAmountMb)}</h1>
         <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div>
