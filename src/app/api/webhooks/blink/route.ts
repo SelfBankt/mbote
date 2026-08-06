@@ -36,14 +36,28 @@ export async function POST(request: NextRequest) {
 
   const event = payload as {
     eventType?: string;
-    transaction?: { id?: string; paymentHash?: string };
+    transaction?: {
+      id?: string;
+      paymentHash?: string;
+      initiationVia?: { paymentHash?: string };
+    };
   };
 
   if (!event || event.eventType !== "receive.lightning") {
     return NextResponse.json({ ok: true }); // ignore anything we don't handle
   }
 
-  const paymentHash = event.transaction?.id ?? event.transaction?.paymentHash;
+  // Blink's `transaction.id` is an internal ledger transaction ID, NOT the Lightning payment
+  // hash — confirmed by introspecting Blink's live GraphQL schema (2026-08-06): `Transaction` has
+  // no top-level `paymentHash` field, only `id`. The real payment hash (the same value returned
+  // by `lnInvoiceCreate` and stored as `blink_payment_hash`) lives under the `InitiationViaLn`
+  // variant of the `initiationVia` union, as `initiationVia.paymentHash`. Using `transaction.id`
+  // here meant this lookup could never match a stored order — the webhook verified fine and
+  // returned 200, but silently no-opped on every real payment (order stayed "pending" forever).
+  const paymentHash =
+    event.transaction?.initiationVia?.paymentHash ??
+    event.transaction?.paymentHash ??
+    event.transaction?.id;
   if (!paymentHash) {
     return NextResponse.json({ error: "missing transaction id" }, { status: 400 });
   }
