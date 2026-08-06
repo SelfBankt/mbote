@@ -29,11 +29,15 @@ function Home() {
       <section className="relative overflow-hidden bg-brand text-white">
         <div
           aria-hidden
-          className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-accent/30 blur-3xl animate-blob-1"
+          className="absolute -top-32 -left-32 h-[34rem] w-[34rem] rounded-full bg-accent/20 blur-[110px] animate-blob-1"
         />
         <div
           aria-hidden
-          className="absolute -bottom-32 -right-16 h-96 w-96 rounded-full bg-brand-light blur-3xl animate-blob-2"
+          className="absolute -bottom-40 -right-24 h-[40rem] w-[40rem] rounded-full bg-brand-light/60 blur-[110px] animate-blob-2"
+        />
+        <div
+          aria-hidden
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[32rem] w-[32rem] rounded-full bg-accent/10 blur-[130px]"
         />
         <div
           aria-hidden
@@ -66,7 +70,7 @@ function Home() {
           >
             <Link
               href="/plans"
-              className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 shadow-[0_8px_30px_-8px_rgba(247,181,0,0.6)] hover:brightness-105 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-8px_rgba(247,181,0,0.7)] transition-all"
+              className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 shadow-[0_8px_30px_-8px_rgba(255,131,0,0.6)] hover:brightness-105 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-8px_rgba(255,131,0,0.7)] transition-all"
             >
               {t("home.cta")}
             </Link>

@@ -5,8 +5,8 @@
   --foreground: #14213D;
   --brand: #14213D;    /* deep indigo — trust, evokes the DRC flag's blue */
   --brand-light: #1F3A63;
-  --accent: #F7B500;   /* warm gold — nods to the DRC flag's star and Bitcoin/Lightning orange-gold */
-  --accent-soft: #FCE8B0;
+  --accent: #FF8300;   /* the logo's orange (sampled from public/brand/logo.png) — every button/accent uses this */
+  --accent-soft: #FFE9D1;
   --success: #1F9D55;
   --danger: #C94A3B;
   --line: rgba(20, 33, 61, 0.12);
