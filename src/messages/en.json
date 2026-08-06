@@ -6,7 +6,8 @@
   "nav": {
     "home": "Home",
     "plans": "Plans",
-    "howItWorks": "How it works"
+    "howItWorks": "How it works",
+    "guides": "Guides"
   },
   "home": {
     "heroTitle": "MboteData! Stay connected in RDC.",

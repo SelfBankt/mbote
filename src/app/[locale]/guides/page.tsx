@@ -1,39 +1,51 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getGuides } from "@/lib/guides";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, localeAlternates } from "@/lib/site";
 
-// French-only content — see src/lib/guides.ts header for why. Every other locale 404s here
-// rather than serving an empty or English-fallback listing.
+const INDEX_TITLE: Record<string, { title: string; description: string }> = {
+  fr: {
+    title: "Guides eSIM RDC",
+    description:
+      "Guides pratiques pour choisir, payer et installer une eSIM en République Démocratique du Congo.",
+  },
+  en: {
+    title: "DR Congo eSIM Guides",
+    description: "Practical guides for choosing, paying for, and installing an eSIM in DR Congo.",
+  },
+  ln: {
+    title: "Ba guide ya eSIM ya Kongo",
+    description: "Ba guide ya practique mpo na kopona, kofuta, mpe kotia eSIM na Kongo.",
+  },
+};
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/guides">): Promise<Metadata> {
   const { locale } = await params;
-  if (locale !== "fr") return {};
+  const copy = INDEX_TITLE[locale] ?? INDEX_TITLE.fr;
   return {
-    title: "Guides eSIM RDC",
-    description:
-      "Guides pratiques pour choisir, payer et installer une eSIM en République Démocratique du Congo.",
-    alternates: { canonical: `${SITE_URL}/fr/guides` },
+    title: copy.title,
+    description: copy.description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/guides`,
+      languages: localeAlternates("/guides"),
+    },
   };
 }
 
 export default async function GuidesIndexPage({ params }: PageProps<"/[locale]/guides">) {
   const { locale } = await params;
-  if (locale !== "fr") notFound();
   setRequestLocale(locale);
 
-  const guides = getGuides();
+  const copy = INDEX_TITLE[locale] ?? INDEX_TITLE.fr;
+  const guides = getGuides(locale);
 
   return (
     <div className="max-w-2xl mx-auto px-5 py-12">
-      <h1 className="text-3xl font-bold">Guides eSIM RDC</h1>
-      <p className="mt-2 text-foreground/70">
-        Guides pratiques pour choisir, payer et installer une eSIM en République Démocratique du
-        Congo.
-      </p>
+      <h1 className="text-3xl font-bold">{copy.title}</h1>
+      <p className="mt-2 text-foreground/70">{copy.description}</p>
 
       <div className="mt-8 space-y-4">
         {guides.map((guide) => (
@@ -42,8 +54,8 @@ export default async function GuidesIndexPage({ params }: PageProps<"/[locale]/g
             href={`/guides/${guide.slug}`}
             className="block border border-line rounded-2xl p-5 bg-white/60 hover:border-brand hover:shadow-sm transition"
           >
-            <h2 className="text-lg font-semibold">{guide.title}</h2>
-            <p className="mt-2 text-sm text-foreground/70">{guide.metaDescription}</p>
+            <h2 className="text-lg font-semibold">{guide.translation.title}</h2>
+            <p className="mt-2 text-sm text-foreground/70">{guide.translation.metaDescription}</p>
           </Link>
         ))}
       </div>

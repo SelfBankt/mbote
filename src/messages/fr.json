@@ -6,7 +6,8 @@
   "nav": {
     "home": "Accueil",
     "plans": "Forfaits",
-    "howItWorks": "Comment ça marche"
+    "howItWorks": "Comment ça marche",
+    "guides": "Guides"
   },
   "home": {
     "heroTitle": "MboteData! Restez connecté en RDC.",

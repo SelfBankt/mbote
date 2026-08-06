@@ -1,10 +1,9 @@
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 export default function Header() {
   const t = useTranslations();
-  const locale = useLocale();
 
   return (
     <header className="border-b border-line">
@@ -17,12 +16,9 @@ export default function Header() {
           <Link href="/plans" className="hover:text-accent transition-colors">
             {t("nav.plans")}
           </Link>
-          {/* French-only content — see src/lib/guides.ts */}
-          {locale === "fr" && (
-            <Link href="/guides" className="hover:text-accent transition-colors">
-              Guides
-            </Link>
-          )}
+          <Link href="/guides" className="hover:text-accent transition-colors">
+            {t("nav.guides")}
+          </Link>
           <LocaleSwitcher />
         </nav>
       </div>
