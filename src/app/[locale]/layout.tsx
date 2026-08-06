@@ -45,6 +45,12 @@ export async function generateMetadata({
       title: name,
       description,
     },
+    // Google Search Console site-ownership verification (search.google.com/search-console) —
+    // this renders as a <meta name="google-site-verification"> tag. Do not remove: Google
+    // re-checks for it periodically, and removing it revokes verification, not just re-checking.
+    verification: {
+      google: "BTJJm2n3ehWZ4qzSd8fKNmQ6BjQpDho_nqOisvcUBFc",
+    },
   };
 }
 
