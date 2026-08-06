@@ -92,6 +92,8 @@ src/app/[locale]/              — every user-facing page, locale-prefixed
   plans/[id]/page.tsx           — plan detail + BuyForm (client component, posts to /api/orders)
   checkout/[orderId]/page.tsx   — server component: loads order, generates QR server-side
   checkout/[orderId]/CheckoutClient.tsx — client component: polls status, renders QR/Machankura/success states
+  guides/page.tsx               — French-only SEO content index (see "SEO" below) — 404s outside fr
+  guides/[slug]/page.tsx        — individual guide article
 src/app/api/                   — NOT locale-prefixed (excluded in proxy.ts's matcher)
   orders/route.ts                — POST: create order + Blink invoice
   orders/[id]/status/route.ts    — GET: poll order status
@@ -99,6 +101,12 @@ src/app/api/                   — NOT locale-prefixed (excluded in proxy.ts's m
 ```
 
 QR codes are generated **server-side** (`qrcode`'s `toDataURL`, in `checkout/[orderId]/page.tsx`) and passed to the client component as a data URL, rather than shipping the `qrcode` package to the browser — smaller client bundle, and the invoice string never needs a client-side round trip just to render itself.
+
+### SEO
+
+Technical foundation (2026-08-06): `src/app/sitemap.ts` and `robots.ts` (every route × locale, 30 URLs at last count), hreflang `<link>` alternates + Open Graph/Twitter tags + `metadataBase` (root `[locale]/layout.tsx`), per-page `generateMetadata` on `/plans` and `/plans/[id]` (real titles instead of the site default), and JSON-LD (`Organization` sitewide, `Product`/`Offer` on plan pages) via the shared `src/components/JsonLd.tsx`. `src/lib/site.ts` holds the hardcoded `SITE_URL` constant and the `localeAlternates()` helper every hreflang/sitemap entry is built from. Registered and verified in both Google Search Console (HTML-tag method, via a `verification.google` entry in the root layout's metadata — do not remove that field, Google re-checks it) and Bing Webmaster Tools (imported directly from the verified GSC property, no separate verification needed). Sitemap submitted to both; **do not** remove `verification.google` from the layout metadata even after verification succeeds, or ownership is revoked.
+
+`src/lib/guides.ts` + `src/app/[locale]/guides/`: long-tail SEO content, **French only, deliberately** — French carries more DRC search volume than Lingala even among Lingala speakers, and as a brand-new domain with no backlinks yet, long-tail informational queries ("comment installer une eSIM en RDC") are a more realistic path to ranking than competing head-on for "eSIM RDC". This is hand-written article content, not translated UI strings, so it lives outside the next-intl message-file pattern the rest of the app uses. `/[locale]/guides` and `/[locale]/guides/[slug]` both call `notFound()` for any locale other than `fr` — no half-translated or English-fallback version is served. Each guide gets its own `Article` + `FAQPage` JSON-LD (the FAQ content is real Q&A also rendered on-page, not schema-only). The "Guides" nav link in `Header.tsx` only renders when `locale === "fr"`. The sitemap includes these under `/fr/guides*` with no hreflang alternates, since there's genuinely no other-locale version for those to point to.
 
 ## Deployment
 
