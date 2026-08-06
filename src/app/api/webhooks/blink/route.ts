@@ -1,20 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOrderByPaymentHash } from "@/lib/db";
 import { confirmAndFulfillOrder } from "@/lib/orders";
+import { verifyWebhookSignature, WebhookVerificationError } from "@/lib/blink";
 
 // Receives Blink's `receive.lightning` webhook event (see src/lib/blink.ts header for the payload
-// shape as documented publicly). NOT YET SIGNATURE-VERIFIED — Blink delivers webhooks via Svix,
-// and this should check the svix-id/svix-timestamp/svix-signature headers before trusting the
-// body, but that wasn't confirmed against Blink's own docs (see verifyWebhookSignature() in
-// src/lib/blink.ts). Do not point a real BLINK_API_KEY at this endpoint until that's implemented
-// — right now anyone who finds this URL could POST a fake "payment confirmed" event.
+// shape and the signature-verification scheme). The raw body text is read *before* JSON parsing —
+// signature verification is computed over the exact bytes Blink sent, and re-serializing a parsed
+// object would almost certainly produce different bytes (key order, whitespace) and make every
+// signature check fail.
 export async function POST(request: NextRequest) {
-  const payload = await request.json().catch(() => null);
-  if (!payload || payload.eventType !== "receive.lightning") {
+  const rawBody = await request.text();
+  const svixId = request.headers.get("svix-id");
+  const svixTimestamp = request.headers.get("svix-timestamp");
+  const svixSignature = request.headers.get("svix-signature");
+
+  if (!svixId || !svixTimestamp || !svixSignature) {
+    return NextResponse.json({ error: "missing svix headers" }, { status: 400 });
+  }
+
+  let payload: unknown;
+  try {
+    payload = verifyWebhookSignature(rawBody, {
+      "svix-id": svixId,
+      "svix-timestamp": svixTimestamp,
+      "svix-signature": svixSignature,
+    });
+  } catch (err) {
+    if (err instanceof WebhookVerificationError) {
+      // deliberately vague response — don't help an attacker distinguish "bad signature" from
+      // "bad timestamp" from other failure modes
+      return NextResponse.json({ error: "signature verification failed" }, { status: 401 });
+    }
+    throw err; // BLINK_WEBHOOK_SECRET missing, etc. — a real server error, not an auth failure
+  }
+
+  const event = payload as {
+    eventType?: string;
+    transaction?: { id?: string; paymentHash?: string };
+  };
+
+  if (!event || event.eventType !== "receive.lightning") {
     return NextResponse.json({ ok: true }); // ignore anything we don't handle
   }
 
-  const paymentHash: string | undefined = payload.transaction?.id ?? payload.transaction?.paymentHash;
+  const paymentHash = event.transaction?.id ?? event.transaction?.paymentHash;
   if (!paymentHash) {
     return NextResponse.json({ error: "missing transaction id" }, { status: 400 });
   }

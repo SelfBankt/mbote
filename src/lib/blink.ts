@@ -3,14 +3,13 @@
 //   - GraphQL endpoint: https://api.blink.sv/graphql (mainnet), api.staging.blink.sv for staging
 //   - Auth: `X-API-KEY` header, from the Blink Dashboard's API Keys page
 //   - Invoice creation: `lnInvoiceCreate(input: LnInvoiceCreateInput!)` mutation, returning
-//     `{ invoice: { paymentRequest, paymentHash, paymentSecret, satoshis }, errors: [...] }`
-//   - Payment confirmation: webhooks (registered via the Dashboard or the `callbackEndpointAdd`
-//     mutation), event type `receive.lightning`, payload `{ accountId, eventType, walletId,
-//     transaction: { id, settlementAmount, settlementCurrency, status, createdAt, ... } }`.
-//     Delivery is via Svix — signature verification should use Svix's standard headers
-//     (svix-id/svix-timestamp/svix-signature); this wasn't confirmed against Blink's own docs
-//     directly, so verify against dev.blink.sv before trusting webhook payloads in production
-//     (see `verifyWebhookSignature` below, currently a TODO stub).
+//     `{ invoice: { paymentRequest, paymentHash, paymentSecret, satoshis }, errors: [...] }`.
+//     Confirmed live against the real API (2026-08-06) — this exact mutation shape works.
+//   - Payment confirmation: webhooks (registered via the Dashboard's Callback Endpoints page, or
+//     the `callbackEndpointAdd` mutation), event type `receive.lightning`, payload `{ accountId,
+//     eventType, walletId, transaction: { id, settlementAmount, settlementCurrency, status,
+//     createdAt, ... } }`. Delivery is via Svix, which signs every webhook — see
+//     `verifyWebhookSignature` below.
 //
 // BLINK_API_KEY / BLINK_WALLET_ID are unset until a real Blink merchant account exists — with
 // them unset, everything here runs in mock mode: a fake invoice is generated and the order flips
@@ -100,11 +99,44 @@ function createMockInvoice(params: { satoshis: number; memo: string }): CreatedI
   };
 }
 
-// TODO once a real Blink account exists: verify the `svix-id` / `svix-timestamp` /
-// `svix-signature` headers against dev.blink.sv's webhook docs before trusting a payload.
-export function verifyWebhookSignature(): boolean {
-  throw new Error("verifyWebhookSignature: not implemented — see the TODO above this function");
+// Blink delivers webhooks via Svix, which signs every payload with HMAC-SHA256 (algorithm
+// confirmed against Svix's own docs, not Blink's — Blink's docs mention Svix for delivery/retries
+// but don't spell out the signing scheme themselves): the signed content is
+// `${svix-id}.${svix-timestamp}.${rawBody}`, keyed by the base64-decoded signing secret (the part
+// of `whsec_...` after the prefix). Using the official `svix` npm package instead of hand-rolling
+// this — it handles the base64 decoding, the multi-signature `svix-signature` header format
+// (space-separated `v1,<sig>` entries, since a secret rotation can have two valid secrets active
+// at once), the timestamp replay-window check, and the timing-safe comparison correctly, all of
+// which are easy to get subtly wrong writing HMAC comparison by hand.
+//
+// BLINK_WEBHOOK_SECRET is the *endpoint's* signing secret (starts with `whsec_`), issued when you
+// register the callback endpoint in the Blink Dashboard — it is a different value from
+// BLINK_API_KEY. Must be read from the raw request body text, not a parsed/re-serialized JSON
+// object — HMAC verification fails silently (wrong signature) if the bytes don't match exactly
+// what Blink sent, which is why the route handler passes rawBody, not `await request.json()`.
+import { Webhook, WebhookVerificationError } from "svix";
+
+export function isWebhookVerificationConfigured(): boolean {
+  return Boolean(process.env.BLINK_WEBHOOK_SECRET);
 }
+
+export function verifyWebhookSignature(
+  rawBody: string,
+  headers: { "svix-id": string; "svix-timestamp": string; "svix-signature": string }
+): unknown {
+  const secret = process.env.BLINK_WEBHOOK_SECRET;
+  if (!secret) {
+    throw new Error(
+      "BLINK_WEBHOOK_SECRET is not set — cannot verify webhook signatures. Register a callback " +
+        "endpoint in the Blink Dashboard to get one; do not disable verification instead."
+    );
+  }
+  // throws WebhookVerificationError on a bad/missing signature or an out-of-window timestamp —
+  // callers should let that propagate into a 401, not swallow it
+  return new Webhook(secret).verify(rawBody, headers);
+}
+
+export { WebhookVerificationError };
 
 // Rough USD->sats conversion for checkout. Swap for a real price feed (e.g. the same
 // frankfurter.app-style approach or a dedicated BTC price API) before going live — a hardcoded
