@@ -66,9 +66,11 @@ Why Maya Mobile specifically: researched against several eSIM wholesale/API plat
 
 `src/lib/email.ts` — once an order is fulfilled, `confirmAndFulfillOrder()` (`src/lib/orders.ts`) emails the customer the eSIM QR code (as a PNG attachment, generated server-side with the same `qrcode` package used for the checkout Lightning QR) plus the manual LPA activation code, localized to `order.locale` via `next-intl`'s `createTranslator` (not a request-scoped `useTranslations`, since this runs outside any page render — messages are loaded directly by dynamic `import()`, same pattern as `src/i18n/request.ts`).
 
-Uses Resend's HTTP API directly via `fetch`, not the `resend` npm package — a single POST call didn't justify a dependency. `RESEND_API_KEY` unset runs in mock mode (logs what would have been sent, same pattern as Blink/Maya); `EMAIL_FROM` must be on a domain verified in the Resend dashboard once real sending is needed.
+Uses Resend's HTTP API directly via `fetch`, not the `resend` npm package — a single POST call didn't justify a dependency. `RESEND_API_KEY` unset runs in mock mode (logs what would have been sent, same pattern as Blink/Maya).
 
 `order.contact` can be an email *or* a phone number (see `checkout.contactLabel`) — delivery only fires when it contains `@`; phone-number contacts are silently skipped rather than erroring, since SMS/WhatsApp delivery into DRC isn't built (most mainstream SMS APIs have weak/expensive DRC coverage — worth checking real usage patterns before picking one). Verified end-to-end in mock mode (2026-08-06): all three locales produced correctly-subjected/translated log output, and a phone-number contact correctly produced no email.
+
+**Live in production** (2026-08-06): `RESEND_API_KEY` and `EMAIL_FROM="MboteData <orders@mbotedata.com>"` are set locally and on Vercel. mbotedata.com is verified as a sending domain in the Resend dashboard, confirmed by a real send that succeeded to an address *outside* the Resend account (domain verification lifts Resend's sandbox restriction that otherwise limits the shared `onboarding@resend.dev` sender to the account owner's own address only). Delivery to real customers now works — the only remaining gap is that fulfillment itself (`src/lib/maya.ts`) is still mocked, so the QR/code being emailed isn't a real eSIM yet.
 
 ### Order flow and storage
 
