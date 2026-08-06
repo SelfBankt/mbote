@@ -41,11 +41,16 @@ function Home() {
         />
 
         <div className="relative max-w-5xl mx-auto px-5 py-24 md:py-28 text-center">
-          <h1
-            className="animate-fade-in-up text-4xl md:text-6xl font-bold tracking-tight text-balance"
-            style={{ animationDelay: "0ms" }}
-          >
-            {t("home.heroTitle")}
+          <h1 className="animate-fade-in-up text-balance" style={{ animationDelay: "0ms" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- small static local PNG, no benefit from next/image here */}
+            <img
+              src="/brand/logo-white.png"
+              alt={t("site.name")}
+              className="h-11 md:h-16 w-auto mx-auto"
+            />
+            <span className="block mt-3 text-4xl md:text-6xl font-bold tracking-tight">
+              {t("home.heroTitleLine2")}
+            </span>
           </h1>
 
           <p
