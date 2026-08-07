@@ -1,6 +1,7 @@
 import { getOrder, markOrderPaid, markOrderFulfilled } from "@/lib/db";
 import { fulfillOrder } from "@/lib/maya";
 import { sendTopup } from "@/lib/reloadly";
+import { sendTransfer } from "@/lib/dingconnect";
 import { sendEsimEmail, sendTopupEmail } from "@/lib/email";
 import { getPlan, formatData } from "@/lib/plans";
 import { getTopup } from "@/lib/topups";
@@ -74,14 +75,31 @@ async function fulfillTopupOrder(
     const topup = await getTopup(topupId);
     if (!topup) throw new Error(`unknown topup id ${topupId}`);
 
-    const result = await sendTopup({
-      operatorId: topup.operatorId,
-      recipientPhone,
-      recipientCountryCode: topup.countryCode,
-      amountUsd: topup.priceUsd,
-      orderId,
-    });
-    await markOrderFulfilled(orderId, { topupReference: result.transactionId });
+    // Dispatch to whichever provider this catalog entry actually came from — and critically, pay
+    // the provider's own wholesale amount (topup.reloadlyWholesaleUsd / dingconnectSendValue), NOT
+    // topup.priceUsd (the marked-up customer-facing price). Both providers expect an exact
+    // wholesale figure from their own product list, not an arbitrary amount.
+    const topupReference =
+      topup.provider === "dingconnect"
+        ? (
+            await sendTransfer({
+              skuCode: topup.dingconnectSkuCode,
+              recipientPhone,
+              sendValue: topup.dingconnectSendValue,
+              sendCurrencyIso: topup.dingconnectSendCurrencyIso,
+              orderId,
+            })
+          ).transferReference
+        : (
+            await sendTopup({
+              operatorId: topup.reloadlyOperatorId,
+              recipientPhone,
+              recipientCountryCode: topup.countryCode,
+              amountUsd: topup.reloadlyWholesaleUsd,
+              orderId,
+            })
+          ).transactionId;
+    await markOrderFulfilled(orderId, { topupReference });
 
     if (contact.includes("@")) {
       try {

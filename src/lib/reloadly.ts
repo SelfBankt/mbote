@@ -73,6 +73,10 @@ export async function sendTopup(params: {
   operatorId: number;
   recipientPhone: string;
   recipientCountryCode: string; // ISO 3166-1 alpha-2, e.g. "CD"
+  // The operator's exact wholesale fixedAmount (see ReloadlyDataProduct.wholesaleUsd) — NOT
+  // topups.ts's marked-up customer-facing priceUsd. This operator is FIXED-denomination, so
+  // Reloadly expects one of its own enumerated fixedAmounts verbatim; sending an arbitrary
+  // marked-up price would not match any real product.
   amountUsd: number;
   orderId: string; // mbote's own order id, passed as a custom identifier
 }): Promise<FulfilledTopup> {
@@ -116,4 +120,53 @@ function sendTopupMock(params: { orderId: string }): FulfilledTopup {
     transactionId: `mock-${params.orderId.slice(0, 8)}`,
     status: "SUCCESSFUL",
   };
+}
+
+// Confirmed via a live GET /operators/countries/CD call (2026-08-07) — the only DRC operator with
+// a real data product (see src/lib/topups.ts header comment for the full coverage picture).
+export const VODACOM_DATA_OPERATOR_ID = 1326;
+
+export type ReloadlyDataProduct = {
+  operatorId: number;
+  network: "Vodacom";
+  displayText: string; // e.g. "3.6GB Data Bundle (7 Days)" — Reloadly's fixedAmountsDescriptions text
+  wholesaleUsd: number; // one of the operator's fixedAmounts — must be sent back verbatim as `amount`
+};
+
+// Every DRC data product available for a FIXED-denomination operator, straight from Reloadly's own
+// operator detail (already USD, no FX conversion needed unlike DingConnect — see fx.ts). Parsing
+// the displayText into a GB amount / validity period, and filtering out night-restricted bundles,
+// is catalog/display logic and lives in topups.ts, not here — same split as dingconnect.ts.
+export async function getDrcDataProducts(): Promise<ReloadlyDataProduct[]> {
+  if (!isReloadlyConfigured()) {
+    return getDrcDataProductsMock();
+  }
+
+  const token = await getAccessToken();
+  const res = await fetch(`${topupsApiUrl()}/operators/${VODACOM_DATA_OPERATOR_ID}`, {
+    headers: {
+      Accept: "application/com.reloadly.topups-v1+json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Reloadly GetOperator error: ${res.status} ${await res.text()}`);
+  }
+  const data = await res.json();
+
+  const fixedAmounts: number[] = data.fixedAmounts ?? [];
+  const descriptions: Record<string, string> = data.fixedAmountsDescriptions ?? {};
+  return fixedAmounts.map((amount) => ({
+    operatorId: VODACOM_DATA_OPERATOR_ID,
+    network: "Vodacom" as const,
+    displayText: descriptions[amount.toFixed(2)] ?? descriptions[String(amount)] ?? "",
+    wholesaleUsd: amount,
+  }));
+}
+
+function getDrcDataProductsMock(): ReloadlyDataProduct[] {
+  return [
+    { operatorId: VODACOM_DATA_OPERATOR_ID, network: "Vodacom", displayText: "3.6GB Data Bundle (7 Days)", wholesaleUsd: 3.72 },
+    { operatorId: VODACOM_DATA_OPERATOR_ID, network: "Vodacom", displayText: "13GB Data Bundle (30 Days)", wholesaleUsd: 7.43 },
+  ];
 }

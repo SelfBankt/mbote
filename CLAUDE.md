@@ -76,51 +76,92 @@ There is no real USD→sats price feed (`usdToSats()` in `blink.ts` uses a hardc
 
 Why Maya Mobile specifically: researched against several eSIM wholesale/API platforms for DRC coverage specifically (not just "how many countries globally," which is a misleading metric — several big aggregators with ~100-country coverage don't include DRC at all). Confirmed: **Maya Mobile covers DRC via Vodacom + Orange LTE**, has a documented developer API and white-label reseller program. MobiMatter also confirmed DRC coverage (marketplace model, cheaper starting price) and is worth keeping as a second option. eSIM Access was ruled out — easy self-serve API signup, but DRC isn't in their ~100-country list.
 
-### Data top-ups (Reloadly)
+### Data top-ups (Reloadly + DingConnect)
 
-A second, parallel offering alongside the eSIM plans above: `src/lib/reloadly.ts` talks to
-[Reloadly](https://www.reloadly.com)'s Airtime & Data Topups API to add data directly onto a phone
-number that **already has an active SIM** on a DRC network (Vodacom/Orange/Airtel) — no eSIM, no
-QR code, no LPA activation code involved. The customer supplies their existing phone number
-instead of an eSIM-compatible-device contact, and a successful `sendTopup()` call is the entire
-fulfillment (see the `"topup"` branch of `confirmAndFulfillOrder()` in `src/lib/orders.ts`).
+A second, parallel offering alongside the eSIM plans above: adds data directly onto a phone number
+that **already has an active SIM** on a DRC network — no eSIM, no QR code, no LPA activation code.
+The customer supplies their existing phone number instead of an eSIM-compatible-device contact,
+and a successful provider API call is the entire fulfillment (see the `"topup"` branch of
+`confirmAndFulfillOrder()` in `src/lib/orders.ts`).
 
-`src/lib/topups.ts` is the catalog (parallel to `plans.ts`), reusing the same `Network`
-type/`NETWORK_LOGOS` map since it's the same three carriers. Unlike Maya, Reloadly's API reference
-is public (no partner NDA), and — as of 2026-08-07, once real production credentials were
-available — has been confirmed end-to-end: OAuth token issuance and a live
-`GET https://topups.reloadly.com/operators/countries/CD` lookup. That lookup revealed **Vodacom is
-the only DRC network with an actual data-bundle product on Reloadly** (`operatorId` 1326, "Vodacom
-DRC Data") — Orange and Airtel DRC only expose generic RANGE-type airtime top-up, no data product.
-The Vodacom catalog entries use the real bundle sizes/validity from that operator's
-`fixedAmountsDescriptions` (not estimates) with a 10% markup over Reloadly's wholesale price,
-rounded to the nearest cent. Orange/Airtel are kept in the catalog as `available: false`
-("coming soon") — not linked from `/topups`, and rejected by `POST /api/orders` as defense in
-depth — same "real, confirmed gap, not an oversight" treatment as the Machankura DRC gap below.
-One correction worth remembering if this file is touched again: the OAuth token host is
-`auth.reloadly.com`, not `accounts.reloadly.com` (an easy wrong guess — the latter doesn't
-resolve). `sendTopup()` itself (an actual billable top-up) has NOT been exercised against
-production, only auth + the read-only operator lookup — confirm a real send works (sandbox first,
-if available) before relying on this for real customer orders.
+Two providers, confirmed against real production accounts (2026-08-07):
 
-Runs in mock mode exactly like Blink/Maya/Resend when `RELOADLY_CLIENT_ID`/`RELOADLY_CLIENT_SECRET`
-are unset — `sendTopup()` returns a fake transaction id, so the full top-up flow (browse `/topups`,
-buy, pay, mock-confirm, mock-fulfill, mock-email) works end to end with zero real credentials, same
-as the eSIM flow. Production credentials are now set in local `.env.local` (2026-08-07) — **not yet
-added to Vercel** (`vercel env add RELOADLY_CLIENT_ID production --value="..." --sensitive`, same
-pattern as the other secrets — see "Deployment" below), so the deployed site is still mock-mode
-until that's done and redeployed. Since local dev now calls the real Reloadly API, be deliberate
-about triggering real order fulfillment locally — override the credential env vars to empty when
-you specifically want mock mode for a test run. `RELOADLY_SANDBOX=true` would switch the client to
-Reloadly's sandbox host/audience if sandbox credentials are obtained later.
+- **Reloadly** (`src/lib/reloadly.ts`) — Vodacom only (`operatorId` 1326, "Vodacom DRC Data").
+  Orange and Airtel DRC only expose generic RANGE-type airtime on Reloadly, no data product. Auth
+  is OAuth2 client-credentials; one correction worth remembering if this file is touched again —
+  the token host is `auth.reloadly.com`, NOT `accounts.reloadly.com` (an easy wrong guess, the
+  latter doesn't resolve). Wholesale prices are already USD.
+- **DingConnect** (`src/lib/dingconnect.ts`) — Vodacom AND Airtel (`GET /api/V1/GetProducts` with
+  `Benefits=Data`, confirmed via `GetProviders`: `ProviderCode` `VDCD`=Vodacom, `AICD`=Airtel;
+  `ORCD`=Orange and `AFCD`=Africell exist as DRC providers but have no product tagged with the
+  `Data` benefit). Auth is a single `api_key` header. DingConnect's own docs/help-center site is
+  behind a Cloudflare bot challenge that blocks non-browser fetches — the request/response shapes
+  here come from a third-party open-source PHP client's generated docs
+  (`github.com/parenthesislab/dingconnect-api-php`), cross-checked against real live responses,
+  not the (inaccessible) official reference. Wholesale prices are quoted in **GBP** (the agent
+  account's billing currency) against a USD `ReceiveValue` — converted to USD via
+  `src/lib/fx.ts` (Frankfurter/ECB rates, no API key, cached 30 min, hardcoded fallback if the
+  fetch fails) before being comparable to Reloadly's USD wholesale prices.
+
+**`src/lib/topups.ts` fetches both providers' catalogs LIVE** (not a hand-copied static list) and
+merges them, cached in memory for 10 minutes. This is a deliberate departure from `plans.ts`'s
+fully-static approach — real SKU lists/prices from both providers can change over time, and copying
+them by hand would silently drift from what's actually sellable. Both providers only return
+free-text product descriptions (no structured GB/validity fields), so `topups.ts` parses them
+defensively and **excludes rather than guesses** whenever something doesn't check out:
+- No parseable "NN GB"/"NN MB" in the description → excluded (drops voice-only bundles that
+  DingConnect still tags with the `Data` benefit, e.g. "45mins Vodacom Call").
+- DingConnect's structured `ValidityPeriodIso` disagreeing with an explicit day/hour count in the
+  description text → excluded. This turned out to be a **real, widespread data-quality issue in
+  DingConnect's Airtel (AICD) catalog specifically** (e.g. "400MB - 7J (7 Days)" carries
+  `ValidityPeriodIso` "P1D") — confirmed by inspecting the raw API response, not a parsing bug.
+  Only 3 of Airtel's 8 raw SKUs survive this check as of 2026-08-07.
+- Time-restricted "night bundle" products (Reloadly has two for Vodacom, usable only in a
+  restricted overnight window) → excluded outright, the plain `dataAmountMb`/`validityDays` shape
+  can't represent that honestly.
+- Combo bundles mixing data with bonus minutes/SMS (DingConnect's Vodacom catalog has several,
+  detected by a `+` in the description, e.g. "3GB + 450Min All Call") → excluded. This is framed
+  site-wide as a pure "data top-up" product, and ranking these by $/GB would make them look like
+  terrible value when they actually bundle in real extra value the data-only comparison ignores.
+
+Customer price = wholesale × 1.10 (10% markup, business decision, 2026-08-07, applied uniformly to
+both providers). **Catalog is sorted by $/GB ascending** (best value first, per 2026-08-07
+request) — as of this writing that's ~22 available products spanning both Vodacom (both providers)
+and Airtel (DingConnect only). Orange has no confirmed data product on *either* provider — kept as
+a single `available: false` ("coming soon") entry, not linked from `/topups`, rejected by
+`POST /api/orders` as defense in depth — same "real, confirmed gap, not an oversight" treatment as
+the Machankura DRC gap below.
+
+Each `DataTopup` carries exactly what's needed to fulfill via its own provider
+(`reloadlyOperatorId`/`reloadlyWholesaleUsd` or `dingconnectSkuCode`/`dingconnectSendValue`/
+`dingconnectSendCurrencyIso`) — `confirmAndFulfillOrder()` dispatches on `topup.provider` and pays
+the provider its own **wholesale** amount, never the marked-up `priceUsd`. This mattered in
+practice: an earlier version of this integration passed the marked-up USD price straight to
+Reloadly's `sendTopup()`, which would very likely have failed or misbehaved against a real
+FIXED-denomination operator that only accepts one of its own enumerated wholesale amounts — caught
+and fixed while wiring up DingConnect, not shipped as-is.
+
+Both `sendTopup()` (Reloadly) and `sendTransfer()` (DingConnect) — the actual, billable top-up
+calls — have **not** been exercised against production, only auth + the read-only catalog lookups
+have. Confirm a real send works (sandbox first, if available) before relying on either for real
+customer orders.
+
+Runs in mock mode exactly like every other integration when the relevant env vars are unset —
+`getDrcDataProducts()`/`sendTopup()`/`sendTransfer()` all have mock fallbacks, so the full top-up
+flow (browse `/topups`, buy, pay, mock-confirm, mock-fulfill, mock-email) works end to end with
+zero real credentials. Production credentials for both providers are in local `.env.local`
+(2026-08-07) — DingConnect is **not yet added to Vercel**, so the deployed site's Airtel coverage
+and DingConnect's Vodacom SKUs are still mock-mode there until that's done and redeployed. Since
+local dev now calls both real APIs, be deliberate about triggering real order fulfillment locally —
+override the credential env vars to empty when you specifically want mock mode for a test run.
 
 Order storage: `orders.product_type` (`"esim"` | `"topup"`) disambiguates which catalog `plan_id`
 resolves against and which fulfillment path runs; `recipient_phone` holds the number being topped
-up; `topup_reference` holds Reloadly's transaction id once fulfilled (kept as a separate column
-from the eSIM-only `esim_reference` rather than repurposing it, to avoid touching a column that was
-already live in production). Both `sqlite.ts` and `postgres.ts` migrate these columns onto an
-already-existing `orders` table via `ALTER TABLE` — `CREATE TABLE IF NOT EXISTS` alone does not
-retroactively add columns.
+up; `topup_reference` holds the provider's transaction/transfer id once fulfilled (kept as a
+separate column from the eSIM-only `esim_reference` rather than repurposing it, to avoid touching a
+column that was already live in production). Both `sqlite.ts` and `postgres.ts` migrate these
+columns onto an already-existing `orders` table via `ALTER TABLE` — `CREATE TABLE IF NOT EXISTS`
+alone does not retroactively add columns.
 
 ### Delivery: email (Resend)
 
@@ -194,5 +235,6 @@ The GitHub repo is connected too, so pushes to `main` also trigger a deployment 
 - No pagination, search, or filtering on the plans listing (fine at 8 hardcoded plans, won't be once real Maya Mobile data is wired in with potentially hundreds of plans/networks).
 - No tests.
 - Maya Mobile eSIM fulfillment is still mocked — no real partner account yet (see "eSIM fulfillment" above), so real orders confirm payment correctly but don't provision a real eSIM.
-- Reloadly production credentials exist and are confirmed working for auth + the operator lookup (see "Data top-ups (Reloadly)" above), but `sendTopup()` — an actual real top-up — has never been exercised for real; confirm one works before relying on it for a real customer order. Not yet added to Vercel, so the deployed site is still mock-mode for top-ups.
-- Only Vodacom has a real Reloadly data product for DRC — Orange/Airtel top-ups are shown as "coming soon" and can't be purchased, a confirmed gap rather than an oversight (mirrors the Machankura DRC gap).
+- Reloadly and DingConnect production credentials both exist and are confirmed working for auth + catalog lookups (see "Data top-ups (Reloadly + DingConnect)" above), but the actual billable top-up calls — `sendTopup()` and `sendTransfer()` — have never been exercised for real; confirm each works before relying on them for a real customer order. DingConnect is not yet added to Vercel, so the deployed site's Airtel coverage and DingConnect Vodacom SKUs are still mock-mode there.
+- Only Vodacom (both providers) and Airtel (DingConnect only) have real data products for DRC — Orange has none on either provider and is shown as "coming soon," a confirmed gap rather than an oversight (mirrors the Machankura DRC gap).
+- No real BTC/USD price feed for `usdToSats()` (see above) — similarly, DingConnect's GBP wholesale prices are converted via a live-but-unpinned FX rate (`src/lib/fx.ts`), not a treasury-grade rate source. Fine for a 10%-margin consumer product, not for anything sensitive to a few basis points.
