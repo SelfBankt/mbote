@@ -6,37 +6,32 @@ import { getGuide } from "@/lib/guides";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 
-// Chrome text around the article (back link, "updated on", FAQ heading, CTA) — kept as a small
+// Structural chrome around the article (back link, "updated on", FAQ heading) — kept as a small
 // per-locale map here rather than the next-intl message files, since it only exists on this one
-// page and travels with the guide content it wraps (see src/lib/guides.ts for why guide prose
-// itself isn't in the message files either).
+// page. The bottom CTA (text + button + destination) is guide-specific instead — see
+// src/lib/guides.ts's ctaHref/ctaText/ctaButtonText — since different guides point at different
+// products (eSIM plans vs. data top-ups).
 const CHROME: Record<
   string,
-  { back: string; updated: string; dateLocale: string; faqTitle: string; ctaText: string; ctaButton: string }
+  { back: string; updated: string; dateLocale: string; faqTitle: string }
 > = {
   fr: {
     back: "Tous les guides",
     updated: "Mis à jour le",
     dateLocale: "fr-FR",
     faqTitle: "Questions fréquentes",
-    ctaText: "Prêt à vous connecter en RDC ?",
-    ctaButton: "Voir les forfaits →",
   },
   en: {
     back: "All guides",
     updated: "Updated",
     dateLocale: "en-US",
     faqTitle: "Frequently asked questions",
-    ctaText: "Ready to get connected in DR Congo?",
-    ctaButton: "View plans →",
   },
   ln: {
     back: "Ba guide nyonso",
     updated: "Ebongisami na",
     dateLocale: "fr-FR",
     faqTitle: "Mituna oyo etunamaka mingi",
-    ctaText: "Oyebi komikangisa na Kongo?",
-    ctaButton: "Tala ba forfait →",
   },
 };
 
@@ -134,12 +129,12 @@ export default async function GuideDetailPage({
       </article>
 
       <div className="mt-10 border border-line rounded-2xl p-5 bg-white/60 flex items-center justify-between gap-4">
-        <p className="text-sm text-foreground/70">{chrome.ctaText}</p>
+        <p className="text-sm text-foreground/70">{t.ctaText}</p>
         <Link
-          href="/plans"
+          href={guide.ctaHref}
           className="text-sm font-medium text-white bg-brand rounded-full px-4 py-2 hover:bg-brand-light transition whitespace-nowrap"
         >
-          {chrome.ctaButton}
+          {t.ctaButtonText}
         </Link>
       </div>
     </div>

@@ -6,17 +6,19 @@ import { SITE_URL, localeAlternates } from "@/lib/site";
 
 const INDEX_TITLE: Record<string, { title: string; description: string }> = {
   fr: {
-    title: "Guides eSIM RDC",
+    title: "Guides eSIM et Recharge RDC",
     description:
-      "Guides pratiques pour choisir, payer et installer une eSIM en République Démocratique du Congo.",
+      "Guides pratiques pour choisir, payer, installer une eSIM, ou recharger des données mobiles en République Démocratique du Congo.",
   },
   en: {
-    title: "DR Congo eSIM Guides",
-    description: "Practical guides for choosing, paying for, and installing an eSIM in DR Congo.",
+    title: "DR Congo eSIM & Top-up Guides",
+    description:
+      "Practical guides for choosing, paying for, and installing an eSIM, or topping up mobile data, in DR Congo.",
   },
   ln: {
-    title: "Ba guide ya eSIM ya Kongo",
-    description: "Ba guide ya practique mpo na kopona, kofuta, mpe kotia eSIM na Kongo.",
+    title: "Ba guide ya eSIM na Recharge ya Kongo",
+    description:
+      "Ba guide ya practique mpo na kopona, kofuta, kotia eSIM, to kotondisa données mobile na Kongo.",
   },
 };
 
