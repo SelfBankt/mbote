@@ -5,7 +5,7 @@ import { routing } from "@/i18n/routing";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useParams } from "next/navigation";
 
-const LABELS: Record<string, string> = { ln: "Lingala", fr: "Français", en: "English" };
+const LABELS: Record<string, string> = { ln: "LI", fr: "FR", en: "EN" };
 
 export default function LocaleSwitcher() {
   const locale = useLocale();

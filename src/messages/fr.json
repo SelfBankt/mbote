@@ -5,10 +5,10 @@
   },
   "nav": {
     "home": "Accueil",
-    "plans": "eSIMs",
-    "topups": "Recharges",
+    "plans": "eSIM",
+    "topups": "Recharge",
     "howItWorks": "Comment ça marche",
-    "guides": "Guides"
+    "guides": "FAQ"
   },
   "home": {
     "heroTitleLine2": "Restez connecté en RDC.",

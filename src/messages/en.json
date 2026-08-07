@@ -5,10 +5,10 @@
   },
   "nav": {
     "home": "Home",
-    "plans": "eSIMs",
-    "topups": "Top-ups",
+    "plans": "eSIM",
+    "topups": "Top-up",
     "howItWorks": "How it works",
-    "guides": "Guides"
+    "guides": "FAQ"
   },
   "home": {
     "heroTitleLine2": "Stay connected in RDC.",

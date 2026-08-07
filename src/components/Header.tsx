@@ -8,11 +8,11 @@ export default function Header() {
   return (
     <header className="border-b border-line">
       <div className="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element -- small static local PNG, no benefit from next/image here */}
           <img src="/brand/logo.png" alt={t("site.name")} className="h-8 w-auto" />
         </Link>
-        <nav className="flex items-center gap-5 text-sm">
+        <nav className="flex items-center gap-5 text-sm whitespace-nowrap">
           <Link href="/topups" className="hover:text-accent transition-colors">
             {t("nav.topups")}
           </Link>
