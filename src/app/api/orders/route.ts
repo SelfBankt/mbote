@@ -2,42 +2,59 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { randomUUID } from "node:crypto";
 import { getPlan } from "@/lib/plans";
+import { getTopup } from "@/lib/topups";
 import { createInvoice, usdToSats } from "@/lib/blink";
 import { createOrder } from "@/lib/db";
 import { confirmAndFulfillOrder } from "@/lib/orders";
 import { routing } from "@/i18n/routing";
 
-const bodySchema = z.object({
-  planId: z.string().min(1),
-  contact: z.string().min(3), // email or phone — kept loose since either is valid for delivery
-  locale: z.enum(routing.locales),
-});
+const bodySchema = z
+  .object({
+    planId: z.string().min(1),
+    productType: z.enum(["esim", "topup"]).default("esim"),
+    contact: z.string().min(3), // email or phone — kept loose since either is valid for delivery
+    recipientPhone: z.string().min(6).optional(), // required for topup orders, checked below
+    locale: z.enum(routing.locales),
+  })
+  .refine((body) => body.productType !== "topup" || Boolean(body.recipientPhone), {
+    message: "recipientPhone is required for topup orders",
+    path: ["recipientPhone"],
+  });
 
 export async function POST(request: NextRequest) {
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json({ error: "invalid request" }, { status: 400 });
   }
-  const { planId, contact, locale } = parsed.data;
+  const { planId, productType, contact, recipientPhone, locale } = parsed.data;
 
-  const plan = await getPlan(planId);
-  if (!plan) {
+  const offer = productType === "topup" ? await getTopup(planId) : await getPlan(planId);
+  if (!offer) {
     return NextResponse.json({ error: "plan not found" }, { status: 404 });
+  }
+  // defense in depth — the UI never links to an unavailable topup's checkout, but don't accept
+  // payment for one even if reached directly (see topups.ts: Orange/Airtel have no confirmed
+  // Reloadly data product for DRC yet)
+  if (productType === "topup" && !("available" in offer && offer.available)) {
+    return NextResponse.json({ error: "this top-up is not available yet" }, { status: 400 });
   }
 
   const orderId = randomUUID();
-  const satoshis = usdToSats(plan.priceUsd);
-  const invoice = await createInvoice({
-    satoshis,
-    memo: `mbote: ${plan.network} ${plan.dataAmountMb}MB / ${plan.validityDays}d (order ${orderId})`,
-  });
+  const satoshis = usdToSats(offer.priceUsd);
+  const memo =
+    productType === "topup"
+      ? `mbote: ${offer.network} top-up ${offer.dataAmountMb}MB / ${offer.validityDays}d for ${recipientPhone} (order ${orderId})`
+      : `mbote: ${offer.network} ${offer.dataAmountMb}MB / ${offer.validityDays}d (order ${orderId})`;
+  const invoice = await createInvoice({ satoshis, memo });
 
   await createOrder({
     id: orderId,
-    plan_id: plan.id,
+    plan_id: offer.id,
+    product_type: productType,
     contact,
+    recipient_phone: productType === "topup" ? (recipientPhone ?? null) : null,
     locale,
-    price_usd: plan.priceUsd,
+    price_usd: offer.priceUsd,
     amount_sats: satoshis,
     lightning_invoice: invoice.paymentRequest,
     blink_payment_hash: invoice.paymentHash,

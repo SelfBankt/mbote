@@ -6,6 +6,7 @@
   "nav": {
     "home": "Accueil",
     "plans": "Forfaits",
+    "topups": "Recharges",
     "howItWorks": "Comment ça marche",
     "guides": "Guides"
   },
@@ -31,7 +32,30 @@
     "validityLabel": "Validité",
     "priceFrom": "À partir de",
     "viewPlan": "Voir le forfait",
-    "empty": "Aucun forfait ne correspond à vos filtres pour le moment."
+    "empty": "Aucun forfait ne correspond à vos filtres pour le moment.",
+    "topupCrossLink": "Vous avez déjà une carte SIM en RDC ? Rechargez vos données plutôt"
+  },
+  "topups": {
+    "title": "Recharges de données pour votre carte SIM",
+    "subtitle": "Ajoutez des données directement à un numéro déjà actif sur Vodacom, Orange ou Airtel en RDC — sans nouvelle carte SIM ni eSIM.",
+    "badge": "Aucune nouvelle carte SIM nécessaire",
+    "validityLabel": "Validité",
+    "priceFrom": "À partir de",
+    "viewTopup": "Voir la recharge",
+    "empty": "Aucune recharge ne correspond à vos filtres pour le moment.",
+    "comingSoon": "Bientôt disponible — pas encore de recharge de données pour ce réseau"
+  },
+  "topupDetail": {
+    "metaTitle": "Recharge de données {data} — {network} ({days} jours)",
+    "metaDescription": "Rechargez {data} de données sur votre carte SIM {network} existante en RDC, valable {days} jours. Payez en Bitcoin Lightning ou mobile money — ajouté en quelques minutes.",
+    "backToTopups": "Retour à toutes les recharges",
+    "worksOnExistingSimNote": "Fonctionne sur votre carte SIM existante — aucune nouvelle carte SIM ni installation d'eSIM nécessaire.",
+    "speedNote": "Les données sont ajoutées automatiquement à votre numéro, généralement en quelques minutes après le paiement.",
+    "afterPurchaseStep1": "Le paiement est confirmé automatiquement dès sa réception.",
+    "afterPurchaseStep2": "Les données sont ajoutées directement au numéro de téléphone que vous avez fourni.",
+    "afterPurchaseStep3": "Utilisez vos données immédiatement — rien à installer.",
+    "termsActiveSimRequired": "Nécessite une carte SIM déjà active sur ce réseau — ceci n'active pas une nouvelle ligne.",
+    "termsNonRefundable": "Non remboursable dès que la recharge a été envoyée au numéro destinataire."
   },
   "planDetail": {
     "buyButton": "Acheter ce forfait",
@@ -71,7 +95,11 @@
     "deliveryNote": "Nous enverrons votre code QR eSIM et les instructions d'installation au contact que vous avez fourni.",
     "expiresIn": "La facture expire dans",
     "contactLabel": "E-mail ou téléphone pour la livraison",
+    "contactLabelOptional": "E-mail pour le reçu (optionnel)",
     "contactPlaceholder": "vous@exemple.com",
+    "recipientPhoneLabel": "Numéro de téléphone à recharger",
+    "recipientPhonePlaceholder": "+243 8xx xxx xxx",
+    "deliveryNoteTopup": "Les données ont été ajoutées directement au {phone}.",
     "startOrder": "Continuer vers le paiement"
   },
   "common": {
@@ -93,6 +121,11 @@
     "instructionsBody": "Scannez le code QR ci-joint avec l'appareil photo de votre téléphone ou votre application d'installation eSIM, ou saisissez ce code d'activation manuellement :",
     "manualCodeLabel": "Code d'activation manuel",
     "supportNote": "Besoin d'aide ? Répondez simplement à cet e-mail.",
-    "footer": "Merci d'avoir choisi MboteData."
+    "footer": "Merci d'avoir choisi MboteData.",
+    "topupSubject": "Votre recharge de données est en route — MboteData",
+    "topupIntro": "Votre paiement est confirmé et votre recharge de données a été envoyée.",
+    "topupInstructionsTitle": "Et maintenant ?",
+    "topupInstructionsBody": "Les données ont été ajoutées directement au numéro de téléphone ci-dessous — rien à installer, utilisez-les dès maintenant.",
+    "topupRecipientLabel": "Numéro rechargé"
   }
 }

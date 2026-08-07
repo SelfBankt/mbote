@@ -12,6 +12,8 @@ export default function CheckoutClient({
   qrDataUrl,
   planSummary,
   priceUsd,
+  productType,
+  recipientPhone,
 }: {
   orderId: string;
   status: OrderStatus;
@@ -19,6 +21,8 @@ export default function CheckoutClient({
   qrDataUrl: string | null;
   planSummary: string;
   priceUsd: number;
+  productType: "esim" | "topup";
+  recipientPhone: string | null;
 }) {
   const t = useTranslations();
   const [status, setStatus] = useState<OrderStatus>(initialStatus);
@@ -62,7 +66,11 @@ export default function CheckoutClient({
             ✅
           </div>
           <p className="font-semibold text-success">{t("checkout.paymentConfirmed")}</p>
-          <p className="mt-2 text-sm text-foreground/70">{t("checkout.deliveryNote")}</p>
+          <p className="mt-2 text-sm text-foreground/70">
+            {productType === "topup"
+              ? t("checkout.deliveryNoteTopup", { phone: recipientPhone ?? "" })
+              : t("checkout.deliveryNote")}
+          </p>
         </div>
       )}
 

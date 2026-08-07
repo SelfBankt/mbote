@@ -1,9 +1,16 @@
 export type OrderStatus = "pending" | "paid" | "fulfilled" | "expired" | "failed";
 
+// "esim" = Maya Mobile eSIM provisioning (esim_reference). "topup" = Reloadly data top-up onto an
+// existing DRC number (recipient_phone required, topup_reference on fulfillment) — see
+// src/lib/topups.ts and src/lib/reloadly.ts.
+export type ProductType = "esim" | "topup";
+
 export type Order = {
   id: string;
   plan_id: string;
+  product_type: ProductType;
   contact: string;
+  recipient_phone: string | null;
   locale: string;
   price_usd: number;
   amount_sats: number | null;
@@ -11,6 +18,7 @@ export type Order = {
   lightning_invoice: string | null;
   blink_payment_hash: string | null;
   esim_reference: string | null;
+  topup_reference: string | null;
   created_at: number;
   paid_at: number | null;
   fulfilled_at: number | null;
@@ -19,7 +27,9 @@ export type Order = {
 export type NewOrder = {
   id: string;
   plan_id: string;
+  product_type: ProductType;
   contact: string;
+  recipient_phone: string | null;
   locale: string;
   price_usd: number;
   amount_sats: number | null;
@@ -36,6 +46,9 @@ export interface OrderStore {
   getOrder(id: string): Promise<Order | undefined>;
   getOrderByPaymentHash(paymentHash: string): Promise<Order | undefined>;
   markOrderPaid(id: string): Promise<void>;
-  markOrderFulfilled(id: string, esimReference: string): Promise<void>;
+  markOrderFulfilled(
+    id: string,
+    reference: { esimReference?: string; topupReference?: string }
+  ): Promise<void>;
   markOrderExpired(id: string): Promise<void>;
 }

@@ -16,6 +16,9 @@ export default function Header() {
           <Link href="/plans" className="hover:text-accent transition-colors">
             {t("nav.plans")}
           </Link>
+          <Link href="/topups" className="hover:text-accent transition-colors">
+            {t("nav.topups")}
+          </Link>
           <Link href="/guides" className="hover:text-accent transition-colors">
             {t("nav.guides")}
           </Link>

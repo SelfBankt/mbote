@@ -76,6 +76,52 @@ There is no real USD→sats price feed (`usdToSats()` in `blink.ts` uses a hardc
 
 Why Maya Mobile specifically: researched against several eSIM wholesale/API platforms for DRC coverage specifically (not just "how many countries globally," which is a misleading metric — several big aggregators with ~100-country coverage don't include DRC at all). Confirmed: **Maya Mobile covers DRC via Vodacom + Orange LTE**, has a documented developer API and white-label reseller program. MobiMatter also confirmed DRC coverage (marketplace model, cheaper starting price) and is worth keeping as a second option. eSIM Access was ruled out — easy self-serve API signup, but DRC isn't in their ~100-country list.
 
+### Data top-ups (Reloadly)
+
+A second, parallel offering alongside the eSIM plans above: `src/lib/reloadly.ts` talks to
+[Reloadly](https://www.reloadly.com)'s Airtime & Data Topups API to add data directly onto a phone
+number that **already has an active SIM** on a DRC network (Vodacom/Orange/Airtel) — no eSIM, no
+QR code, no LPA activation code involved. The customer supplies their existing phone number
+instead of an eSIM-compatible-device contact, and a successful `sendTopup()` call is the entire
+fulfillment (see the `"topup"` branch of `confirmAndFulfillOrder()` in `src/lib/orders.ts`).
+
+`src/lib/topups.ts` is the catalog (parallel to `plans.ts`), reusing the same `Network`
+type/`NETWORK_LOGOS` map since it's the same three carriers. Unlike Maya, Reloadly's API reference
+is public (no partner NDA), and — as of 2026-08-07, once real production credentials were
+available — has been confirmed end-to-end: OAuth token issuance and a live
+`GET https://topups.reloadly.com/operators/countries/CD` lookup. That lookup revealed **Vodacom is
+the only DRC network with an actual data-bundle product on Reloadly** (`operatorId` 1326, "Vodacom
+DRC Data") — Orange and Airtel DRC only expose generic RANGE-type airtime top-up, no data product.
+The Vodacom catalog entries use the real bundle sizes/validity from that operator's
+`fixedAmountsDescriptions` (not estimates) with a 10% markup over Reloadly's wholesale price,
+rounded to the nearest cent. Orange/Airtel are kept in the catalog as `available: false`
+("coming soon") — not linked from `/topups`, and rejected by `POST /api/orders` as defense in
+depth — same "real, confirmed gap, not an oversight" treatment as the Machankura DRC gap below.
+One correction worth remembering if this file is touched again: the OAuth token host is
+`auth.reloadly.com`, not `accounts.reloadly.com` (an easy wrong guess — the latter doesn't
+resolve). `sendTopup()` itself (an actual billable top-up) has NOT been exercised against
+production, only auth + the read-only operator lookup — confirm a real send works (sandbox first,
+if available) before relying on this for real customer orders.
+
+Runs in mock mode exactly like Blink/Maya/Resend when `RELOADLY_CLIENT_ID`/`RELOADLY_CLIENT_SECRET`
+are unset — `sendTopup()` returns a fake transaction id, so the full top-up flow (browse `/topups`,
+buy, pay, mock-confirm, mock-fulfill, mock-email) works end to end with zero real credentials, same
+as the eSIM flow. Production credentials are now set in local `.env.local` (2026-08-07) — **not yet
+added to Vercel** (`vercel env add RELOADLY_CLIENT_ID production --value="..." --sensitive`, same
+pattern as the other secrets — see "Deployment" below), so the deployed site is still mock-mode
+until that's done and redeployed. Since local dev now calls the real Reloadly API, be deliberate
+about triggering real order fulfillment locally — override the credential env vars to empty when
+you specifically want mock mode for a test run. `RELOADLY_SANDBOX=true` would switch the client to
+Reloadly's sandbox host/audience if sandbox credentials are obtained later.
+
+Order storage: `orders.product_type` (`"esim"` | `"topup"`) disambiguates which catalog `plan_id`
+resolves against and which fulfillment path runs; `recipient_phone` holds the number being topped
+up; `topup_reference` holds Reloadly's transaction id once fulfilled (kept as a separate column
+from the eSIM-only `esim_reference` rather than repurposing it, to avoid touching a column that was
+already live in production). Both `sqlite.ts` and `postgres.ts` migrate these columns onto an
+already-existing `orders` table via `ALTER TABLE` — `CREATE TABLE IF NOT EXISTS` alone does not
+retroactively add columns.
+
 ### Delivery: email (Resend)
 
 `src/lib/email.ts` — once an order is fulfilled, `confirmAndFulfillOrder()` (`src/lib/orders.ts`) emails the customer the eSIM QR code (as a PNG attachment, generated server-side with the same `qrcode` package used for the checkout Lightning QR) plus the manual LPA activation code, localized to `order.locale` via `next-intl`'s `createTranslator` (not a request-scoped `useTranslations`, since this runs outside any page render — messages are loaded directly by dynamic `import()`, same pattern as `src/i18n/request.ts`).
@@ -148,3 +194,5 @@ The GitHub repo is connected too, so pushes to `main` also trigger a deployment 
 - No pagination, search, or filtering on the plans listing (fine at 8 hardcoded plans, won't be once real Maya Mobile data is wired in with potentially hundreds of plans/networks).
 - No tests.
 - Maya Mobile eSIM fulfillment is still mocked — no real partner account yet (see "eSIM fulfillment" above), so real orders confirm payment correctly but don't provision a real eSIM.
+- Reloadly production credentials exist and are confirmed working for auth + the operator lookup (see "Data top-ups (Reloadly)" above), but `sendTopup()` — an actual real top-up — has never been exercised for real; confirm one works before relying on it for a real customer order. Not yet added to Vercel, so the deployed site is still mock-mode for top-ups.
+- Only Vodacom has a real Reloadly data product for DRC — Orange/Airtel top-ups are shown as "coming soon" and can't be purchased, a confirmed gap rather than an oversight (mirrors the Machankura DRC gap).

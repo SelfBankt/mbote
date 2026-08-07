@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import { NetworkLogo } from "@/components/NetworkLogo";
-import BuyForm from "./BuyForm";
+import BuyForm from "@/components/BuyForm";
 
 export async function generateMetadata({
   params,
@@ -93,7 +93,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
         <div className="mt-6 text-3xl font-bold text-brand">${plan.priceUsd}</div>
 
         <div className="mt-6">
-          <BuyForm planId={plan.id} locale={locale} />
+          <BuyForm planId={plan.id} locale={locale} productType="esim" />
         </div>
       </div>
 

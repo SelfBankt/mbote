@@ -30,6 +30,9 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
     <div className="max-w-5xl mx-auto px-5 py-12">
       <h1 className="text-3xl font-bold">{t("plans.title")}</h1>
       <p className="mt-2 text-foreground/70">{t("plans.subtitle")}</p>
+      <Link href="/topups" className="mt-2 inline-block text-sm font-medium text-brand hover:text-accent transition-colors">
+        {t("plans.topupCrossLink")} →
+      </Link>
 
       {plans.length === 0 ? (
         <p className="mt-10 text-foreground/60">{t("plans.empty")}</p>

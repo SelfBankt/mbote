@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import { getOrder } from "@/lib/db";
 import { getPlan, formatData } from "@/lib/plans";
+import { getTopup } from "@/lib/topups";
 import CheckoutClient from "./CheckoutClient";
 
 export default async function CheckoutPage({
@@ -13,8 +14,9 @@ export default async function CheckoutPage({
 
   const order = await getOrder(orderId);
   if (!order) notFound();
-  const plan = await getPlan(order.plan_id);
-  if (!plan) notFound();
+  const offer =
+    order.product_type === "topup" ? await getTopup(order.plan_id) : await getPlan(order.plan_id);
+  if (!offer) notFound();
 
   const qrDataUrl = order.lightning_invoice
     ? await QRCode.toDataURL(order.lightning_invoice, { width: 280, margin: 1 })
@@ -26,8 +28,10 @@ export default async function CheckoutPage({
       status={order.status}
       invoice={order.lightning_invoice}
       qrDataUrl={qrDataUrl}
-      planSummary={`${plan.network} · ${formatData(plan.dataAmountMb)} · ${plan.validityDays}d`}
+      planSummary={`${offer.network} · ${formatData(offer.dataAmountMb)} · ${offer.validityDays}d`}
       priceUsd={order.price_usd}
+      productType={order.product_type}
+      recipientPhone={order.recipient_phone}
     />
   );
 }

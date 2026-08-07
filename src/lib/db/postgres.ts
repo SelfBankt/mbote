@@ -31,30 +31,42 @@ const sql = postgres(process.env.DATABASE_URL as string, {
 // Same schema as the SQLite backend (see sqlite.ts), translated to Postgres types. Running this
 // idempotently on cold start rather than a separate migration step — fine at this app's current
 // size/single-table scope; revisit with a real migration tool if the schema grows.
-const ready = sql`
-  CREATE TABLE IF NOT EXISTS orders (
-    id TEXT PRIMARY KEY,
-    plan_id TEXT NOT NULL,
-    contact TEXT NOT NULL,
-    locale TEXT NOT NULL,
-    price_usd DOUBLE PRECISION NOT NULL,
-    amount_sats BIGINT,
-    status TEXT NOT NULL DEFAULT 'pending',
-    lightning_invoice TEXT,
-    blink_payment_hash TEXT,
-    esim_reference TEXT,
-    created_at BIGINT NOT NULL,
-    paid_at BIGINT,
-    fulfilled_at BIGINT
-  )
-`;
+const ready = (async () => {
+  await sql`
+    CREATE TABLE IF NOT EXISTS orders (
+      id TEXT PRIMARY KEY,
+      plan_id TEXT NOT NULL,
+      product_type TEXT NOT NULL DEFAULT 'esim',
+      contact TEXT NOT NULL,
+      recipient_phone TEXT,
+      locale TEXT NOT NULL,
+      price_usd DOUBLE PRECISION NOT NULL,
+      amount_sats BIGINT,
+      status TEXT NOT NULL DEFAULT 'pending',
+      lightning_invoice TEXT,
+      blink_payment_hash TEXT,
+      esim_reference TEXT,
+      topup_reference TEXT,
+      created_at BIGINT NOT NULL,
+      paid_at BIGINT,
+      fulfilled_at BIGINT
+    )
+  `;
+  // CREATE TABLE IF NOT EXISTS above only covers a fresh database — the live production orders
+  // table already existed before product_type/recipient_phone/topup_reference were introduced.
+  // Postgres supports ADD COLUMN IF NOT EXISTS directly, so this is safe to run unconditionally
+  // on every cold start.
+  await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS product_type TEXT NOT NULL DEFAULT 'esim'`;
+  await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS recipient_phone TEXT`;
+  await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS topup_reference TEXT`;
+})();
 
 export const postgresStore: OrderStore = {
   async createOrder(order: NewOrder) {
     await ready;
     await sql`
-      INSERT INTO orders (id, plan_id, contact, locale, price_usd, amount_sats, lightning_invoice, blink_payment_hash, created_at)
-      VALUES (${order.id}, ${order.plan_id}, ${order.contact}, ${order.locale}, ${order.price_usd}, ${order.amount_sats}, ${order.lightning_invoice}, ${order.blink_payment_hash}, ${Date.now()})
+      INSERT INTO orders (id, plan_id, product_type, contact, recipient_phone, locale, price_usd, amount_sats, lightning_invoice, blink_payment_hash, created_at)
+      VALUES (${order.id}, ${order.plan_id}, ${order.product_type}, ${order.contact}, ${order.recipient_phone}, ${order.locale}, ${order.price_usd}, ${order.amount_sats}, ${order.lightning_invoice}, ${order.blink_payment_hash}, ${Date.now()})
     `;
   },
 
@@ -75,9 +87,16 @@ export const postgresStore: OrderStore = {
     await sql`UPDATE orders SET status = 'paid', paid_at = ${Date.now()} WHERE id = ${id} AND status = 'pending'`;
   },
 
-  async markOrderFulfilled(id: string, esimReference: string) {
+  async markOrderFulfilled(id: string, reference: { esimReference?: string; topupReference?: string }) {
     await ready;
-    await sql`UPDATE orders SET status = 'fulfilled', fulfilled_at = ${Date.now()}, esim_reference = ${esimReference} WHERE id = ${id}`;
+    await sql`
+      UPDATE orders SET
+        status = 'fulfilled',
+        fulfilled_at = ${Date.now()},
+        esim_reference = COALESCE(${reference.esimReference ?? null}, esim_reference),
+        topup_reference = COALESCE(${reference.topupReference ?? null}, topup_reference)
+      WHERE id = ${id}
+    `;
   },
 
   async markOrderExpired(id: string) {

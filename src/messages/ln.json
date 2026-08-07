@@ -6,6 +6,7 @@
   "nav": {
     "home": "Ebandeli",
     "plans": "Ba forfait",
+    "topups": "Ba recharge",
     "howItWorks": "Ndenge esalemaka",
     "guides": "Ba guide"
   },
@@ -31,7 +32,30 @@
     "validityLabel": "Ekowumela",
     "priceFrom": "Kobanda na",
     "viewPlan": "Tala forfait",
-    "empty": "Forfait moko te ekokani na oyo oponi sik'oyo."
+    "empty": "Forfait moko te ekokani na oyo oponi sik'oyo.",
+    "topupCrossLink": "Ozali na SIM na Kongo? Tondisa données na yo na esika ya eSIM ya sika"
+  },
+  "topups": {
+    "title": "Recharge ya données mpo na SIM na yo",
+    "subtitle": "Bakisa données mbala moko na numéro oyo esili kozala actif na Vodacom, Orange, to Airtel na Kongo — SIM ya sika to eSIM esengeli te.",
+    "badge": "SIM ya sika esengeli te",
+    "validityLabel": "Ekowumela",
+    "priceFrom": "Kobanda na",
+    "viewTopup": "Tala recharge",
+    "empty": "Recharge moko te ekokani na oyo oponi sik'oyo.",
+    "comingSoon": "Ekoya kala te — recharge ya données ezali nanu te mpo na réseau oyo"
+  },
+  "topupDetail": {
+    "metaTitle": "Recharge ya données {data} — {network} (mikolo {days})",
+    "metaDescription": "Tondisa données {data} na SIM na yo ya {network} na Kongo, ekowumela mikolo {days}. Futa na Bitcoin Lightning to mobile money — ekobakisama na ba minute.",
+    "backToTopups": "Zonga na ba recharge nyonso",
+    "worksOnExistingSimNote": "Esalaka na SIM na yo oyo esili kozala — SIM ya sika to kotia eSIM esengeli te.",
+    "speedNote": "Données ekobakisama na numéro na yo automatiquement, mingi mingi na ba minute nsima ya paiement.",
+    "afterPurchaseStep1": "Paiement endimami automatiquement tango kaka ezui.",
+    "afterPurchaseStep2": "Données ebakisami mbala moko na numéro ya téléphone oyo opesaki.",
+    "afterPurchaseStep3": "Banda kosalela données na yo mbala moko — eloko ya kotia ezali te.",
+    "termsActiveSimRequired": "Esengeli na SIM oyo esili kozala active na réseau oyo — efungolaka ligne ya sika te.",
+    "termsNonRefundable": "Bazongisaka mbongo te soki recharge esili kotindama na numéro ya moto akozwa yango."
   },
   "planDetail": {
     "buyButton": "Somba forfait oyo",
@@ -71,7 +95,11 @@
     "deliveryNote": "Tokotindela yo code QR ya eSIM mpe ba instructions na contact oyo opesaki.",
     "expiresIn": "Facture ekosila na",
     "contactLabel": "Email to numéro ya téléphone mpo na kotinda",
+    "contactLabelOptional": "Email mpo na reçu (esengeli te)",
     "contactPlaceholder": "yo@ndakisa.com",
+    "recipientPhoneLabel": "Numéro ya téléphone ya kotondisa",
+    "recipientPhonePlaceholder": "+243 8xx xxx xxx",
+    "deliveryNoteTopup": "Données ebakisami mbala moko na {phone}.",
     "startOrder": "Kokoba na paiement"
   },
   "common": {
@@ -93,6 +121,11 @@
     "instructionsBody": "Tanga code QR oyo ezali na kati na email na kamera ya téléphone na yo to na application ya kotia eSIM, to kotisa code d'activation oyo na maboko:",
     "manualCodeLabel": "Code d'activation na maboko",
     "supportNote": "Osengeli na lisungi? Zongisa kaka email oyo.",
-    "footer": "Melesi mpo oponi MboteData."
+    "footer": "Melesi mpo oponi MboteData.",
+    "topupSubject": "Recharge ya données na yo ezali koya — MboteData",
+    "topupIntro": "Paiement na yo endimami mpe recharge ya données na yo etindami.",
+    "topupInstructionsTitle": "Oyo ekolanda",
+    "topupInstructionsBody": "Données ebakisami mbala moko na numéro ya téléphone oyo ezali na se — eloko ya kotia ezali te, banda kosalela yango sik'oyo.",
+    "topupRecipientLabel": "Numéro oyo etondisami"
   }
 }

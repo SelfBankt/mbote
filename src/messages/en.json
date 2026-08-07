@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "plans": "Plans",
+    "topups": "Top-ups",
     "howItWorks": "How it works",
     "guides": "Guides"
   },
@@ -31,7 +32,30 @@
     "validityLabel": "Valid for",
     "priceFrom": "From",
     "viewPlan": "View plan",
-    "empty": "No plans match your filters right now."
+    "empty": "No plans match your filters right now.",
+    "topupCrossLink": "Already have a DRC SIM? Top up your data instead"
+  },
+  "topups": {
+    "title": "Data top-ups for your existing SIM",
+    "subtitle": "Add data directly to a phone number already active on Vodacom, Orange, or Airtel in DRC — no new SIM or eSIM needed.",
+    "badge": "No new SIM required",
+    "validityLabel": "Valid for",
+    "priceFrom": "From",
+    "viewTopup": "View top-up",
+    "empty": "No top-ups match your filters right now.",
+    "comingSoon": "Coming soon — no data top-up product for this network yet"
+  },
+  "topupDetail": {
+    "metaTitle": "{data} Data Top-up — {network} ({days} days)",
+    "metaDescription": "Top up {data} of data on your existing {network} SIM in DR Congo, valid {days} days. Pay with Bitcoin Lightning or mobile money — added within minutes.",
+    "backToTopups": "Back to all top-ups",
+    "worksOnExistingSimNote": "Works on your existing SIM — no new SIM card or eSIM installation needed.",
+    "speedNote": "Data is added to your number automatically, usually within minutes of payment.",
+    "afterPurchaseStep1": "Payment is confirmed automatically as soon as it's received.",
+    "afterPurchaseStep2": "Data is added directly to the phone number you provided.",
+    "afterPurchaseStep3": "Start using your data right away — nothing to install.",
+    "termsActiveSimRequired": "Requires an active SIM already registered on this network — this does not activate a new line.",
+    "termsNonRefundable": "Non-refundable once the top-up has been sent to the recipient number."
   },
   "planDetail": {
     "buyButton": "Buy this plan",
@@ -71,7 +95,11 @@
     "deliveryNote": "We'll send your eSIM QR code and setup instructions to the contact you provided.",
     "expiresIn": "Invoice expires in",
     "contactLabel": "Email or phone for delivery",
+    "contactLabelOptional": "Email for receipt (optional)",
     "contactPlaceholder": "you@example.com",
+    "recipientPhoneLabel": "Phone number to top up",
+    "recipientPhonePlaceholder": "+243 8xx xxx xxx",
+    "deliveryNoteTopup": "Data has been added directly to {phone}.",
     "startOrder": "Continue to payment"
   },
   "common": {
@@ -93,6 +121,11 @@
     "instructionsBody": "Scan the attached QR code with your phone's camera or your eSIM installer app, or enter this activation code manually:",
     "manualCodeLabel": "Manual activation code",
     "supportNote": "Need help? Just reply to this email.",
-    "footer": "Thank you for choosing MboteData."
+    "footer": "Thank you for choosing MboteData.",
+    "topupSubject": "Your data top-up is on its way — MboteData",
+    "topupIntro": "Your payment is confirmed and your data top-up has been sent.",
+    "topupInstructionsTitle": "What happens next",
+    "topupInstructionsBody": "The data has been added directly to the phone number below — there's nothing to install, just start using it.",
+    "topupRecipientLabel": "Phone number topped up"
   }
 }
