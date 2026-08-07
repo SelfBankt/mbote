@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPlan, formatData, formatPricePerGb } from "@/lib/plans";
+import { getPlan, formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
+import { getUsdToCdfRate } from "@/lib/fx";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
@@ -33,7 +34,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
   const { locale, id } = await params;
   setRequestLocale(locale);
 
-  const [t, plan] = await Promise.all([getTranslations(), getPlan(id)]);
+  const [t, plan, cdfRate] = await Promise.all([getTranslations(), getPlan(id), getUsdToCdfRate()]);
   if (!plan) notFound();
 
   const productJsonLd = {
@@ -90,7 +91,10 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
             </dd>
           </div>
         </dl>
-        <div className="mt-6 text-3xl font-bold text-brand">${plan.priceUsd}</div>
+        <div className="mt-6 flex items-baseline gap-2">
+          <span className="text-3xl font-bold text-brand">${plan.priceUsd}</span>
+          <span className="text-base text-foreground/50">{formatCdf(plan.priceUsd, cdfRate)}</span>
+        </div>
         <div className="text-sm text-foreground/60">{formatPricePerGb(plan.priceUsd, plan.dataAmountMb)}</div>
 
         <div className="mt-6">

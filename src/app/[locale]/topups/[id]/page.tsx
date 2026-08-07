@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { formatData, formatPricePerGb } from "@/lib/plans";
+import { formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
 import { getTopup } from "@/lib/topups";
+import { getUsdToCdfRate } from "@/lib/fx";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
@@ -34,7 +35,7 @@ export default async function TopupDetailPage({ params }: PageProps<"/[locale]/t
   const { locale, id } = await params;
   setRequestLocale(locale);
 
-  const [t, topup] = await Promise.all([getTranslations(), getTopup(id)]);
+  const [t, topup, cdfRate] = await Promise.all([getTranslations(), getTopup(id), getUsdToCdfRate()]);
   // unavailable topups (no confirmed Reloadly data product yet, see topups.ts) aren't linked from
   // the listing page and have nothing purchasable to show — treat like any other unknown id
   if (!topup || !topup.available) notFound();
@@ -93,7 +94,10 @@ export default async function TopupDetailPage({ params }: PageProps<"/[locale]/t
             </dd>
           </div>
         </dl>
-        <div className="mt-6 text-3xl font-bold text-brand">${topup.priceUsd}</div>
+        <div className="mt-6 flex items-baseline gap-2">
+          <span className="text-3xl font-bold text-brand">${topup.priceUsd}</span>
+          <span className="text-base text-foreground/50">{formatCdf(topup.priceUsd, cdfRate)}</span>
+        </div>
         <div className="text-sm text-foreground/60">{formatPricePerGb(topup.priceUsd, topup.dataAmountMb)}</div>
 
         <div className="mt-6">

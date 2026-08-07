@@ -60,3 +60,12 @@ export function formatPricePerGb(priceUsd: number, dataAmountMb: number): string
   if (!gb || !Number.isFinite(gb)) return "";
   return `$${(priceUsd / gb).toFixed(2)}/GB`;
 }
+
+// Formats a USD price as its CDF (Congolese Franc) equivalent for display — takes the
+// already-converted amount rather than a rate, so it stays independent of where the USD->CDF rate
+// comes from (see getUsdToCdfRate() in lib/fx.ts). No decimals: CDF prices aren't shown with
+// centimes in everyday DRC pricing. Not locale-specific, same convention as formatData()/
+// formatPricePerGb() always rendering their units literally regardless of locale.
+export function formatCdf(priceUsd: number, usdToCdfRate: number): string {
+  return `${Math.round(priceUsd * usdToCdfRate).toLocaleString("en-US")} FC`;
+}

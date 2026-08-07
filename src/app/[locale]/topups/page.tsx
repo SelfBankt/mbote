@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { formatData, formatPricePerGb } from "@/lib/plans";
+import { formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
 import { getTopups } from "@/lib/topups";
+import { getUsdToCdfRate } from "@/lib/fx";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { NetworkLogo } from "@/components/NetworkLogo";
 
@@ -25,7 +26,7 @@ export default async function TopupsPage({ params }: PageProps<"/[locale]/topups
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t, topups] = await Promise.all([getTranslations(), getTopups()]);
+  const [t, topups, cdfRate] = await Promise.all([getTranslations(), getTopups(), getUsdToCdfRate()]);
 
   return (
     <div className="max-w-5xl mx-auto px-5 py-12">
@@ -51,7 +52,10 @@ export default async function TopupsPage({ params }: PageProps<"/[locale]/topups
                 </div>
                 <div className="mt-4 flex items-baseline justify-between">
                   <div>
-                    <span className="text-xl font-semibold text-brand">${topup.priceUsd}</span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-xl font-semibold text-brand">${topup.priceUsd}</span>
+                      <span className="text-xs text-foreground/50">{formatCdf(topup.priceUsd, cdfRate)}</span>
+                    </div>
                     <div className="text-xs text-foreground/50">
                       {formatPricePerGb(topup.priceUsd, topup.dataAmountMb)}
                     </div>
