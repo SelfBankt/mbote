@@ -31,7 +31,6 @@
     "subtitle": "Ba forfait nyonso esalaka na réseau ya Vodacom, Orange, to Airtel na Kongo.",
     "dataLabel": "Données",
     "validityLabel": "Ekowumela",
-    "priceFrom": "Kobanda na",
     "viewPlan": "Tala forfait",
     "empty": "Forfait moko te ekokani na oyo oponi sik'oyo.",
     "topupCrossLink": "Ozali na SIM na Kongo? Tondisa données na yo na esika ya eSIM ya sika"
@@ -41,7 +40,6 @@
     "subtitle": "Bakisa données mbala moko na numéro oyo esili kozala actif na Vodacom, Orange, to Airtel na Kongo — SIM ya sika to eSIM esengeli te.",
     "badge": "SIM ya sika esengeli te",
     "validityLabel": "Ekowumela",
-    "priceFrom": "Kobanda na",
     "viewTopup": "Tala recharge",
     "empty": "Recharge moko te ekokani na oyo oponi sik'oyo.",
     "comingSoon": "Ekoya kala te — recharge ya données ezali nanu te mpo na réseau oyo"

@@ -31,7 +31,6 @@
     "subtitle": "Tous les forfaits fonctionnent sur le réseau Vodacom, Orange ou Airtel en RDC.",
     "dataLabel": "Données",
     "validityLabel": "Validité",
-    "priceFrom": "À partir de",
     "viewPlan": "Voir le forfait",
     "empty": "Aucun forfait ne correspond à vos filtres pour le moment.",
     "topupCrossLink": "Vous avez déjà une carte SIM en RDC ? Rechargez vos données plutôt"
@@ -41,7 +40,6 @@
     "subtitle": "Ajoutez des données directement à un numéro déjà actif sur Vodacom, Orange ou Airtel en RDC — sans nouvelle carte SIM ni eSIM.",
     "badge": "Aucune nouvelle carte SIM nécessaire",
     "validityLabel": "Validité",
-    "priceFrom": "À partir de",
     "viewTopup": "Voir la recharge",
     "empty": "Aucune recharge ne correspond à vos filtres pour le moment.",
     "comingSoon": "Bientôt disponible — pas encore de recharge de données pour ce réseau"

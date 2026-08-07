@@ -51,7 +51,6 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
               </div>
               <div className="mt-4 flex items-baseline justify-between">
                 <div>
-                  <span className="text-xs text-foreground/60">{t("plans.priceFrom")} </span>
                   <span className="text-xl font-semibold text-brand">${plan.priceUsd}</span>
                   <div className="text-xs text-foreground/50">
                     {formatPricePerGb(plan.priceUsd, plan.dataAmountMb)}

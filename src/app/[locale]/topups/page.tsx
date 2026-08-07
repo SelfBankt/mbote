@@ -51,7 +51,6 @@ export default async function TopupsPage({ params }: PageProps<"/[locale]/topups
                 </div>
                 <div className="mt-4 flex items-baseline justify-between">
                   <div>
-                    <span className="text-xs text-foreground/60">{t("topups.priceFrom")} </span>
                     <span className="text-xl font-semibold text-brand">${topup.priceUsd}</span>
                     <div className="text-xs text-foreground/50">
                       {formatPricePerGb(topup.priceUsd, topup.dataAmountMb)}
