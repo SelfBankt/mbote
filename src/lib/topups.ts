@@ -32,12 +32,16 @@
 //     in the display text, which reliably separates every combo from every pure-data product in both
 //     providers' live catalogs as of this writing.
 //
-// Pricing: customer-facing priceUsd = wholesaleUsd * 1.10 (10% markup, business decision,
-// 2026-08-07 — same figure originally set for Reloadly-only, now applied uniformly to DingConnect
-// products too since no separate figure was given). Catalog is sorted by $/GB ascending (best
-// value first) per 2026-08-07 request. Fetched live and cached in memory for a short TTL — see
-// CACHE_TTL_MS — rather than hand-maintained, since both providers' real SKU lists/prices can
-// change over time and a stale hardcoded copy would silently drift from what's actually sellable.
+// Pricing: customer-facing priceUsd = wholesaleUsd * 1.05 (5% markup, business decision,
+// 2026-08-07, revised down from an initial 10% — applied uniformly across the whole catalog,
+// both providers, every tier). Catalog is sorted by $/GB ascending (best
+// value first) per 2026-08-07 request. When both providers sell the identical product (same
+// network/data/validity), only the cheaper one is kept (see dedupeCheaper()) — showing both would
+// just be clutter, and as of this writing Reloadly is cheaper across the board (see CLAUDE.md),
+// so this mostly trims DingConnect's Vodacom duplicates while leaving its Airtel-exclusive
+// products untouched. Fetched live and cached in memory for a short TTL — see CACHE_TTL_MS —
+// rather than hand-maintained, since both providers' real SKU lists/prices can change over time
+// and a stale hardcoded copy would silently drift from what's actually sellable.
 import { NETWORK_LOGOS, type Network } from "@/lib/plans";
 import * as reloadly from "@/lib/reloadly";
 import * as dingconnect from "@/lib/dingconnect";
@@ -65,7 +69,7 @@ export type DataTopup = {
   dingconnectSendCurrencyIso: string;
 };
 
-const MARKUP = 1.1;
+const MARKUP = 1.05;
 
 const ORANGE_COMING_SOON: DataTopup = {
   id: "cd-orange-topup-comingsoon",
@@ -178,6 +182,23 @@ function pricePerGb(t: DataTopup): number {
   return t.priceUsd / (t.dataAmountMb / 1024);
 }
 
+// When both providers happen to sell the identical product (same network, same data amount, same
+// validity — e.g. both currently offer Vodacom 3.6GB/7d), only the cheaper one is worth showing;
+// the other is strictly dominated and just clutters the list. As of this writing Reloadly wins
+// every such overlap (see CLAUDE.md), so this mostly trims DingConnect's Vodacom duplicates while
+// leaving its Airtel-exclusive and other non-overlapping products untouched.
+function dedupeCheaper(topups: DataTopup[]): DataTopup[] {
+  const cheapestByKey = new Map<string, DataTopup>();
+  for (const t of topups) {
+    const key = `${t.network}|${t.dataAmountMb}|${t.validityDays}`;
+    const existing = cheapestByKey.get(key);
+    if (!existing || t.priceUsd < existing.priceUsd) {
+      cheapestByKey.set(key, t);
+    }
+  }
+  return [...cheapestByKey.values()];
+}
+
 let cache: { data: DataTopup[]; expiresAt: number } | null = null;
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
@@ -193,10 +214,10 @@ async function buildCatalog(): Promise<DataTopup[]> {
     }),
   ]);
 
-  const available = [
+  const available = dedupeCheaper([
     ...buildFromReloadly(reloadlyProducts),
     ...buildFromDingConnect(dingconnectProducts),
-  ].sort((a, b) => pricePerGb(a) - pricePerGb(b));
+  ]).sort((a, b) => pricePerGb(a) - pricePerGb(b));
 
   return [...available, ORANGE_COMING_SOON];
 }

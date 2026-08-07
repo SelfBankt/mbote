@@ -124,13 +124,16 @@ defensively and **excludes rather than guesses** whenever something doesn't chec
   site-wide as a pure "data top-up" product, and ranking these by $/GB would make them look like
   terrible value when they actually bundle in real extra value the data-only comparison ignores.
 
-Customer price = wholesale × 1.10 (10% markup, business decision, 2026-08-07, applied uniformly to
-both providers). **Catalog is sorted by $/GB ascending** (best value first, per 2026-08-07
-request) — as of this writing that's ~22 available products spanning both Vodacom (both providers)
-and Airtel (DingConnect only). Orange has no confirmed data product on *either* provider — kept as
-a single `available: false` ("coming soon") entry, not linked from `/topups`, rejected by
-`POST /api/orders` as defense in depth — same "real, confirmed gap, not an oversight" treatment as
-the Machankura DRC gap below.
+Customer price = wholesale × 1.05 (5% markup, business decision, 2026-08-07, revised down from an
+initial 10% — applied uniformly across the whole catalog, both providers, every tier).
+**Catalog is sorted by $/GB ascending** (best value first, per 2026-08-07 request). When both
+providers sell the identical product (same network/data/validity), only the cheaper one is kept —
+as of this writing Reloadly wins every such overlap, so this mostly trims DingConnect's Vodacom
+duplicates while leaving its Airtel-exclusive products untouched. As of this writing that's ~17
+available products spanning both Vodacom (both providers) and Airtel (DingConnect only). Orange
+has no confirmed data product on *either* provider — kept as a single `available: false`
+("coming soon") entry, not linked from `/topups`, rejected by `POST /api/orders` as defense in
+depth — same "real, confirmed gap, not an oversight" treatment as the Machankura DRC gap below.
 
 Each `DataTopup` carries exactly what's needed to fulfill via its own provider
 (`reloadlyOperatorId`/`reloadlyWholesaleUsd` or `dingconnectSkuCode`/`dingconnectSendValue`/
@@ -237,4 +240,4 @@ The GitHub repo is connected too, so pushes to `main` also trigger a deployment 
 - Maya Mobile eSIM fulfillment is still mocked — no real partner account yet (see "eSIM fulfillment" above), so real orders confirm payment correctly but don't provision a real eSIM.
 - Reloadly and DingConnect production credentials both exist and are confirmed working for auth + catalog lookups (see "Data top-ups (Reloadly + DingConnect)" above), but the actual billable top-up calls — `sendTopup()` and `sendTransfer()` — have never been exercised for real; confirm each works before relying on them for a real customer order. DingConnect is not yet added to Vercel, so the deployed site's Airtel coverage and DingConnect Vodacom SKUs are still mock-mode there.
 - Only Vodacom (both providers) and Airtel (DingConnect only) have real data products for DRC — Orange has none on either provider and is shown as "coming soon," a confirmed gap rather than an oversight (mirrors the Machankura DRC gap).
-- No real BTC/USD price feed for `usdToSats()` (see above) — similarly, DingConnect's GBP wholesale prices are converted via a live-but-unpinned FX rate (`src/lib/fx.ts`), not a treasury-grade rate source. Fine for a 10%-margin consumer product, not for anything sensitive to a few basis points.
+- No real BTC/USD price feed for `usdToSats()` (see above) — similarly, DingConnect's GBP wholesale prices are converted via a live-but-unpinned FX rate (`src/lib/fx.ts`), not a treasury-grade rate source. Fine for a 5%-margin consumer product, not for anything sensitive to a few basis points.
