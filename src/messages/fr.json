@@ -12,17 +12,18 @@
   },
   "home": {
     "heroTitleLine2": "Restez connecté en RDC.",
-    "heroSubtitle": "Comparez les forfaits eSIM des réseaux de confiance, puis payez comme vous voulez — portefeuille Lightning, ou directement depuis votre solde mobile money.",
-    "cta": "Comparer les forfaits",
+    "heroSubtitle": "Comparez les recharges au meilleur $/Go et les forfaits eSIM des réseaux de confiance, puis payez comme vous voulez — portefeuille Lightning, ou directement depuis votre solde mobile money.",
+    "cta": "Comparer les eSIM",
+    "ctaTopup": "Comparer les recharges",
     "badgeNetwork": "Réseaux Vodacom & Orange",
     "badgePayment": "Bitcoin Lightning & mobile money",
     "badgeDelivery": "Livraison instantanée par e-mail",
     "step1Title": "Comparez",
-    "step1Body": "Parcourez les forfaits eSIM pour la RDC par prix, volume de données et validité.",
+    "step1Body": "Comparez les recharges et les forfaits eSIM pour la RDC par prix, volume de données et validité.",
     "step2Title": "Payez à votre façon",
     "step2Body": "Payez avec un portefeuille Bitcoin Lightning, ou avec M-Pesa / mobile money via Machankura — sans carte bancaire.",
     "step3Title": "Restez connecté",
-    "step3Body": "Votre code QR eSIM et les instructions d'installation arrivent dès que le paiement est confirmé.",
+    "step3Body": "Votre confirmation de recharge ou votre code QR eSIM arrivent dès que le paiement est confirmé.",
     "finalCtaTitle": "Prêt à vous connecter ?"
   },
   "plans": {

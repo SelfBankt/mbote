@@ -65,9 +65,15 @@ function Home() {
           </p>
 
           <div
-            className="animate-fade-in-up mt-9"
+            className="animate-fade-in-up mt-9 flex flex-wrap items-center justify-center gap-4"
             style={{ animationDelay: "240ms" }}
           >
+            <Link
+              href="/topups"
+              className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 shadow-[0_8px_30px_-8px_rgba(255,131,0,0.6)] hover:brightness-105 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-8px_rgba(255,131,0,0.7)] transition-all"
+            >
+              {t("home.ctaTopup")}
+            </Link>
             <Link
               href="/plans"
               className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 shadow-[0_8px_30px_-8px_rgba(255,131,0,0.6)] hover:brightness-105 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-8px_rgba(255,131,0,0.7)] transition-all"
@@ -112,12 +118,20 @@ function Home() {
           <h2 className="text-2xl md:text-3xl font-semibold text-balance">
             {t("home.finalCtaTitle")}
           </h2>
-          <Link
-            href="/plans"
-            className="inline-block mt-6 bg-accent text-brand font-semibold rounded-full px-8 py-3.5 hover:brightness-105 hover:-translate-y-0.5 transition-all"
-          >
-            {t("home.cta")}
-          </Link>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/topups"
+              className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 hover:brightness-105 hover:-translate-y-0.5 transition-all"
+            >
+              {t("home.ctaTopup")}
+            </Link>
+            <Link
+              href="/plans"
+              className="inline-block bg-accent text-brand font-semibold rounded-full px-8 py-3.5 hover:brightness-105 hover:-translate-y-0.5 transition-all"
+            >
+              {t("home.cta")}
+            </Link>
+          </div>
         </div>
       </section>
     </div>

@@ -12,17 +12,18 @@
   },
   "home": {
     "heroTitleLine2": "Kangama na Kongo.",
-    "heroSubtitle": "Tala mpe kokanisa ba forfait ya eSIM ya ba réseaux ya solo, na nsima futa ndenge olingi — na portefeuille Lightning to na mbongo ya mobile money.",
-    "cta": "Kokanisa ba forfait",
+    "heroSubtitle": "Tala mpe kokanisa ba recharge na ntalo ya se na $/Go, mpe ba forfait ya eSIM ya ba réseaux ya solo, na nsima futa ndenge olingi — na portefeuille Lightning to na mbongo ya mobile money.",
+    "cta": "Kokanisa ba eSIM",
+    "ctaTopup": "Kokanisa ba recharge",
     "badgeNetwork": "Ba réseau Vodacom na Orange",
     "badgePayment": "Bitcoin Lightning na mobile money",
     "badgeDelivery": "Ekoya na email mbala moko",
     "step1Title": "Kokanisa",
-    "step1Body": "Tala ba forfait ya eSIM ya Kongo na ntalo, données, mpe ntango ekowumela.",
+    "step1Body": "Kokanisa ba recharge na ba forfait ya eSIM ya Kongo na ntalo, données, mpe ntango ekowumela.",
     "step2Title": "Futa ndenge olingi",
     "step2Body": "Futa na portefeuille Bitcoin Lightning, to na M-Pesa / mobile money na nzela ya Machankura — carte bancaire te.",
     "step3Title": "Kangama",
-    "step3Body": "Code QR ya eSIM na yo ekoya na ba instructions nsima ya kondimama ya paiement.",
+    "step3Body": "Confirmation ya recharge to code QR ya eSIM na yo ekoya nsima ya kondimama ya paiement.",
     "finalCtaTitle": "Oyebi komikangisa?"
   },
   "plans": {
