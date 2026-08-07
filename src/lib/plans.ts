@@ -52,3 +52,11 @@ export function formatData(dataAmountMb: number): string {
   if (dataAmountMb >= 1024) return `${dataAmountMb / 1024} GB`;
   return `${dataAmountMb} MB`;
 }
+
+// Shared by both plans (eSIM) and topups pages — not locale-specific, same convention as
+// formatData() always rendering "GB"/"MB" literally regardless of locale.
+export function formatPricePerGb(priceUsd: number, dataAmountMb: number): string {
+  const gb = dataAmountMb / 1024;
+  if (!gb || !Number.isFinite(gb)) return "";
+  return `$${(priceUsd / gb).toFixed(2)}/GB`;
+}

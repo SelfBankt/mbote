@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getPlans, formatData } from "@/lib/plans";
+import { getPlans, formatData, formatPricePerGb } from "@/lib/plans";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { NetworkLogo } from "@/components/NetworkLogo";
 
@@ -53,6 +53,9 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
                 <div>
                   <span className="text-xs text-foreground/60">{t("plans.priceFrom")} </span>
                   <span className="text-xl font-semibold text-brand">${plan.priceUsd}</span>
+                  <div className="text-xs text-foreground/50">
+                    {formatPricePerGb(plan.priceUsd, plan.dataAmountMb)}
+                  </div>
                 </div>
                 <span className="text-sm font-medium text-accent">{t("plans.viewPlan")} →</span>
               </div>

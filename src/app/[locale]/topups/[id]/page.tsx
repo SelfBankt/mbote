@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { formatData } from "@/lib/plans";
+import { formatData, formatPricePerGb } from "@/lib/plans";
 import { getTopup } from "@/lib/topups";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
@@ -94,6 +94,7 @@ export default async function TopupDetailPage({ params }: PageProps<"/[locale]/t
           </div>
         </dl>
         <div className="mt-6 text-3xl font-bold text-brand">${topup.priceUsd}</div>
+        <div className="text-sm text-foreground/60">{formatPricePerGb(topup.priceUsd, topup.dataAmountMb)}</div>
 
         <div className="mt-6">
           <BuyForm planId={topup.id} locale={locale} productType="topup" />

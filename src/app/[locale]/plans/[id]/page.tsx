@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPlan, formatData } from "@/lib/plans";
+import { getPlan, formatData, formatPricePerGb } from "@/lib/plans";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
@@ -91,6 +91,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
           </div>
         </dl>
         <div className="mt-6 text-3xl font-bold text-brand">${plan.priceUsd}</div>
+        <div className="text-sm text-foreground/60">{formatPricePerGb(plan.priceUsd, plan.dataAmountMb)}</div>
 
         <div className="mt-6">
           <BuyForm planId={plan.id} locale={locale} productType="esim" />
