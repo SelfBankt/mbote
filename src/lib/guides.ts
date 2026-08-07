@@ -33,6 +33,404 @@ export type Guide = {
 
 const GUIDES: Guide[] = [
   {
+    slug: "comment-recharger-donnees-rdc",
+    updatedAt: "2026-08-08",
+    ctaHref: "/topups",
+    translations: {
+      fr: {
+        title: "Comment recharger des données mobiles en RDC sans acheter d'eSIM",
+        metaDescription:
+          "Ajoutez des données à un numéro que vous avez déjà en RDC — sans nouvelle carte SIM, sans eSIM, sans installation. Comparez les recharges Vodacom et Airtel et payez en Bitcoin Lightning ou mobile money.",
+        intro:
+          "Si vous avez déjà une carte SIM active sur Vodacom ou Airtel en RDC, vous n'avez pas besoin d'une nouvelle eSIM pour obtenir plus de données — une recharge de données ajoute des données directement au numéro que vous utilisez déjà, sans rien à installer. Voici comment ça marche.",
+        sections: [
+          {
+            heading: "Recharge ou eSIM : quelle différence ?",
+            paragraphs: [
+              "Une eSIM est une toute nouvelle ligne mobile — utile si vous arrivez en RDC sans carte SIM locale, ou si vous voulez une ligne données dédiée sur un téléphone compatible.",
+              "Une recharge de données fait quelque chose de plus simple : elle ajoute des données directement à un numéro qui a déjà une carte SIM active en RDC — le vôtre, ou celui de quelqu'un d'autre, comme un proche que vous soutenez depuis l'étranger. Pas de nouvelle carte SIM, pas d'installation d'eSIM, rien à scanner.",
+            ],
+          },
+          {
+            heading: "Quels réseaux sont disponibles",
+            paragraphs: [
+              "Les recharges couvrent actuellement les numéros Vodacom et Airtel en RDC. Orange n'a pas encore d'option de recharge de données disponible chez nos fournisseurs — c'est affiché comme « bientôt disponible » plutôt que retiré, car cela peut changer.",
+              "Chaque recharge affiche son prix par Go, pour comparer facilement la valeur entre les différentes tailles et durées de validité avant de choisir.",
+            ],
+          },
+          {
+            heading: "Étape 1 : choisissez une recharge et entrez le numéro",
+            paragraphs: [
+              "Parcourez les recharges disponibles, choisissez celle qui correspond au volume de données et à la durée de validité dont vous avez besoin, puis entrez le numéro de téléphone qui doit recevoir les données — au format international (ex. +243 8xx xxx xxx). Vous pouvez recharger votre propre numéro ou celui d'une autre personne.",
+            ],
+          },
+          {
+            heading: "Étape 2 : payez",
+            paragraphs: [
+              "Payez de la même manière que partout ailleurs sur MboteData : scannez le code QR Lightning avec un portefeuille Bitcoin, ou payez directement depuis votre solde mobile money via Machankura là où c'est disponible — sans carte bancaire internationale.",
+            ],
+          },
+          {
+            heading: "Étape 3 : les données arrivent automatiquement",
+            paragraphs: [
+              "Dès que le paiement est confirmé, les données sont ajoutées directement au numéro que vous avez saisi — généralement en quelques minutes. Il n'y a aucun code QR à scanner ni rien à installer ; le destinataire peut simplement commencer à utiliser ses données.",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Dois-je être moi-même en RDC pour envoyer une recharge ?",
+            answer:
+              "Non — vous pouvez recharger un numéro de RDC depuis n'importe où, c'est pourquoi c'est un moyen courant d'envoyer des données à la famille ou à des amis en RDC sans qu'ils aient besoin d'une carte bancaire ou d'un portefeuille Bitcoin eux-mêmes.",
+          },
+          {
+            question: "Quelle est la différence avec offrir une eSIM à quelqu'un ?",
+            answer:
+              "Une eSIM n'aide que si le téléphone du destinataire est compatible eSIM et qu'il accepte d'en installer une. Une recharge fonctionne sur n'importe quel téléphone ayant déjà une carte SIM active sur un réseau disponible — aucune installation n'est nécessaire de son côté.",
+          },
+          {
+            question: "Et si le numéro que je veux recharger est chez Orange ?",
+            answer:
+              "Orange n'est pas encore disponible — c'est indiqué « bientôt disponible » sur la page des recharges plutôt que masqué, car cela dépend de l'ajout du support par nos fournisseurs, pas de nous directement.",
+          },
+          {
+            question: "À quelle vitesse les données arrivent-elles ?",
+            answer:
+              "Généralement en quelques minutes après la confirmation du paiement — il n'y a pas d'étape d'installation à attendre, contrairement à une eSIM.",
+          },
+        ],
+        ctaText: "Prêt à recharger un numéro en RDC ?",
+        ctaButtonText: "Voir les recharges →",
+      },
+      en: {
+        title: "How to Top Up Mobile Data in DR Congo (No eSIM Needed)",
+        metaDescription:
+          "Add data to a phone number you already have in DR Congo — no new SIM, no eSIM, no installation. Compare Vodacom and Airtel top-ups and pay with Bitcoin Lightning or mobile money.",
+        intro:
+          "If you already have an active SIM card on Vodacom or Airtel in DR Congo, you don't need a new eSIM to get more data — a data top-up adds data directly to the number you already use, with nothing to install. Here's how it works.",
+        sections: [
+          {
+            heading: "Top-up vs. eSIM: what's the difference?",
+            paragraphs: [
+              "An eSIM is a whole new mobile line — useful if you're arriving in DR Congo without a local SIM at all, or want a dedicated data-only line on a phone that supports it.",
+              "A data top-up does something simpler: it adds data straight to a phone number that already has an active SIM in DR Congo — yours, or someone else's, like a family member you're supporting from abroad. No new SIM card, no eSIM installation, nothing to scan.",
+            ],
+          },
+          {
+            heading: "Which networks are supported",
+            paragraphs: [
+              "Top-ups currently cover Vodacom and Airtel numbers in DR Congo. Orange doesn't have a data top-up option available yet from either of our providers — it's shown as \"coming soon\" rather than removed, since that could change.",
+              "Each top-up listing shows its price per GB, so you can compare value across sizes and validity periods at a glance before choosing.",
+            ],
+          },
+          {
+            heading: "Step 1: pick a top-up and enter the phone number",
+            paragraphs: [
+              "Browse the available top-ups, choose one that fits the data amount and validity period you need, and enter the phone number that should receive the data — in international format (e.g. +243 8xx xxx xxx). You can top up your own number or someone else's.",
+            ],
+          },
+          {
+            heading: "Step 2: pay",
+            paragraphs: [
+              "Pay the same way as everywhere else on MboteData: scan the Lightning QR code with a Bitcoin wallet, or pay straight from your mobile money balance via Machankura where available — no international bank card needed.",
+            ],
+          },
+          {
+            heading: "Step 3: data lands automatically",
+            paragraphs: [
+              "As soon as payment is confirmed, the data is added directly to the number you entered — usually within minutes. There's no QR code to scan and nothing to install; the recipient can just start using their data.",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Do I need to be in DR Congo myself to send a top-up?",
+            answer:
+              "No — you can top up a DR Congo number from anywhere, which is why this is a common way to send data to family or friends in DR Congo without them needing a bank card or a Bitcoin wallet themselves.",
+          },
+          {
+            question: "How is this different from buying someone an eSIM?",
+            answer:
+              "An eSIM only helps if the recipient's phone supports eSIM and they're willing to install one. A top-up works on any phone with an existing SIM on a supported network — no installation required on their end.",
+          },
+          {
+            question: "What if the number I want to top up is on Orange?",
+            answer:
+              "Orange isn't available yet — it's marked \"coming soon\" on the top-ups page rather than hidden, since it depends on our providers adding support, not something we control directly.",
+          },
+          {
+            question: "How fast does the data arrive?",
+            answer:
+              "Typically within minutes of payment being confirmed — there's no installation step to wait on, unlike an eSIM.",
+          },
+        ],
+        ctaText: "Ready to top up a number in DR Congo?",
+        ctaButtonText: "View top-ups →",
+      },
+      ln: {
+        title: "Ndenge ya kotondisa données ya mobile na Kongo (eSIM esengeli te)",
+        metaDescription:
+          "Bakisa données na numéro oyo ozali na yango déjà na Kongo — SIM ya sika te, eSIM te, kotia eloko te. Kokanisa ba recharge ya Vodacom na Airtel mpe futa na Bitcoin Lightning to mobile money.",
+        intro:
+          "Soki ozali déjà na SIM oyo ezali active na Vodacom to Airtel na Kongo, osengeli na eSIM ya sika te mpo na kozua données ebele — recharge ya données ebakisaka données mbala moko na numéro oyo osalelaka déjà, eloko ya kotia ezali te. Tala ndenge esalaka.",
+        sections: [
+          {
+            heading: "Recharge to eSIM: bokeseni nini?",
+            paragraphs: [
+              "eSIM ezali ligne ya mobile ya sika mobimba — esungaka soki oyei na Kongo na SIM ya mboka te, to olingi ligne ya données kaka na téléphone oyo ekoki na yango.",
+              "Recharge ya données esalaka eloko ya pete koleka: ebakisaka données mbala moko na numéro oyo ezali déjà na SIM active na Kongo — ya yo moko, to ya moto mosusu, lokola libota oyo ozali kosunga uta na mboka mosusu. SIM ya sika te, kotia eSIM te, eloko ya ko-scanner te.",
+            ],
+          },
+          {
+            heading: "Ba réseau nini ezali disponible",
+            paragraphs: [
+              "Ba recharge ezali sik'oyo mpo na ba numéro ya Vodacom na Airtel na Kongo. Orange ezali nanu na option ya recharge ya données te epai ya ba fournisseur na biso — emonisami lokola «ekoya kala te» na esika ya kolongolama, mpo yango ekoki kobongwana.",
+              "Recharge moko na moko elakisaka ntalo na yango na Go, mpo okoka kokanisa valeur na kati ya ba taille na ba durée ya validité liboso ya kopona.",
+            ],
+          },
+          {
+            heading: "Etape 1: pona recharge mpe kotisa numéro",
+            paragraphs: [
+              "Tala ba recharge oyo ezali, pona oyo ekokani na données mpe durée ya validité oyo osengeli na yango, na nsima kotisa numéro ya téléphone oyo esengeli kozua données — na format internationale (ex. +243 8xx xxx xxx). Okoki kotondisa numéro na yo moko to ya moto mosusu.",
+            ],
+          },
+          {
+            heading: "Etape 2: futa",
+            paragraphs: [
+              "Futa ndenge moko na bisika mosusu nyonso na MboteData: tanga code QR ya Lightning na portefeuille Bitcoin, to futa mbala moko na mbongo ya mobile money na yo na nzela ya Machankura esika ezali disponible — carte bancaire ya mboka mosusu esengeli te.",
+            ],
+          },
+          {
+            heading: "Etape 3: données ekoya mbala moko",
+            paragraphs: [
+              "Tango kaka paiement endimami, données ebakisami mbala moko na numéro oyo otisaki — mingi mingi na ba minute. Code QR ya ko-scanner ezali te mpe eloko ya kotia ezali te; moto akozwa akoki kaka kobanda kosalela données na ye.",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Nasengeli kozala ngai moko na Kongo mpo na kotinda recharge?",
+            answer:
+              "Te — okoki kotondisa numéro ya Kongo uta esika nyonso, yango wana ezali lolenge ya boyokani mpo na kotindela libota to baninga na Kongo données, na kozanga ete bango bazala na carte bancaire to portefeuille Bitcoin bango moko.",
+          },
+          {
+            question: "Bokeseni nini na kopesa moto eSIM?",
+            answer:
+              "eSIM esungaka kaka soki téléphone ya moto oyo akozwa yango ekoki na eSIM mpe andimi kotia yango. Recharge esalaka na téléphone nyonso oyo ezali déjà na SIM active na réseau oyo ezali disponible — kotia eloko esengeli te na ngambo na ye.",
+          },
+          {
+            question: "Soki numéro oyo nalingi kotondisa ezali na Orange?",
+            answer:
+              "Orange ezali nanu disponible te — emonisami «ekoya kala te» na page ya ba recharge na esika ya kobombama, mpo yango etali ko-bakisama ya support na ba fournisseur na biso, likambo oyo biso moko tokambaka te mbala moko.",
+          },
+          {
+            question: "Données ekoya noki boni?",
+            answer:
+              "Mbala mingi na ba minute nsima ya kondimama ya paiement — etape ya kotia eloko ezali te ya kozela, na bokeseni na eSIM.",
+          },
+        ],
+        ctaText: "Oyebi kotondisa numéro na Kongo?",
+        ctaButtonText: "Tala ba recharge →",
+      },
+    },
+  },
+  {
+    slug: "recharge-vs-esim-rdc",
+    updatedAt: "2026-08-08",
+    ctaHref: "/topups",
+    translations: {
+      fr: {
+        title: "Recharge de données vs eSIM en RDC : que choisir ?",
+        metaDescription:
+          "Recharge de données ou eSIM pour se connecter en RDC ? Comparatif pratique : pour qui chaque option est faite, réseaux couverts, rapidité, et comment choisir.",
+        intro:
+          "MboteData vend deux choses différentes : une toute nouvelle ligne de données eSIM, et une recharge de données pour un numéro que vous avez déjà. Elles répondent à des besoins différents — voici comment savoir laquelle vous convient.",
+        sections: [
+          {
+            heading: "La différence de fond",
+            paragraphs: [
+              "Une eSIM vous donne une toute nouvelle ligne mobile, installée sur votre téléphone comme une SIM numérique — c'est pour quand vous n'avez pas encore de connexion en RDC, ou voulez une ligne données dédiée.",
+              "Une recharge de données ajoute des données à un numéro déjà actif sur un réseau RDC pris en charge — le vôtre ou celui de quelqu'un d'autre. Rien à installer ; elle recharge simplement une ligne existante.",
+            ],
+          },
+          {
+            heading: "Choisissez une recharge si...",
+            paragraphs: [
+              "Vous (ou quelqu'un que vous soutenez) avez déjà une carte SIM Vodacom ou Airtel active en RDC et avez juste besoin de plus de données.",
+              "Vous voulez envoyer des données à de la famille ou des amis en RDC depuis l'étranger, sans qu'ils aient besoin d'un portefeuille Bitcoin, d'une carte bancaire, ou d'aucune configuration technique de leur côté.",
+              "Vous voulez que les données arrivent le plus vite possible — généralement en quelques minutes, puisqu'il n'y a pas d'étape d'installation.",
+            ],
+          },
+          {
+            heading: "Choisissez une eSIM si...",
+            paragraphs: [
+              "Vous voyagez en RDC et n'avez encore aucune carte SIM locale.",
+              "Votre téléphone est compatible eSIM et vous voulez une ligne de données dédiée que vous contrôlez entièrement, séparée d'une carte SIM physique.",
+              "Vous devez créer un nouveau numéro plutôt qu'ajouter des données à un numéro existant.",
+            ],
+          },
+          {
+            heading: "La couverture réseau diffère entre les deux",
+            paragraphs: [
+              "Les forfaits eSIM ici fonctionnent sur Vodacom ou Orange. Les recharges de données couvrent actuellement Vodacom et Airtel — les recharges Orange ne sont pas encore disponibles chez nos fournisseurs de recharge, affichées comme « bientôt disponible » plutôt que masquées. Vérifiez la couverture de votre réseau spécifique avant de choisir.",
+            ],
+          },
+          {
+            heading: "Le paiement est identique dans les deux cas",
+            paragraphs: [
+              "Les forfaits eSIM et les recharges de données se paient de la même manière sur MboteData : scannez un code QR Lightning avec un portefeuille Bitcoin, ou payez depuis votre solde mobile money via Machankura — sans carte bancaire internationale dans les deux cas.",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Puis-je acheter une recharge si je ne sais pas si la SIM du destinataire est active ?",
+            answer:
+              "La recharge est livrée au numéro que vous saisissez, mais elle n'a d'effet que si ce numéro a déjà une carte SIM active sur un réseau pris en charge — vérifiez d'abord avec le destinataire en cas de doute.",
+          },
+          {
+            question: "Une recharge est-elle moins chère qu'une eSIM ?",
+            answer:
+              "Elles ne sont pas vraiment comparables sur le seul prix — une eSIM inclut une toute nouvelle ligne, tandis qu'une recharge ajoute seulement des données à une ligne déjà existante. Comparez le prix par Go affiché sur chaque offre pour une comparaison plus juste de la valeur des données spécifiquement.",
+          },
+          {
+            question: "Puis-je passer d'une recharge à une eSIM plus tard ?",
+            answer:
+              "Oui — ce sont des achats indépendants. Acheter une recharge n'affecte en rien votre capacité à acheter aussi une eSIM plus tard, et inversement.",
+          },
+        ],
+        ctaText: "Prêt à recharger un numéro en RDC ?",
+        ctaButtonText: "Voir les recharges →",
+      },
+      en: {
+        title: "Data Top-up vs. eSIM in DR Congo: Which Should You Choose?",
+        metaDescription:
+          "Data top-up or eSIM to get connected in DR Congo? A practical comparison: who each option is for, what networks are covered, speed, and how to choose.",
+        intro:
+          "MboteData sells two different things: a brand-new eSIM data line, and a data top-up for a phone number you already have. They solve different problems — here's how to tell which one you actually need.",
+        sections: [
+          {
+            heading: "The core difference",
+            paragraphs: [
+              "An eSIM gives you a whole new mobile line, installed on your phone as a digital SIM — it's for when you don't already have connectivity in DR Congo, or want a dedicated data-only line.",
+              "A data top-up adds data to a phone number that's already active on a supported DR Congo network — yours or someone else's. Nothing to install; it just tops up an existing line.",
+            ],
+          },
+          {
+            heading: "Choose a top-up if...",
+            paragraphs: [
+              "You (or someone you're supporting) already has an active Vodacom or Airtel SIM in DR Congo and just needs more data.",
+              "You want to send data to family or friends in DR Congo from abroad, without them needing a Bitcoin wallet, a bank card, or any technical setup on their end.",
+              "You want the data to land as fast as possible — usually within minutes, since there's no install step.",
+            ],
+          },
+          {
+            heading: "Choose an eSIM if...",
+            paragraphs: [
+              "You're traveling to DR Congo and don't have a local SIM at all yet.",
+              "Your phone supports eSIM and you want a dedicated data line you fully control, separate from a physical SIM.",
+              "You need to set up a new number rather than add data to an existing one.",
+            ],
+          },
+          {
+            heading: "Network coverage differs between the two",
+            paragraphs: [
+              "eSIM plans here run on Vodacom or Orange. Data top-ups currently cover Vodacom and Airtel — Orange top-ups aren't available yet from either top-up provider, shown as \"coming soon\" rather than hidden. Check the coverage for your specific network before choosing.",
+            ],
+          },
+          {
+            heading: "Payment is identical either way",
+            paragraphs: [
+              "Both eSIM plans and data top-ups are paid the same way on MboteData: scan a Lightning QR code with a Bitcoin wallet, or pay from your mobile money balance via Machankura — no international bank card needed for either.",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Can I buy a top-up if I don't know whether the recipient's SIM is active?",
+            answer:
+              "The top-up is delivered to whatever number you enter, but it only has an effect if that number already has an active SIM on a supported network — check with the recipient first if you're not sure.",
+          },
+          {
+            question: "Is a top-up cheaper than an eSIM?",
+            answer:
+              "They're not really comparable on price alone — an eSIM includes a brand-new line, while a top-up only adds data to a line that already exists. Compare the $/GB shown on each listing for the fairest comparison of data value specifically.",
+          },
+          {
+            question: "Can I switch from a top-up to an eSIM later?",
+            answer:
+              "Yes — they're independent purchases. Nothing about buying a top-up affects your ability to also buy an eSIM later, or vice versa.",
+          },
+        ],
+        ctaText: "Ready to top up a number in DR Congo?",
+        ctaButtonText: "View top-ups →",
+      },
+      ln: {
+        title: "Recharge ya données to eSIM na Kongo: nini opona?",
+        metaDescription:
+          "Recharge ya données to eSIM mpo na kokangama na Kongo? Comparaison ya practique: mpo na banani lolenge na lolenge ekoki, ba réseau oyo ezali couvert, vitesse, mpe ndenge ya kopona.",
+        intro:
+          "MboteData etekisaka biloko mibale ekeseni: ligne ya données ya eSIM ya sika mobimba, mpe recharge ya données mpo na numéro oyo ozali na yango déjà. Ezali mpo na ba besoin ekeseni — tala ndenge ya koyeba oyo ekoki na yo.",
+        sections: [
+          {
+            heading: "Bokeseni ya solo",
+            paragraphs: [
+              "eSIM epesaka yo ligne ya mobile ya sika mobimba, oyo etiami na téléphone na yo lokola SIM ya numérique — ezali mpo na tango ozali nanu na connexion te na Kongo, to olingi ligne ya données kaka.",
+              "Recharge ya données ebakisaka données na numéro oyo ezali déjà active na réseau ya Kongo oyo ezali couvert — ya yo moko to ya moto mosusu. Eloko ya kotia ezali te; erecharge kaka ligne oyo ezali déjà.",
+            ],
+          },
+          {
+            heading: "Pona recharge soki...",
+            paragraphs: [
+              "Yo (to moto oyo ozali kosunga) ozali déjà na SIM ya Vodacom to Airtel active na Kongo mpe osengeli kaka na données ebele.",
+              "Olingi kotindela libota to baninga na Kongo données uta na mboka mosusu, na kozanga ete bango bazala na portefeuille Bitcoin, carte bancaire, to configuration technique nini na ngambo na bango.",
+              "Olingi ete données ekoma noki koleka — mingi mingi na ba minute, mpo etape ya kotia eloko ezali te.",
+            ],
+          },
+          {
+            heading: "Pona eSIM soki...",
+            paragraphs: [
+              "Ozali kokende na Kongo mpe ozali nanu na SIM ya kuna moko te.",
+              "Téléphone na yo ekoki na eSIM mpe olingi ligne ya données oyo yo moko okambaka, ekeseni na SIM ya physique.",
+              "Osengeli kosala numéro ya sika na esika ya kobakisa données na numéro oyo esili kozala.",
+            ],
+          },
+          {
+            heading: "Couverture ya réseau ekeseni kati na yango mibale",
+            paragraphs: [
+              "Ba forfait ya eSIM awa esalaka na Vodacom to Orange. Ba recharge ya données ezali sik'oyo mpo na Vodacom na Airtel — ba recharge ya Orange ezali nanu disponible te epai ya ba fournisseur ya recharge, emonisami lokola «ekoya kala te» na esika ya kobombama. Tala couverture ya réseau na yo liboso ya kopona.",
+            ],
+          },
+          {
+            heading: "Paiement ekokani na ba lolenge nyonso mibale",
+            paragraphs: [
+              "Ba forfait ya eSIM na ba recharge ya données efutamaka ndenge moko na MboteData: tanga code QR ya Lightning na portefeuille Bitcoin, to futa na mbongo ya mobile money na yo na nzela ya Machankura — carte bancaire ya mboka mosusu te na ba lolenge nyonso mibale.",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Nakoki kosomba recharge soki nayebi te soki SIM ya moto oyo akozwa yango ezali active?",
+            answer:
+              "Recharge etindamaka na numéro oyo otisaki, kasi ezali na effet kaka soki numéro yango ezali déjà na SIM active na réseau oyo ezali couvert — tuna moto oyo akozwa yango liboso soki ozali na ntembe.",
+          },
+          {
+            question: "Recharge ezali ntalo moke koleka eSIM?",
+            answer:
+              "Ekokani mpenza te na ntalo kaka — eSIM ezali na ligne ya sika mobimba, na tango recharge ebakisaka kaka données na ligne oyo esili kozala. Kokanisa ntalo na Go oyo elakisami na offre moko na moko mpo na comparaison ya solo ya valeur ya données.",
+          },
+          {
+            question: "Nakoki kobongwana uta na recharge tii na eSIM na nsima?",
+            answer:
+              "Ee — ezali ba achat ekeseni. Kosomba recharge ebongolaka eloko moko te na likoki na yo ya kosomba mpe eSIM na nsima, mpe lolenge mosusu.",
+          },
+        ],
+        ctaText: "Oyebi kotondisa numéro na Kongo?",
+        ctaButtonText: "Tala ba recharge →",
+      },
+    },
+  },
+  {
     slug: "comment-installer-esim-rdc",
     updatedAt: "2026-08-06",
     ctaHref: "/plans",
@@ -560,404 +958,6 @@ const GUIDES: Guide[] = [
         ],
         ctaText: "Oyebi komikangisa na Kongo?",
         ctaButtonText: "Tala ba forfait →",
-      },
-    },
-  },
-  {
-    slug: "comment-recharger-donnees-rdc",
-    updatedAt: "2026-08-08",
-    ctaHref: "/topups",
-    translations: {
-      fr: {
-        title: "Comment recharger des données mobiles en RDC sans acheter d'eSIM",
-        metaDescription:
-          "Ajoutez des données à un numéro que vous avez déjà en RDC — sans nouvelle carte SIM, sans eSIM, sans installation. Comparez les recharges Vodacom et Airtel et payez en Bitcoin Lightning ou mobile money.",
-        intro:
-          "Si vous avez déjà une carte SIM active sur Vodacom ou Airtel en RDC, vous n'avez pas besoin d'une nouvelle eSIM pour obtenir plus de données — une recharge de données ajoute des données directement au numéro que vous utilisez déjà, sans rien à installer. Voici comment ça marche.",
-        sections: [
-          {
-            heading: "Recharge ou eSIM : quelle différence ?",
-            paragraphs: [
-              "Une eSIM est une toute nouvelle ligne mobile — utile si vous arrivez en RDC sans carte SIM locale, ou si vous voulez une ligne données dédiée sur un téléphone compatible.",
-              "Une recharge de données fait quelque chose de plus simple : elle ajoute des données directement à un numéro qui a déjà une carte SIM active en RDC — le vôtre, ou celui de quelqu'un d'autre, comme un proche que vous soutenez depuis l'étranger. Pas de nouvelle carte SIM, pas d'installation d'eSIM, rien à scanner.",
-            ],
-          },
-          {
-            heading: "Quels réseaux sont disponibles",
-            paragraphs: [
-              "Les recharges couvrent actuellement les numéros Vodacom et Airtel en RDC. Orange n'a pas encore d'option de recharge de données disponible chez nos fournisseurs — c'est affiché comme « bientôt disponible » plutôt que retiré, car cela peut changer.",
-              "Chaque recharge affiche son prix par Go, pour comparer facilement la valeur entre les différentes tailles et durées de validité avant de choisir.",
-            ],
-          },
-          {
-            heading: "Étape 1 : choisissez une recharge et entrez le numéro",
-            paragraphs: [
-              "Parcourez les recharges disponibles, choisissez celle qui correspond au volume de données et à la durée de validité dont vous avez besoin, puis entrez le numéro de téléphone qui doit recevoir les données — au format international (ex. +243 8xx xxx xxx). Vous pouvez recharger votre propre numéro ou celui d'une autre personne.",
-            ],
-          },
-          {
-            heading: "Étape 2 : payez",
-            paragraphs: [
-              "Payez de la même manière que partout ailleurs sur MboteData : scannez le code QR Lightning avec un portefeuille Bitcoin, ou payez directement depuis votre solde mobile money via Machankura là où c'est disponible — sans carte bancaire internationale.",
-            ],
-          },
-          {
-            heading: "Étape 3 : les données arrivent automatiquement",
-            paragraphs: [
-              "Dès que le paiement est confirmé, les données sont ajoutées directement au numéro que vous avez saisi — généralement en quelques minutes. Il n'y a aucun code QR à scanner ni rien à installer ; le destinataire peut simplement commencer à utiliser ses données.",
-            ],
-          },
-        ],
-        faq: [
-          {
-            question: "Dois-je être moi-même en RDC pour envoyer une recharge ?",
-            answer:
-              "Non — vous pouvez recharger un numéro de RDC depuis n'importe où, c'est pourquoi c'est un moyen courant d'envoyer des données à la famille ou à des amis en RDC sans qu'ils aient besoin d'une carte bancaire ou d'un portefeuille Bitcoin eux-mêmes.",
-          },
-          {
-            question: "Quelle est la différence avec offrir une eSIM à quelqu'un ?",
-            answer:
-              "Une eSIM n'aide que si le téléphone du destinataire est compatible eSIM et qu'il accepte d'en installer une. Une recharge fonctionne sur n'importe quel téléphone ayant déjà une carte SIM active sur un réseau disponible — aucune installation n'est nécessaire de son côté.",
-          },
-          {
-            question: "Et si le numéro que je veux recharger est chez Orange ?",
-            answer:
-              "Orange n'est pas encore disponible — c'est indiqué « bientôt disponible » sur la page des recharges plutôt que masqué, car cela dépend de l'ajout du support par nos fournisseurs, pas de nous directement.",
-          },
-          {
-            question: "À quelle vitesse les données arrivent-elles ?",
-            answer:
-              "Généralement en quelques minutes après la confirmation du paiement — il n'y a pas d'étape d'installation à attendre, contrairement à une eSIM.",
-          },
-        ],
-        ctaText: "Prêt à recharger un numéro en RDC ?",
-        ctaButtonText: "Voir les recharges →",
-      },
-      en: {
-        title: "How to Top Up Mobile Data in DR Congo (No eSIM Needed)",
-        metaDescription:
-          "Add data to a phone number you already have in DR Congo — no new SIM, no eSIM, no installation. Compare Vodacom and Airtel top-ups and pay with Bitcoin Lightning or mobile money.",
-        intro:
-          "If you already have an active SIM card on Vodacom or Airtel in DR Congo, you don't need a new eSIM to get more data — a data top-up adds data directly to the number you already use, with nothing to install. Here's how it works.",
-        sections: [
-          {
-            heading: "Top-up vs. eSIM: what's the difference?",
-            paragraphs: [
-              "An eSIM is a whole new mobile line — useful if you're arriving in DR Congo without a local SIM at all, or want a dedicated data-only line on a phone that supports it.",
-              "A data top-up does something simpler: it adds data straight to a phone number that already has an active SIM in DR Congo — yours, or someone else's, like a family member you're supporting from abroad. No new SIM card, no eSIM installation, nothing to scan.",
-            ],
-          },
-          {
-            heading: "Which networks are supported",
-            paragraphs: [
-              "Top-ups currently cover Vodacom and Airtel numbers in DR Congo. Orange doesn't have a data top-up option available yet from either of our providers — it's shown as \"coming soon\" rather than removed, since that could change.",
-              "Each top-up listing shows its price per GB, so you can compare value across sizes and validity periods at a glance before choosing.",
-            ],
-          },
-          {
-            heading: "Step 1: pick a top-up and enter the phone number",
-            paragraphs: [
-              "Browse the available top-ups, choose one that fits the data amount and validity period you need, and enter the phone number that should receive the data — in international format (e.g. +243 8xx xxx xxx). You can top up your own number or someone else's.",
-            ],
-          },
-          {
-            heading: "Step 2: pay",
-            paragraphs: [
-              "Pay the same way as everywhere else on MboteData: scan the Lightning QR code with a Bitcoin wallet, or pay straight from your mobile money balance via Machankura where available — no international bank card needed.",
-            ],
-          },
-          {
-            heading: "Step 3: data lands automatically",
-            paragraphs: [
-              "As soon as payment is confirmed, the data is added directly to the number you entered — usually within minutes. There's no QR code to scan and nothing to install; the recipient can just start using their data.",
-            ],
-          },
-        ],
-        faq: [
-          {
-            question: "Do I need to be in DR Congo myself to send a top-up?",
-            answer:
-              "No — you can top up a DR Congo number from anywhere, which is why this is a common way to send data to family or friends in DR Congo without them needing a bank card or a Bitcoin wallet themselves.",
-          },
-          {
-            question: "How is this different from buying someone an eSIM?",
-            answer:
-              "An eSIM only helps if the recipient's phone supports eSIM and they're willing to install one. A top-up works on any phone with an existing SIM on a supported network — no installation required on their end.",
-          },
-          {
-            question: "What if the number I want to top up is on Orange?",
-            answer:
-              "Orange isn't available yet — it's marked \"coming soon\" on the top-ups page rather than hidden, since it depends on our providers adding support, not something we control directly.",
-          },
-          {
-            question: "How fast does the data arrive?",
-            answer:
-              "Typically within minutes of payment being confirmed — there's no installation step to wait on, unlike an eSIM.",
-          },
-        ],
-        ctaText: "Ready to top up a number in DR Congo?",
-        ctaButtonText: "View top-ups →",
-      },
-      ln: {
-        title: "Ndenge ya kotondisa données ya mobile na Kongo (eSIM esengeli te)",
-        metaDescription:
-          "Bakisa données na numéro oyo ozali na yango déjà na Kongo — SIM ya sika te, eSIM te, kotia eloko te. Kokanisa ba recharge ya Vodacom na Airtel mpe futa na Bitcoin Lightning to mobile money.",
-        intro:
-          "Soki ozali déjà na SIM oyo ezali active na Vodacom to Airtel na Kongo, osengeli na eSIM ya sika te mpo na kozua données ebele — recharge ya données ebakisaka données mbala moko na numéro oyo osalelaka déjà, eloko ya kotia ezali te. Tala ndenge esalaka.",
-        sections: [
-          {
-            heading: "Recharge to eSIM: bokeseni nini?",
-            paragraphs: [
-              "eSIM ezali ligne ya mobile ya sika mobimba — esungaka soki oyei na Kongo na SIM ya mboka te, to olingi ligne ya données kaka na téléphone oyo ekoki na yango.",
-              "Recharge ya données esalaka eloko ya pete koleka: ebakisaka données mbala moko na numéro oyo ezali déjà na SIM active na Kongo — ya yo moko, to ya moto mosusu, lokola libota oyo ozali kosunga uta na mboka mosusu. SIM ya sika te, kotia eSIM te, eloko ya ko-scanner te.",
-            ],
-          },
-          {
-            heading: "Ba réseau nini ezali disponible",
-            paragraphs: [
-              "Ba recharge ezali sik'oyo mpo na ba numéro ya Vodacom na Airtel na Kongo. Orange ezali nanu na option ya recharge ya données te epai ya ba fournisseur na biso — emonisami lokola «ekoya kala te» na esika ya kolongolama, mpo yango ekoki kobongwana.",
-              "Recharge moko na moko elakisaka ntalo na yango na Go, mpo okoka kokanisa valeur na kati ya ba taille na ba durée ya validité liboso ya kopona.",
-            ],
-          },
-          {
-            heading: "Etape 1: pona recharge mpe kotisa numéro",
-            paragraphs: [
-              "Tala ba recharge oyo ezali, pona oyo ekokani na données mpe durée ya validité oyo osengeli na yango, na nsima kotisa numéro ya téléphone oyo esengeli kozua données — na format internationale (ex. +243 8xx xxx xxx). Okoki kotondisa numéro na yo moko to ya moto mosusu.",
-            ],
-          },
-          {
-            heading: "Etape 2: futa",
-            paragraphs: [
-              "Futa ndenge moko na bisika mosusu nyonso na MboteData: tanga code QR ya Lightning na portefeuille Bitcoin, to futa mbala moko na mbongo ya mobile money na yo na nzela ya Machankura esika ezali disponible — carte bancaire ya mboka mosusu esengeli te.",
-            ],
-          },
-          {
-            heading: "Etape 3: données ekoya mbala moko",
-            paragraphs: [
-              "Tango kaka paiement endimami, données ebakisami mbala moko na numéro oyo otisaki — mingi mingi na ba minute. Code QR ya ko-scanner ezali te mpe eloko ya kotia ezali te; moto akozwa akoki kaka kobanda kosalela données na ye.",
-            ],
-          },
-        ],
-        faq: [
-          {
-            question: "Nasengeli kozala ngai moko na Kongo mpo na kotinda recharge?",
-            answer:
-              "Te — okoki kotondisa numéro ya Kongo uta esika nyonso, yango wana ezali lolenge ya boyokani mpo na kotindela libota to baninga na Kongo données, na kozanga ete bango bazala na carte bancaire to portefeuille Bitcoin bango moko.",
-          },
-          {
-            question: "Bokeseni nini na kopesa moto eSIM?",
-            answer:
-              "eSIM esungaka kaka soki téléphone ya moto oyo akozwa yango ekoki na eSIM mpe andimi kotia yango. Recharge esalaka na téléphone nyonso oyo ezali déjà na SIM active na réseau oyo ezali disponible — kotia eloko esengeli te na ngambo na ye.",
-          },
-          {
-            question: "Soki numéro oyo nalingi kotondisa ezali na Orange?",
-            answer:
-              "Orange ezali nanu disponible te — emonisami «ekoya kala te» na page ya ba recharge na esika ya kobombama, mpo yango etali ko-bakisama ya support na ba fournisseur na biso, likambo oyo biso moko tokambaka te mbala moko.",
-          },
-          {
-            question: "Données ekoya noki boni?",
-            answer:
-              "Mbala mingi na ba minute nsima ya kondimama ya paiement — etape ya kotia eloko ezali te ya kozela, na bokeseni na eSIM.",
-          },
-        ],
-        ctaText: "Oyebi kotondisa numéro na Kongo?",
-        ctaButtonText: "Tala ba recharge →",
-      },
-    },
-  },
-  {
-    slug: "recharge-vs-esim-rdc",
-    updatedAt: "2026-08-08",
-    ctaHref: "/topups",
-    translations: {
-      fr: {
-        title: "Recharge de données vs eSIM en RDC : que choisir ?",
-        metaDescription:
-          "Recharge de données ou eSIM pour se connecter en RDC ? Comparatif pratique : pour qui chaque option est faite, réseaux couverts, rapidité, et comment choisir.",
-        intro:
-          "MboteData vend deux choses différentes : une toute nouvelle ligne de données eSIM, et une recharge de données pour un numéro que vous avez déjà. Elles répondent à des besoins différents — voici comment savoir laquelle vous convient.",
-        sections: [
-          {
-            heading: "La différence de fond",
-            paragraphs: [
-              "Une eSIM vous donne une toute nouvelle ligne mobile, installée sur votre téléphone comme une SIM numérique — c'est pour quand vous n'avez pas encore de connexion en RDC, ou voulez une ligne données dédiée.",
-              "Une recharge de données ajoute des données à un numéro déjà actif sur un réseau RDC pris en charge — le vôtre ou celui de quelqu'un d'autre. Rien à installer ; elle recharge simplement une ligne existante.",
-            ],
-          },
-          {
-            heading: "Choisissez une recharge si...",
-            paragraphs: [
-              "Vous (ou quelqu'un que vous soutenez) avez déjà une carte SIM Vodacom ou Airtel active en RDC et avez juste besoin de plus de données.",
-              "Vous voulez envoyer des données à de la famille ou des amis en RDC depuis l'étranger, sans qu'ils aient besoin d'un portefeuille Bitcoin, d'une carte bancaire, ou d'aucune configuration technique de leur côté.",
-              "Vous voulez que les données arrivent le plus vite possible — généralement en quelques minutes, puisqu'il n'y a pas d'étape d'installation.",
-            ],
-          },
-          {
-            heading: "Choisissez une eSIM si...",
-            paragraphs: [
-              "Vous voyagez en RDC et n'avez encore aucune carte SIM locale.",
-              "Votre téléphone est compatible eSIM et vous voulez une ligne de données dédiée que vous contrôlez entièrement, séparée d'une carte SIM physique.",
-              "Vous devez créer un nouveau numéro plutôt qu'ajouter des données à un numéro existant.",
-            ],
-          },
-          {
-            heading: "La couverture réseau diffère entre les deux",
-            paragraphs: [
-              "Les forfaits eSIM ici fonctionnent sur Vodacom ou Orange. Les recharges de données couvrent actuellement Vodacom et Airtel — les recharges Orange ne sont pas encore disponibles chez nos fournisseurs de recharge, affichées comme « bientôt disponible » plutôt que masquées. Vérifiez la couverture de votre réseau spécifique avant de choisir.",
-            ],
-          },
-          {
-            heading: "Le paiement est identique dans les deux cas",
-            paragraphs: [
-              "Les forfaits eSIM et les recharges de données se paient de la même manière sur MboteData : scannez un code QR Lightning avec un portefeuille Bitcoin, ou payez depuis votre solde mobile money via Machankura — sans carte bancaire internationale dans les deux cas.",
-            ],
-          },
-        ],
-        faq: [
-          {
-            question: "Puis-je acheter une recharge si je ne sais pas si la SIM du destinataire est active ?",
-            answer:
-              "La recharge est livrée au numéro que vous saisissez, mais elle n'a d'effet que si ce numéro a déjà une carte SIM active sur un réseau pris en charge — vérifiez d'abord avec le destinataire en cas de doute.",
-          },
-          {
-            question: "Une recharge est-elle moins chère qu'une eSIM ?",
-            answer:
-              "Elles ne sont pas vraiment comparables sur le seul prix — une eSIM inclut une toute nouvelle ligne, tandis qu'une recharge ajoute seulement des données à une ligne déjà existante. Comparez le prix par Go affiché sur chaque offre pour une comparaison plus juste de la valeur des données spécifiquement.",
-          },
-          {
-            question: "Puis-je passer d'une recharge à une eSIM plus tard ?",
-            answer:
-              "Oui — ce sont des achats indépendants. Acheter une recharge n'affecte en rien votre capacité à acheter aussi une eSIM plus tard, et inversement.",
-          },
-        ],
-        ctaText: "Prêt à recharger un numéro en RDC ?",
-        ctaButtonText: "Voir les recharges →",
-      },
-      en: {
-        title: "Data Top-up vs. eSIM in DR Congo: Which Should You Choose?",
-        metaDescription:
-          "Data top-up or eSIM to get connected in DR Congo? A practical comparison: who each option is for, what networks are covered, speed, and how to choose.",
-        intro:
-          "MboteData sells two different things: a brand-new eSIM data line, and a data top-up for a phone number you already have. They solve different problems — here's how to tell which one you actually need.",
-        sections: [
-          {
-            heading: "The core difference",
-            paragraphs: [
-              "An eSIM gives you a whole new mobile line, installed on your phone as a digital SIM — it's for when you don't already have connectivity in DR Congo, or want a dedicated data-only line.",
-              "A data top-up adds data to a phone number that's already active on a supported DR Congo network — yours or someone else's. Nothing to install; it just tops up an existing line.",
-            ],
-          },
-          {
-            heading: "Choose a top-up if...",
-            paragraphs: [
-              "You (or someone you're supporting) already has an active Vodacom or Airtel SIM in DR Congo and just needs more data.",
-              "You want to send data to family or friends in DR Congo from abroad, without them needing a Bitcoin wallet, a bank card, or any technical setup on their end.",
-              "You want the data to land as fast as possible — usually within minutes, since there's no install step.",
-            ],
-          },
-          {
-            heading: "Choose an eSIM if...",
-            paragraphs: [
-              "You're traveling to DR Congo and don't have a local SIM at all yet.",
-              "Your phone supports eSIM and you want a dedicated data line you fully control, separate from a physical SIM.",
-              "You need to set up a new number rather than add data to an existing one.",
-            ],
-          },
-          {
-            heading: "Network coverage differs between the two",
-            paragraphs: [
-              "eSIM plans here run on Vodacom or Orange. Data top-ups currently cover Vodacom and Airtel — Orange top-ups aren't available yet from either top-up provider, shown as \"coming soon\" rather than hidden. Check the coverage for your specific network before choosing.",
-            ],
-          },
-          {
-            heading: "Payment is identical either way",
-            paragraphs: [
-              "Both eSIM plans and data top-ups are paid the same way on MboteData: scan a Lightning QR code with a Bitcoin wallet, or pay from your mobile money balance via Machankura — no international bank card needed for either.",
-            ],
-          },
-        ],
-        faq: [
-          {
-            question: "Can I buy a top-up if I don't know whether the recipient's SIM is active?",
-            answer:
-              "The top-up is delivered to whatever number you enter, but it only has an effect if that number already has an active SIM on a supported network — check with the recipient first if you're not sure.",
-          },
-          {
-            question: "Is a top-up cheaper than an eSIM?",
-            answer:
-              "They're not really comparable on price alone — an eSIM includes a brand-new line, while a top-up only adds data to a line that already exists. Compare the $/GB shown on each listing for the fairest comparison of data value specifically.",
-          },
-          {
-            question: "Can I switch from a top-up to an eSIM later?",
-            answer:
-              "Yes — they're independent purchases. Nothing about buying a top-up affects your ability to also buy an eSIM later, or vice versa.",
-          },
-        ],
-        ctaText: "Ready to top up a number in DR Congo?",
-        ctaButtonText: "View top-ups →",
-      },
-      ln: {
-        title: "Recharge ya données to eSIM na Kongo: nini opona?",
-        metaDescription:
-          "Recharge ya données to eSIM mpo na kokangama na Kongo? Comparaison ya practique: mpo na banani lolenge na lolenge ekoki, ba réseau oyo ezali couvert, vitesse, mpe ndenge ya kopona.",
-        intro:
-          "MboteData etekisaka biloko mibale ekeseni: ligne ya données ya eSIM ya sika mobimba, mpe recharge ya données mpo na numéro oyo ozali na yango déjà. Ezali mpo na ba besoin ekeseni — tala ndenge ya koyeba oyo ekoki na yo.",
-        sections: [
-          {
-            heading: "Bokeseni ya solo",
-            paragraphs: [
-              "eSIM epesaka yo ligne ya mobile ya sika mobimba, oyo etiami na téléphone na yo lokola SIM ya numérique — ezali mpo na tango ozali nanu na connexion te na Kongo, to olingi ligne ya données kaka.",
-              "Recharge ya données ebakisaka données na numéro oyo ezali déjà active na réseau ya Kongo oyo ezali couvert — ya yo moko to ya moto mosusu. Eloko ya kotia ezali te; erecharge kaka ligne oyo ezali déjà.",
-            ],
-          },
-          {
-            heading: "Pona recharge soki...",
-            paragraphs: [
-              "Yo (to moto oyo ozali kosunga) ozali déjà na SIM ya Vodacom to Airtel active na Kongo mpe osengeli kaka na données ebele.",
-              "Olingi kotindela libota to baninga na Kongo données uta na mboka mosusu, na kozanga ete bango bazala na portefeuille Bitcoin, carte bancaire, to configuration technique nini na ngambo na bango.",
-              "Olingi ete données ekoma noki koleka — mingi mingi na ba minute, mpo etape ya kotia eloko ezali te.",
-            ],
-          },
-          {
-            heading: "Pona eSIM soki...",
-            paragraphs: [
-              "Ozali kokende na Kongo mpe ozali nanu na SIM ya kuna moko te.",
-              "Téléphone na yo ekoki na eSIM mpe olingi ligne ya données oyo yo moko okambaka, ekeseni na SIM ya physique.",
-              "Osengeli kosala numéro ya sika na esika ya kobakisa données na numéro oyo esili kozala.",
-            ],
-          },
-          {
-            heading: "Couverture ya réseau ekeseni kati na yango mibale",
-            paragraphs: [
-              "Ba forfait ya eSIM awa esalaka na Vodacom to Orange. Ba recharge ya données ezali sik'oyo mpo na Vodacom na Airtel — ba recharge ya Orange ezali nanu disponible te epai ya ba fournisseur ya recharge, emonisami lokola «ekoya kala te» na esika ya kobombama. Tala couverture ya réseau na yo liboso ya kopona.",
-            ],
-          },
-          {
-            heading: "Paiement ekokani na ba lolenge nyonso mibale",
-            paragraphs: [
-              "Ba forfait ya eSIM na ba recharge ya données efutamaka ndenge moko na MboteData: tanga code QR ya Lightning na portefeuille Bitcoin, to futa na mbongo ya mobile money na yo na nzela ya Machankura — carte bancaire ya mboka mosusu te na ba lolenge nyonso mibale.",
-            ],
-          },
-        ],
-        faq: [
-          {
-            question: "Nakoki kosomba recharge soki nayebi te soki SIM ya moto oyo akozwa yango ezali active?",
-            answer:
-              "Recharge etindamaka na numéro oyo otisaki, kasi ezali na effet kaka soki numéro yango ezali déjà na SIM active na réseau oyo ezali couvert — tuna moto oyo akozwa yango liboso soki ozali na ntembe.",
-          },
-          {
-            question: "Recharge ezali ntalo moke koleka eSIM?",
-            answer:
-              "Ekokani mpenza te na ntalo kaka — eSIM ezali na ligne ya sika mobimba, na tango recharge ebakisaka kaka données na ligne oyo esili kozala. Kokanisa ntalo na Go oyo elakisami na offre moko na moko mpo na comparaison ya solo ya valeur ya données.",
-          },
-          {
-            question: "Nakoki kobongwana uta na recharge tii na eSIM na nsima?",
-            answer:
-              "Ee — ezali ba achat ekeseni. Kosomba recharge ebongolaka eloko moko te na likoki na yo ya kosomba mpe eSIM na nsima, mpe lolenge mosusu.",
-          },
-        ],
-        ctaText: "Oyebi kotondisa numéro na Kongo?",
-        ctaButtonText: "Tala ba recharge →",
       },
     },
   },
