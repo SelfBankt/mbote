@@ -13,11 +13,11 @@ export default function Header() {
           <img src="/brand/logo.png" alt={t("site.name")} className="h-8 w-auto" />
         </Link>
         <nav className="flex items-center gap-5 text-sm">
-          <Link href="/plans" className="hover:text-accent transition-colors">
-            {t("nav.plans")}
-          </Link>
           <Link href="/topups" className="hover:text-accent transition-colors">
             {t("nav.topups")}
+          </Link>
+          <Link href="/plans" className="hover:text-accent transition-colors">
+            {t("nav.plans")}
           </Link>
           <Link href="/guides" className="hover:text-accent transition-colors">
             {t("nav.guides")}
