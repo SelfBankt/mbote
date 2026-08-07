@@ -961,6 +961,175 @@ const GUIDES: Guide[] = [
       },
     },
   },
+  {
+    slug: "recharger-une-esim-rdc",
+    updatedAt: "2026-08-07",
+    ctaHref: "/topups",
+    translations: {
+      fr: {
+        title: "Peut-on recharger les données d'une eSIM RDC sur ce site ?",
+        metaDescription:
+          "Vous avez acheté une eSIM RDC et voulez ajouter des données ? Voici ce que le site propose réellement pour les eSIM, ce qui fonctionne probablement quand même, et ce qu'il faut vérifier avant d'essayer.",
+        intro:
+          "eSIM et recharge de données sont deux offres séparées sur MboteData, sans lien direct entre elles dans le parcours d'achat. Voici ce que ça change concrètement si vous avez déjà une eSIM et voulez lui ajouter des données.",
+        sections: [
+          {
+            heading: "Ce que le site relie aujourd'hui",
+            paragraphs: [
+              "Il n'y a pas de bouton « recharger cette eSIM » après un achat d'eSIM, et la page de recharge ne recherche pas vos anciennes commandes eSIM par numéro. Les deux parcours sont construits et présentés comme deux offres distinctes (voir le guide « Recharge de données vs eSIM »).",
+            ],
+          },
+          {
+            heading: "Ce qui fonctionne probablement quand même",
+            paragraphs: [
+              "Reloadly et DingConnect, les fournisseurs derrière les recharges, ajoutent des données à un numéro de téléphone au niveau du réseau — ils ne distinguent pas une carte SIM physique d'une eSIM. Une fois votre eSIM MboteData active sur Vodacom ou Airtel, c'est une ligne active comme une autre sur ce réseau : saisir ce même numéro sur la page des recharges devrait donc aussi lui ajouter des données.",
+              "Ce n'est cependant pas un parcours testé de bout en bout par le site — c'est une conséquence du fonctionnement des fournisseurs, pas une fonctionnalité garantie. À traiter comme « probable, pas confirmé ».",
+            ],
+          },
+          {
+            heading: "La couverture réseau reste la limite principale",
+            paragraphs: [
+              "Les forfaits eSIM ici fonctionnent sur Vodacom ou Orange. Les recharges de données ne couvrent actuellement que Vodacom et Airtel. Concrètement, une eSIM Orange ne peut pas être rechargée via ce site pour l'instant, puisqu'aucun des deux fournisseurs de recharge n'a de produit Orange disponible.",
+            ],
+          },
+          {
+            heading: "Comment essayer",
+            paragraphs: [
+              "Retrouvez le numéro de votre eSIM dans les paramètres cellulaires de votre téléphone une fois qu'elle est installée et activée — pas sur MboteData, le site ne conserve pas d'historique consultable de vos commandes eSIM.",
+              "Vérifiez que ce numéro est bien sur Vodacom ou Airtel, puis allez sur la page des recharges, choisissez une offre, saisissez le numéro, et payez comme pour n'importe quel achat (Lightning ou mobile money).",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "MboteData ajoutera-t-il automatiquement des données à mon eSIM après paiement d'une recharge ?",
+            answer:
+              "Oui, tant que le numéro saisi correspond à un réseau pris en charge — la recharge est livrée à n'importe quel numéro actif (Vodacom ou Airtel actuellement), que ce numéro soit sur une eSIM ou une carte SIM physique.",
+          },
+          {
+            question: "Puis-je recharger une eSIM Orange achetée ici ?",
+            answer:
+              "Pas pour l'instant — Orange n'a pas de produit de recharge de données chez nos fournisseurs (Reloadly, DingConnect), même si les eSIM Orange sont vendues sur le site.",
+          },
+          {
+            question: "Où trouver le numéro de mon eSIM pour la recharger ?",
+            answer:
+              "Dans les paramètres cellulaires de votre téléphone une fois l'eSIM installée et activée — pas sur MboteData, qui ne conserve pas de tableau de bord de vos commandes eSIM passées.",
+          },
+        ],
+        ctaText: "Prêt à essayer une recharge sur le numéro de votre eSIM ?",
+        ctaButtonText: "Voir les recharges →",
+      },
+      en: {
+        title: "Can You Top Up Data on a DRC eSIM Through This Site?",
+        metaDescription:
+          "Bought a DR Congo eSIM and want more data? Here's what the site actually connects for eSIM users, what's likely to still work, and what to check before trying.",
+        intro:
+          "eSIMs and data top-ups are two separate offerings on MboteData, with no direct link between them in the purchase flow. Here's what that means in practice if you already have an eSIM and want to add data to it.",
+        sections: [
+          {
+            heading: "What the site connects today",
+            paragraphs: [
+              "There's no \"top up this eSIM\" button after an eSIM purchase, and the top-up page doesn't look up past eSIM orders by number. The two flows are built and presented as separate offerings (see the \"Data Top-up vs. eSIM\" guide).",
+            ],
+          },
+          {
+            heading: "What probably still works",
+            paragraphs: [
+              "Reloadly and DingConnect, the providers behind top-ups, add data to a phone number at the network level — they don't distinguish a physical SIM from an eSIM. Once your MboteData eSIM is active on Vodacom or Airtel, it's an ordinary active line on that network, so entering that same number on the top-up page would likely add data to it too.",
+              "That said, this isn't a path the site has tested end-to-end — it's a consequence of how the providers work, not a guaranteed feature. Treat it as \"likely, not confirmed.\"",
+            ],
+          },
+          {
+            heading: "Network coverage is still the main limit",
+            paragraphs: [
+              "eSIM plans here run on Vodacom or Orange. Data top-ups currently cover only Vodacom and Airtel. In practice, an Orange eSIM can't be topped up through this site right now, since neither top-up provider has an Orange product available.",
+            ],
+          },
+          {
+            heading: "How to try it",
+            paragraphs: [
+              "Find your eSIM's phone number in your phone's cellular settings once it's installed and activated — not on MboteData, since the site doesn't keep a browsable history of your eSIM orders.",
+              "Confirm that number is on Vodacom or Airtel, then go to the top-ups page, pick an offer, enter the number, and pay the same way as any purchase (Lightning or mobile money).",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "Will MboteData automatically add data to my eSIM after I pay for a top-up?",
+            answer:
+              "Yes, as long as the number you enter matches a supported network — a top-up is delivered to whatever active number you provide (Vodacom or Airtel right now), whether that number is on an eSIM or a physical SIM.",
+          },
+          {
+            question: "Can I top up an Orange eSIM I bought here?",
+            answer:
+              "Not yet — Orange doesn't have a data top-up product from either of our providers (Reloadly, DingConnect), even though Orange eSIMs are sold on the site.",
+          },
+          {
+            question: "Where do I find my eSIM's phone number to top it up?",
+            answer:
+              "In your phone's cellular settings once the eSIM is installed and activated — not on MboteData, which doesn't keep a dashboard of your past eSIM orders.",
+          },
+        ],
+        ctaText: "Ready to try a top-up on your eSIM's number?",
+        ctaButtonText: "View top-ups →",
+      },
+      ln: {
+        title: "Okoki kotondisa données ya eSIM ya Kongo na site oyo?",
+        metaDescription:
+          "Osombaki eSIM ya Kongo mpe olingi kobakisa données? Tala nini site ekangani mpo na ba eSIM, nini ekoki kosala kaka, mpe nini osengeli kotala liboso ya komeka.",
+        intro:
+          "eSIM na recharge ya données ezali biloko mibale ekeseni na MboteData, ezanga bokangani ya mbala moko na kati ya processus ya achat. Tala oyo elakisi na réalité soki ozali déjà na eSIM mpe olingi kobakisela yango données.",
+        sections: [
+          {
+            heading: "Nini site ekangani lelo",
+            paragraphs: [
+              "Bouton « recharge eSIM oyo » ezali te nsima ya achat ya eSIM, mpe page ya recharge elukaka ba commande ya kala ya eSIM na numéro te. Ba parcours mibale esalemi mpe emonisami lokola biloko mibale ekeseni (tala guide « Recharge ya données to eSIM »).",
+            ],
+          },
+          {
+            heading: "Nini ekoki kaka kosala",
+            paragraphs: [
+              "Reloadly na DingConnect, ba fournisseur oyo bazali sima ya ba recharge, ebakisaka données na numéro na niveau ya réseau — bakesenisaka te SIM ya physique na eSIM. Soki eSIM na yo ya MboteData ezali déjà active na Vodacom to Airtel, ezali ligne ya normal na réseau yango — kotia numéro yango na page ya recharge ekoki mpe kobakisela yango données.",
+              "Kasi ezali te parcours oyo esili kotestama mobimba na site — ezali conséquence ya ndenge ba fournisseur basalaka, fonctionnalité ya garanti te. Kanisa yango lokola « ekoki kosala, kasi confirmé te ».",
+            ],
+          },
+          {
+            heading: "Couverture ya réseau ezali kaka limite ya monene",
+            paragraphs: [
+              "Ba forfait ya eSIM awa esalaka na Vodacom to Orange. Ba recharge ya données ezali sik'oyo kaka mpo na Vodacom na Airtel. Na réalité, eSIM ya Orange ekoki kozwa recharge te na nzela ya site oyo sik'oyo, mpo moko te kati na ba fournisseur ya recharge ezali na produit ya Orange.",
+            ],
+          },
+          {
+            heading: "Ndenge ya komeka",
+            paragraphs: [
+              "Luka numéro ya eSIM na yo na ba paramètre ya cellulaire ya téléphone na yo tango eSIM esili kotiama mpe kozala active — kasi te na MboteData, mpo site ebombaka historique ya ba commande ya eSIM na yo te.",
+              "Confirme numéro yango ezali na Vodacom to Airtel, na nsima kende na page ya recharge, pona offre, tia numéro yango, mpe futa ndenge ya achat nyonso (Lightning to mobile money).",
+            ],
+          },
+        ],
+        faq: [
+          {
+            question: "MboteData ekobakisa données automatiquement na eSIM na ngai nsima ya kofuta recharge?",
+            answer:
+              "Ee, soki numéro oyo otisaki ekokani na réseau oyo ezali couvert — recharge ekomaka na numéro nyonso oyo ezali active (Vodacom to Airtel sik'oyo), ezala na eSIM to na SIM ya physique.",
+          },
+          {
+            question: "Nakoki kotondisa eSIM ya Orange oyo nasombaki awa?",
+            answer:
+              "Nanu te — Orange ezali na produit ya recharge ya données te epai ya ba fournisseur na biso (Reloadly, DingConnect), atako ba eSIM ya Orange etekami na site.",
+          },
+          {
+            question: "Wapi nakoki kozwa numéro ya eSIM na ngai mpo na kotondisa yango?",
+            answer:
+              "Na ba paramètre ya cellulaire ya téléphone na yo tango eSIM esili kotiama mpe kozala active — kasi te na MboteData, oyo ebombaka dashboard ya ba commande ya eSIM ya kala te.",
+          },
+        ],
+        ctaText: "Oyebi komeka recharge na numéro ya eSIM na yo?",
+        ctaButtonText: "Tala ba recharge →",
+      },
+    },
+  },
 ];
 
 export function getGuides(locale: string): (Guide & { translation: GuideTranslation })[] {
