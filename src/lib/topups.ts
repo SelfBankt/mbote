@@ -219,6 +219,12 @@ async function buildCatalog(): Promise<DataTopup[]> {
     ...buildFromDingConnect(dingconnectProducts),
   ]).sort((a, b) => pricePerGb(a) - pricePerGb(b));
 
+  // Drop the single worst $/GB option catalog-wide (business decision, 2026-08-08) — it's the
+  // last element post-sort. Dropped from the catalog itself (not just hidden on /topups) so
+  // /topups/[id] and POST /api/orders stay consistent with what's listed, same "not purchasable"
+  // treatment as ORANGE_COMING_SOON below.
+  if (available.length > 0) available.pop();
+
   return [...available, ORANGE_COMING_SOON];
 }
 
