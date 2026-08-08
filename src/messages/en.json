@@ -109,7 +109,7 @@
     "copied": "Copied!"
   },
   "footer": {
-    "disclaimer": "Demo build — plan data is illustrative, not live pricing. See CLAUDE.md."
+    "tagline": "MboteData - Stay connected in RDC."
   },
   "email": {
     "subject": "Your eSIM for RDC is ready — MboteData",
