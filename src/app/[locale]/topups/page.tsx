@@ -7,6 +7,14 @@ import { getUsdToCdfRate } from "@/lib/fx";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { NetworkLogo } from "@/components/NetworkLogo";
 
+// getTopups() fetches Reloadly/DingConnect catalogs live and caches them in memory for 10
+// minutes (see CACHE_TTL_MS in lib/topups.ts). Without this, Next statically generates this
+// page once at build/deploy time and freezes whatever topup IDs existed then into the served
+// HTML forever — while /topups/[id] resolves against the live catalog on every request. Any
+// drift between the two (a SKU rotating out, a denomination changing) leaves a stale card on
+// this page whose link 404s on click. Revalidating on the same window keeps them in sync.
+export const revalidate = 600;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/topups">): Promise<Metadata> {
