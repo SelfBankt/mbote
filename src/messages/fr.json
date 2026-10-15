@@ -33,7 +33,11 @@
     "validityLabel": "Validité",
     "viewPlan": "Voir le forfait",
     "empty": "Aucun forfait ne correspond à vos filtres pour le moment.",
-    "topupCrossLink": "Vous avez déjà une carte SIM en RDC ? Rechargez vos données plutôt"
+    "topupCrossLink": "Vous avez déjà une carte SIM en RDC ? Rechargez vos données plutôt",
+    "comingSoonTitle": "Les eSIM arrivent bientôt",
+    "comingSoonBody": "Vous ne pouvez pas encore acheter d'eSIM sur MboteData. Si vous avez déjà une carte SIM en RDC, vous pouvez recharger ses données dès aujourd'hui.",
+    "comingSoonCta": "Voir les recharges de données",
+    "comingSoonBadge": "Bientôt disponible"
   },
   "topups": {
     "title": "Recharges de données pour votre carte SIM",

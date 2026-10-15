@@ -1,5 +1,6 @@
 import { getOrder, markOrderPaid, markOrderFulfilled } from "@/lib/db";
-import { fulfillOrder } from "@/lib/maya";
+import { fulfillOrder, isMayaConfigured } from "@/lib/maya";
+import { isBlinkConfigured } from "@/lib/blink";
 import { sendTopup } from "@/lib/reloadly";
 import { sendTransfer } from "@/lib/dingconnect";
 import { sendEsimEmail, sendTopupEmail } from "@/lib/email";
@@ -28,6 +29,12 @@ async function fulfillEsimOrder(
   contact: string,
   locale: string
 ): Promise<void> {
+  // A real payment for an eSIM with no real provider (e.g. an invoice created before sales
+  // closed): leave the order "paid" for a manual refund rather than emailing a mock code
+  if (isBlinkConfigured() && !isMayaConfigured()) {
+    console.error(`eSIM order ${orderId} was paid but Maya isn't configured: not fulfilled, refund it manually`);
+    return;
+  }
   try {
     const esim = await fulfillOrder({ planId, orderId });
     await markOrderFulfilled(orderId, { esimReference: esim.esimReference });

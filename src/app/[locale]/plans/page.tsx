@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getPlans, formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
+import { esimSalesOpen, getPlans, formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
 import { getUsdToCdfRate } from "@/lib/fx";
 import { SITE_URL, localeAlternates } from "@/lib/site";
 import { NetworkLogo } from "@/components/NetworkLogo";
@@ -35,6 +35,16 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
         {t("plans.topupCrossLink")} →
       </Link>
 
+      {!esimSalesOpen() && (
+        <div className="mt-6 rounded-xl bg-accent-soft p-4 text-sm">
+          <p className="font-semibold">{t("plans.comingSoonTitle")}</p>
+          <p className="mt-1 text-foreground/80">{t("plans.comingSoonBody")}</p>
+          <Link href="/topups" className="mt-2 inline-block font-medium text-brand hover:text-accent transition-colors">
+            {t("plans.comingSoonCta")} →
+          </Link>
+        </div>
+      )}
+
       {plans.length === 0 ? (
         <p className="mt-10 text-foreground/60">{t("plans.empty")}</p>
       ) : (
@@ -60,7 +70,9 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
                     {formatPricePerGb(plan.priceUsd, plan.dataAmountMb)}
                   </div>
                 </div>
-                <span className="text-sm font-medium text-accent">{t("plans.viewPlan")} →</span>
+                <span className="text-sm font-medium text-accent">
+                  {esimSalesOpen() ? t("plans.viewPlan") : t("plans.comingSoonBadge")} →
+                </span>
               </div>
             </Link>
           ))}

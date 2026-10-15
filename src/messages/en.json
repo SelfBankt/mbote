@@ -33,7 +33,11 @@
     "validityLabel": "Valid for",
     "viewPlan": "View plan",
     "empty": "No plans match your filters right now.",
-    "topupCrossLink": "Already have a DRC SIM? Top up your data instead"
+    "topupCrossLink": "Already have a DRC SIM? Top up your data instead",
+    "comingSoonTitle": "eSIMs are coming soon",
+    "comingSoonBody": "You can't buy eSIMs on MboteData yet. If you already have a DRC SIM, you can top up its data today.",
+    "comingSoonCta": "See data top-ups",
+    "comingSoonBadge": "Coming soon"
   },
   "topups": {
     "title": "Data top-ups for your existing SIM",

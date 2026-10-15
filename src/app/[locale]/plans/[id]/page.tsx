@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { getPlan, formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
+import { esimSalesOpen, getPlan, formatData, formatPricePerGb, formatCdf } from "@/lib/plans";
 import { getUsdToCdfRate } from "@/lib/fx";
 import { Link } from "@/i18n/navigation";
 import { SITE_URL, localeAlternates } from "@/lib/site";
@@ -51,7 +51,7 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
       "@type": "Offer",
       price: plan.priceUsd,
       priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
+      availability: esimSalesOpen() ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       url: `${SITE_URL}/${locale}/plans/${id}`,
     },
   };
@@ -98,7 +98,17 @@ export default async function PlanDetailPage({ params }: PageProps<"/[locale]/pl
         <div className="text-sm text-foreground/60">{formatPricePerGb(plan.priceUsd, plan.dataAmountMb)}</div>
 
         <div className="mt-6">
-          <BuyForm planId={plan.id} locale={locale} productType="esim" />
+          {esimSalesOpen() ? (
+            <BuyForm planId={plan.id} locale={locale} productType="esim" />
+          ) : (
+            <div className="rounded-xl bg-accent-soft p-4 text-sm">
+              <p className="font-semibold">{t("plans.comingSoonTitle")}</p>
+              <p className="mt-1 text-foreground/80">{t("plans.comingSoonBody")}</p>
+              <Link href="/topups" className="mt-2 inline-block font-medium text-brand hover:text-accent transition-colors">
+                {t("plans.comingSoonCta")} →
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
