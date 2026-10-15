@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { randomUUID } from "node:crypto";
-import { getPlan } from "@/lib/plans";
+import { esimSalesOpen, getPlan } from "@/lib/plans";
 import { getTopup } from "@/lib/topups";
 import { createInvoice, usdToSats } from "@/lib/blink";
 import { createOrder } from "@/lib/db";
@@ -27,6 +27,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "invalid request" }, { status: 400 });
   }
   const { planId, productType, contact, recipientPhone, locale } = parsed.data;
+
+  // Never take real money for an eSIM that would only be "fulfilled" with a mock code
+  if (productType === "esim" && !esimSalesOpen()) {
+    return NextResponse.json({ error: "eSIMs are not available yet" }, { status: 400 });
+  }
 
   const offer = productType === "topup" ? await getTopup(planId) : await getPlan(planId);
   if (!offer) {

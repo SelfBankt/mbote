@@ -1,3 +1,5 @@
+import { isBlinkConfigured } from "@/lib/blink";
+import { isMayaConfigured } from "@/lib/maya";
 // Placeholder eSIM plan data — see CLAUDE.md "eSIM fulfillment (Maya Mobile)". The shape here
 // mirrors what Maya Mobile's Connect+ API is documented to return (plan id, network, data
 // allowance, validity, USD price) so swapping getPlans() for a real `fetch()` call against their
@@ -68,4 +70,14 @@ export function formatPricePerGb(priceUsd: number, dataAmountMb: number): string
 // formatPricePerGb() always rendering their units literally regardless of locale.
 export function formatCdf(priceUsd: number, usdToCdfRate: number): string {
   return `${Math.round(priceUsd * usdToCdfRate).toLocaleString("en-US")} FC`;
+}
+
+/**
+ * Whether eSIMs can be sold right now. Taking real money (Blink configured) for an eSIM that
+ * can't really be provisioned (Maya not configured) would email the customer a fake activation
+ * code, so eSIM sales only open once Maya is set up. Full mock mode (neither configured) stays
+ * open so the whole flow can still be demoed locally.
+ */
+export function esimSalesOpen(): boolean {
+  return isMayaConfigured() || !isBlinkConfigured();
 }

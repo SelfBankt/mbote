@@ -33,7 +33,11 @@
     "validityLabel": "Ekowumela",
     "viewPlan": "Tala forfait",
     "empty": "Forfait moko te ekokani na oyo oponi sik'oyo.",
-    "topupCrossLink": "Ozali na SIM na Kongo? Tondisa données na yo na esika ya eSIM ya sika"
+    "topupCrossLink": "Ozali na SIM na Kongo? Tondisa données na yo na esika ya eSIM ya sika",
+    "comingSoonTitle": "eSIM ekoya kala mingi te",
+    "comingSoonBody": "Okoki kosomba eSIM na MboteData naino te. Soki ozali na SIM na Kongo, okoki kotondisa données na yo lelo.",
+    "comingSoonCta": "Tala ba recharge ya données",
+    "comingSoonBadge": "Ekoya kala mingi te"
   },
   "topups": {
     "title": "Recharge ya données mpo na SIM na yo",
