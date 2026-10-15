@@ -220,7 +220,7 @@ Live at **mbotedata.com**, deployed on Vercel (team `mbote1`, project `mbote`), 
 vercel deploy --prod --token=<a Vercel access token, from vercel.com/account/tokens>
 ```
 
-The GitHub repo is connected too, so pushes to `main` also trigger a deployment automatically — the CLI deploy above is only needed for things like an env var change that isn't tied to a code push.
+The GitHub repo is connected too, so pushes to `main` also trigger a production deployment automatically — the CLI deploy above is only needed for things like an env var change that isn't tied to a code push. After merging, check that a new Production deployment appears (`vercel ls mbote`): on 2026-10-15 the merge of PR #1 produced no production build and had to be deployed with `vercel deploy --prod`.
 
 **Env vars** are managed via `vercel env add <NAME> production --value="..." [--sensitive]` — **always pass `--value` explicitly rather than letting the CLI read from a `.env.local` line via shell substitution**: `.env.local` values here are double-quoted (`KEY="value"`), and naively extracting them (e.g. `` $(grep ...) ``) captures the literal quote characters into the stored secret, silently breaking auth. Confirmed this exact failure mode once already (`BLINK_API_KEY`/`BLINK_WALLET_ID` had to be removed and re-added after the quotes made it into the stored value) — worth remembering before scripting env var updates again.
 
@@ -237,6 +237,7 @@ The GitHub repo is connected too, so pushes to `main` also trigger a deployment 
 - No admin/ops view of orders — checking order status currently means querying Postgres (or the SQLite file in local dev) directly.
 - No pagination, search, or filtering on the plans listing (fine at 8 hardcoded plans, won't be once real Maya Mobile data is wired in with potentially hundreds of plans/networks).
 - No tests.
+- eSIM sales are closed while `MAYA_API_KEY` is unset in a real-payments deployment (`esimSalesOpen()` in `src/lib/plans.ts`, 2026-10-15): plan pages say "coming soon" and `POST /api/orders` refuses eSIM orders, so nobody pays real sats for a mock eSIM. They reopen automatically once the key is set and redeployed.
 - Maya Mobile eSIM fulfillment is still mocked — no real partner account yet (see "eSIM fulfillment" above), so real orders confirm payment correctly but don't provision a real eSIM.
 - Reloadly and DingConnect production credentials both exist and are confirmed working for auth + catalog lookups (see "Data top-ups (Reloadly + DingConnect)" above), but the actual billable top-up calls — `sendTopup()` and `sendTransfer()` — have never been exercised for real; confirm each works before relying on them for a real customer order. DingConnect is not yet added to Vercel, so the deployed site's Airtel coverage and DingConnect Vodacom SKUs are still mock-mode there.
 - Only Vodacom (both providers) and Airtel (DingConnect only) have real data products for DRC — Orange has none on either provider and is shown as "coming soon," a confirmed gap rather than an oversight (mirrors the Machankura DRC gap).
